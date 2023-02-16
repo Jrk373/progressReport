@@ -1,0 +1,5 @@
+This is the images folder. It includes images that are imported, as well as those that are generated through the project.
+
+USe the following naming convention:
+
+img_topic_date_descriptiveName
