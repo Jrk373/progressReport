@@ -1,0 +1,23 @@
+zip,primary_city,state,county,country,latitude,longitude,irs_estimated_population,Provider_ShortName,Provider
+85936,Saint Johns,AZ,Apache County,US,34.56,-109.33,3340,LCBHC (CBI),Little Colorado Behavioral Health (CBI)
+85938,Springerville,AZ,Apache County,US,34.04,-109.2,2050,LCBHC (CBI),Little Colorado Behavioral Health (CBI)
+86001,Flagstaff,AZ,Coconino County,US,35.23,-111.72,20330,SBHS,Southwest Behavioral and Health
+86001,Flagstaff,AZ,Coconino County,US,35.23,-111.75,20330,TGC,The Guidance Center
+86040,Page,AZ,Coconino County,US,36.68,-111.41,10109,EHS (CBI),Encompass Health Services (CBI)
+86022,Fredonia,AZ,Coconino County,US,36.86,-112.84,1480,EHS (CBI),Encompass Health Services (CBI)
+86432,Littlefield,AZ,Mohave County,US,36.9,-113.94,1110,EHS (CBI),Encompass Health Services (CBI)
+86401,Kingman,AZ,Mohave County,US,35.24,-113.79,22300,MMHC,Mohave Mental Health Clinics
+86401,Kingman,AZ,Mohave County,US,35.24,-113.76,22300,SBHS,Southwest Behavioral and Health
+86403,Lake Havasu City,AZ,Mohave County,US,34.48,-114.35,13980,MMHC,Mohave Mental Health Clinics
+86403,Lake Havasu City,AZ,Mohave County,US,34.48,-114.32,13980,SBHS,Southwest Behavioral and Health
+86429,Bullhead City,AZ,Mohave County,US,35.14,-114.52,5830,MMHC,Mohave Mental Health Clinics
+86429,Bullhead City,AZ,Mohave County,US,35.14,-114.49,5830,SBHS,Southwest Behavioral and Health
+85901,Show Low,AZ,Navajo County,US,34.23,-110.07,14090,CPIH,Changepoint Integrated Health
+85937,Snowflake,AZ,Navajo County,US,34.57,-110.06,8200,CPIH,Changepoint Integrated Health
+86025,Holbrook,AZ,Navajo County,US,34.94,-110.09,4630,CPIH,Changepoint Integrated Health
+86047,Winslow,AZ,Navajo County,US,35.1,-110.64,10810,CPIH,Changepoint Integrated Health
+86312,Prescott Valley,AZ,Yavapai County,US,34.61,-112.35,2732,SBHS,Southwest Behavioral and Health
+86312,Prescott Valley,AZ,Yavapai County,US,34.61,-112.32,2732,PH,Polara Health
+86301,Prescott,AZ,Yavapai County,US,34.62,-112.42,20500,PH,Polara Health
+86326,Cottonwood,AZ,Yavapai County,US,34.75,-112.01,21340,SHG,Spectrum Healthcare Group
+86322,Camp Verde,AZ,Yavapai County,US,34.48,-111.78,10560,SHG,Spectrum Healthcare Group
