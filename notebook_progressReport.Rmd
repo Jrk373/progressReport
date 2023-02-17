@@ -12,7 +12,7 @@ The purpose of this notebook is to document the workflow associated with compili
 
 This notebook is the primary source for scripts.
 
-## Overview
+# Overview
 
 There are several components involved in the APR that can be broken down into several sections. The highest order elements of this collection of data are:
 
@@ -41,7 +41,6 @@ The CRISP-DM process for data mining was used for this project.
 -   Have current demographic information concerning members
 -   Have complete knowledge of member service (claims) activity
 
-
 ##### Success Criteria
 
 -   To meet or surpass all quality measures
@@ -49,35 +48,30 @@ The CRISP-DM process for data mining was used for this project.
     -   FUH7 = 39.36%
     -   HDO = 93.00%
 
-
 ##### Situation Assessment
 
 -   The Alliance Providers as a whole meet the respective standards
 -   Some individual are not meeting all measures
 -   The most significant of the non-compliance is FUH7
 
-
 ##### Translate to analytical objectives (Determine Project Goals)
 
 -   Study existing trends among VBP, Claims, and Demographic data
 -   Utilize understanding of trends to assess predictive capabilities
-
 
 ##### Clearly understand how action can be taken based on outcomes
 
 -   Data can be shared in real time with internal business partners
 -   Aggregate data, free of PHI can be shared with providers via intranet
 
-
 ##### Identify the Business Problem
 
--   There has been a lack of clarity and consistency in VBP reporting and communication between health plan and provider. 
+-   There has been a lack of clarity and consistency in VBP reporting and communication between health plan and provider.
 -   Providers need a more timely and transparent delivery of program status.
 
+### Data Understanding
 
-#### Data Understanding
-
-##### Identify data sources
+#### Identify data sources
 
 -   HCA Data
     -   Global Membership All AZ enrollments
@@ -87,7 +81,6 @@ The CRISP-DM process for data mining was used for this project.
     -   Health Information Exchange - Contexture Data
 
     -   Pharmacy Data
-    
 -   Reference materials
     -   Census Data
 
@@ -95,12 +88,12 @@ The CRISP-DM process for data mining was used for this project.
 
     -   AZAHCCCS.gov reference documents
 
-##### What are the formats?
+#### What are the formats?
 
 -   All HCA membership and claims data is direct queried from SQL data warehouse maintained by HCA
 -   External reference materials are usually .xls or .csv format, but often require wrangling to make usable for analysis
 
-##### Key fieldnames and targets
+#### Key fieldnames and targets
 
 -   Membership IDs
 -   Demographics
@@ -117,20 +110,18 @@ The CRISP-DM process for data mining was used for this project.
     -   Measure IDs
     -   Compliant status
     -   Provider information
-    
-##### Data quality
+
+### Data quality
 
 Date is compiled and validated by BCBSAZ finance and MIS subject matter experts and can be relied on to be accurate and complete. However, the data transmitted from original sources, like the AHCCCS demographic files, are only as accurate as the data input by providers and members. Value Based Purchasing reports from BCBSAZ are based on 3rd party vendor analysis and report of BCBSAZ data.
 
+### Data Preparation
 
-#### Data Preparation
-
-##### r Setup
+#### r Setup
 
 The following setup, libraries, and packages were loaded.
 
 ```{r setup, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
-
 # Set up knitting options for markdown file
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -160,9 +151,13 @@ library(tidyverse)
 
 ```
 
-##### Membership Data
+#### Membership Data
 
-BCBSAZ Data warehouse is the source of this data. The following SQL Query is used to extract membership and enrollment data. In the SQL code the prefix **"dm"** refers to the table *globalMembers.dbo.dailyMembershipAllArizonaEnrollments*, **"da"** refers to *dailyMembershipAllArizonaAddresses*, and **"cid"** refers to *globalMembers.dbo.clientIdPlus*. The query returns all enrolled and disenrolled cases in table **dm** and matches key member details, like date of birth, by joining with the **da** and **cid** tables.
+BCBSAZ Data warehouse is the source of member enrollment data. The following SQL Query is used to extract membership and enrollment data.
+
+In the SQL code the prefix **"dm"** refers to the table *globalMembers.dbo.dailyMembershipAllArizonaEnrollments*, **"da"** refers to *dailyMembershipAllArizonaAddresses*, and **"cid"** refers to *globalMembers.dbo.clientIdPlus*.
+
+The query returns all enrolled and disenrolled cases in table **dm** and matches key member details, like date of birth, by joining with the **da** and **cid** tables.
 
 The following SQL query was executed:
 
@@ -187,11 +182,20 @@ globalMembers.dbo.dailyMembershipAllArizonaEnrollments dm
 LEFT JOIN globalMembers.dbo.clientIdPlus cid ON dm.primaryId = cid.primaryId
 LEFT JOIN globalMembers.dbo.dailyMembershipAllArizonaAddresses da ON dm.primaryId = da.primaryId
 ```
+**need to say something about where this data pull went to.**
 
-In order to process the data to reflect only active NARBHA ACO members, the following is conducted. Reference tables *coordinate_cities* and *ZipDatabase* were added to the model to provide data for the geographical location of Alliance providers. The global membership table queried from BCBSAZ, *GlblMmbrship* was loaded to the model. Separate data frames and objects are created throughout the process to preserve the original data.
 
-```{r Load Data1, echo=TRUE, warning=FALSE, message=FALSE}
+#### Residential Data
 
+In order to process the data to reflect only active NARBHA ACO members, the following is conducted.
+
+-   Reference tables *coordinate_cities* and *ZipDatabase* were added to the model to provide data for the geographical location of Alliance providers.
+
+-   The global membership table queried from BCBSAZ, *GlblMmbrship,* was loaded to the model.
+
+Separate data frames and objects were created throughout the process to preserve the original data.
+
+```{r Data_Load1, echo=TRUE, warning=FALSE, message=FALSE}
 # Load data
 coordinate_cities <- read_csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/data_reference_allianceCitiesAndClinics.csv")
 GlblMmbrshp <- read_csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/data_anon_2023-01-02_BCBSAZHCAMembership.csv")
@@ -200,14 +204,20 @@ ZipDatabase <- read.csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/da
 
 Several reference objects and data frames were created to provide parameters for determining active membership.
 
-```{r createobjects1, echo=TRUE, warning=FALSE, message=FALSE}
+```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
+# Create common objects for all
 
 VBP_Report_Date = "2022-09-01"
 
 GlobalMembers_Report_Date = "2022-12-31"
 
+# options are offered here to use anonomized names
+#
+Provider_ShortName_out <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", 
+                         "SHG", "SBH", "TGC", "WYGC"))
 Provider_ShortName <- (c("Nine", "One", "Two", "Seven", "Five", 
                          "Six", "Three", "Eight", "Four"))
+#
 
 MainStates <- map_data("state")
 
@@ -216,8 +226,13 @@ Arizona <- filter(MainStates, region == "arizona")
 AZ_County <- (c("Apache County", "Coconino County", "Mohave County", 
                 "Navajo County", "Yavapai County"))
 
-AZ_County_Map <- (c("Apache", "Coconino", "Mohave", 
+# options are offered here to use anonomized names
+#
+AZ_County_Map_out <- (c("Apache", "Coconino", "Mohave", 
                     "Navajo", "Yavapai"))
+AZ_County_Map <- (c("Alderan", "Naboo", "Tatooine", 
+                    "Dagobah", "Endor"))
+#
 
 data("county.map")
 
@@ -230,6 +245,11 @@ NAZ_Zips <- ZipDatabase %>%
 
 Vec_AZ_Zips <- NAZ_Zips$zip
 
+# Create NCQA Mean vector
+NCQA_MeanList = c(.5729, .3936, .93)
+
+# Vector of alliance allocations
+Allocations <- AllianceProvAllocation$`Annual Member Months`
 ```
 
 The data frame *ActiveNAZMmbrshp* was created to contain the active membership of the alliance. This was completed by filtering the raw data in *GlblMmbrshp* in the following ways:
@@ -240,10 +260,9 @@ The data frame *ActiveNAZMmbrshp* was created to contain the active membership o
 
 -   Include only those auto-assigned to Alliance Providers
 
--   The data was also calculated to distinguish adults, *Age />= 18 (AdultMembership)*, from children, *Age /< 18 (ChildMembership)*. Both age groups are included in the model.
+-   The data was also calculated to distinguish adults, *Age \>= 18 (Adult Membership)*, from children, *Age \< 18 (Child Membership)*. Both age groups are included in the overall model.
 
 ```{r Data_GlblMmbrshp, echo=TRUE, warning=FALSE, message=FALSE}
-
 # Calculate active members based on BCBSAZ auto-enrollment
 ActiveNAZMmbrshp <- GlblMmbrshp %>% 
   replace(.=="NULL", NA) %>% 
@@ -263,17 +282,100 @@ ChildMembership <- ActiveNAZMmbrshp %>%
 
 ```
 
-There are `r (prettyNum(nrow(AdultMembership), big.mark=","))` active adults, and `r (prettyNum(nrow(ChildMembership), big.mark=","))` active children, for a total of `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active ACO members assigned to Alliance Providers in the northern region, according to *GlblMmbrshp*. There is a slight discrepency between filtering by county *(103,825)* or zipcode *(103,264)*.
+There are `r (prettyNum(nrow(AdultMembership), big.mark=","))` active adults, and `r (prettyNum(nrow(ChildMembership), big.mark=","))` active children, for a total of `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active ACO members assigned to Alliance Providers in the northern region, according to *GlblMmbrshp*. There is a slight discrepancy between filtering by county *(103,825)* or zip code *(103,264)*. For most analyses we will use county; however, zip code is required for the choropleth map.
 
+#### Value Based Purchasing Data
+
+The source of this data is the BCBSAZ VBP Quality Summary report. This is a monthly report that BCBSAZ HC staff generate based on data analyses conducted by a third party vendor. The report is produced monthly, reporting on a calendar year contract cycle (2022-01-01 to 2022-12-31), with claims adjudicated through 90 days prior to the report date. In other words a "90 day claims lag", such that a report in May would have claims adjudicated through February.
+
+The third party vendor uses HEDIS My2022[^1] as their reference to determine eligibility and compliance regarding the target measures (AMM2, FUH, HDO).
+
+[^1]: <https://www.ncqa.org/hedis/>
+
+```{r Data_Load3, echo=TRUE, warning=FALSE, message=FALSE}
+# Load data
+VBP_Rep_Comb <- read_csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/data_anon_2022-12-29_HCAVBPReportsCombined.csv")
+
+```
+
+A data frame was created to hold the NCQA means and descriptors that are the target measures for Alliance Providers.
+```{r TBL_NCQAMeasures, echo=TRUE, warning=FALSE, message=FALSE}
+Domain <- c("Behavioral Health", "Behavioral Health","Overuse/Approrpiateness")
+Measure <- c("Antidepressant Medication (AMM), Effective Acute Phase Treatment",
+             "Follow-Up After Hospitalization for Mental Illness (FUH), 
+             Follow-Up Within 7 Days Post-Discharge",
+             "Use of Opioids at High Dosage (HDO)")
+NCQA_Mean <- c(.5729, .3936, .9300)
+
+AllianceMeasures_DF <- data.frame(Domain, Measure, NCQA_Mean)
+
+```
+
+This code is discussed below the chunk
+```{r Tab_PercentCompliant, echo=TRUE, warning=FALSE, message=FALSE}
+# Create the VBP Report compliance table
+Tab_PercentCompliant <- VBP_Rep_Comb %>% 
+  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
+  mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
+  select(Provider,
+         Provider_ShortName, 
+         SubMeasureID,
+         AdaptedCompliant,
+         TotalEligible,
+         PercentCompliant,
+         PercentTotalEligible,
+         ClaimsAdjudicatedThrough,
+         AdaptedNCQAMean,
+         PerformanceLevel)
+
+```
+
+BCBSAZ Value Based Purchasing reports for compliance to NCQA Performance measures were merged and uploaded to the data model. This included `r n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough)` months of reports. These reports provide an accumulating record of eligible member encounters, as well as compliance indicators for each Alliance Provider. A data frame for NCQA Measures was created. The Alliance is contracted to provide an Accountable Care Organization that elevates patient care through early recognition and rapid response to inpatient encounters (FUH), early recognition and consistent prescribing of anti-depressant medications (AMM), and finally, careful prescription and monitoring of individuals receive opioid medications (HDO).
+
+The required measures are:
+
+-   `r (AllianceMeasures_DF)[1,2]`
+
+-   `r (AllianceMeasures_DF)[2,2]`
+
+-   `r (AllianceMeasures_DF)[3,2]`
+
+Compliance percentages were computed from the raw data, and selected into a data frame *(Tab_PercentCompliant)*. Because this data is cumulative over the contract year, it may need to be filtered for *VBP_Report_Date* for certain reports. 
+
+Note: The "adapted compliance" for HDO is used in most analysis as it more accurately reflects successful performance compared to AMM2 and FUH7. 
+
+The data was validated by verifying all reports were collected for all providers, for all report dates. This analysis utilized the variable *claimsAdjudicatedThrough* as the *"Report Date"*. This check should return **27**, or 1 row per provider, per measure. If valid, the VBP performance data is now ready for analysis.
+
+```{r VBP_Calculations, echo=TRUE, message=FALSE, warning=FALSE}
+# Validate that all reports were collected for all providers. This number should a
+Tab_PercentCompliant %>% 
+  group_by(ClaimsAdjudicatedThrough) %>% 
+  nrow(.)/(n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough))
+  
+```
+
+### Modeling
+
+#### Select modeling techniques
+
+#### Generate Test Design
+
+#### Build Model
+
+#### Assess Model
+
+# Analysis
 The active membership was then compared to the contract allocated membership. The member allocation table, *AllianceProvAllocation*, was loaded to the data model, and merged with elements of the *ActiveNAZMmbrshp* table. This new date frame was used to compare active enrollments from the BCBSAZ auto-assignment process with allocated members determined by contract.
 
-```{r Load Data2, echo=TRUE, warning=FALSE, message=FALSE}
+```{r Data_Load2, echo=TRUE, warning=FALSE, message=FALSE}
 # Load data
-AllianceProvAllocation <- read_csv("Data_Files/Alliance_Provider_Member_Allocation.csv")
+AllianceProvAllocation <- read_csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/data_reference_2022-10-01_AllianceProviderMemberAllocation.csv")
 ```
 
 ```{r allianceAllocation, echo=TRUE, warning=FALSE, message=FALSE}
-
 # Wrangle contract allocation table for comparison
 Alliance_AllocationTable <- AllianceProvAllocation %>% 
   rename(AllianceAllocation = `Annual Member Months`) %>% 
@@ -281,7 +383,8 @@ Alliance_AllocationTable <- AllianceProvAllocation %>%
   mutate(Provider_ShortName = if_else((
             Provider_ShortName == "Spectrum"), 
             "SHG", 
-            Provider_ShortName))
+            Provider_ShortName)# the short name for spectrum varies depending on data source
+         )
 
 # Wrangle BCBASAZ Auto Enrolled per GlblMmbrshp for comparison
 HCA_AutoEnrolled <- ActiveNAZMmbrshp %>% 
@@ -303,72 +406,8 @@ ContractAlloc_v_Assignment <-
 Alloc_v_EnrolledPercentDiff <- data.frame(c(
   sum(ContractAlloc_v_Assignment$AllianceAllocation)),
   sum(ContractAlloc_v_Assignment$HCA_Enrollment)) %>% 
-  mutate(PercentDiff = percent(((`sum.ContractAlloc_v_Assignment.HCA_Enrollment.` -`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
-                               /`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
+  mutate(PercentDiff = percent(((`sum.ContractAlloc_v_Assignment.HCA_Enrollment.` -`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))                               /`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
 
 ```
 
 As of the contract start date, October 1, 2022, The Alliance was allocated `r (prettyNum(sum(ContractAlloc_v_Assignment$AllianceAllocation), big.mark=","))` members by contract. Alliance providers were auto-assigned `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active members as of `r GlobalMembers_Report_Date`. The percent change is `r Alloc_v_EnrolledPercentDiff$PercentDiff`.
-
-##### Value Based Purchasing Data
-
-```{r Load Data3, echo=TRUE, warning=FALSE, message=FALSE}
-
-# Load data
-VBP_Rep_Comb <- read_csv("Data_Files/20221229_HCA_VBP_ReportsCombined.csv")
-
-```
-
-```{r TBL_NCQAMeasures, echo=TRUE, warning=FALSE, message=FALSE}
-Domain <- c("Behavioral Health", "Behavioral Health","Overuse/Approrpiateness")
-Measure <- c("Antidepressant Medication (AMM), Effective Acute Phase Treatment",
-             "Follow-Up After Hospitalization for Mental Illness (FUH), 
-             Follow-Up Within 7 Days Post-Discharge",
-             "Use of Opioids at High Dosage (HDO)")
-NCQA_Mean <- c(.5729, .3936, .9300)
-
-AllianceMeasures_DF <- data.frame(Domain, Measure, NCQA_Mean)
-
-```
-
-```{r Tab_PercentCompliant, echo=TRUE, warning=FALSE, message=FALSE}
-
-# Create the VBP Report compliance table
-Tab_PercentCompliant <- VBP_Rep_Comb %>% 
-  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
-  mutate(SumTotalElig = sum(TotalEligible)) %>%
-  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
-  select(Provider_ShortName, 
-         SubMeasureID,
-         TotalEligible,
-         PercentCompliant,
-         PercentTotalEligible,
-         ClaimsAdjudicatedThrough,
-         AdaptedNCQAMean)
-
-```
-
-BCBSAZ Value Based Purchasing reports for compliance to NCQA Performance measures were merged and uploaded to the data model. This included `r n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough)` months of reports. These reports provide an accumulating record of eligible member encounters, as well as compliance indicators for each Alliance Provider. A data frame for NCQA Measures was created. The Alliance is contracted to provide an Accountable Care Organization that elevates patient care through early recognition and rapid response to inpatient encounters (FUH), early recognition and consistent prescribing of anti-depressant medications (AMM), and finally, careful prescription and monitoring of individuals receive opioid medications (HDO).
-
-The required measures are:
-
--   `r (AllianceMeasures_DF)[1,2]`
-
--   `r (AllianceMeasures_DF)[2,2]`
-
--   `r (AllianceMeasures_DF)[3,2]`
-
-Compliance percentages were computed from the raw data, and selected into a data frame *(Tab_PercentCompliant)*. Because this data is cumulative over the contract year, it may need to be filtered for *VBP_Report_Date* for certain reports. Note: The "adapted compliance" for HDO is used in most analysis as it more accurately reflects successful performance compared to AMM2 and FUH7. Note: The raw data table is to be updated for the next reporting cycle to remove pre-calculated variables as this is redundant to the process for calculating variables outlined above.
-
-The data was validated by verifying all reports were collected for all providers, for all report dates. This analysis utilized the variable *claimsAdjudicatedThrough* as the *"Report Date"*. This check should return **27**, or 1 row per provider, per measure. If valid, the VBP performance data is now ready for analysis.
-
-```{r VBP_Calculations, echo=TRUE, message=FALSE, warning=FALSE}
-
-# Validate that all reports were collected for all providers. This number should a
-Tab_PercentCompliant %>% 
-  group_by(ClaimsAdjudicatedThrough) %>% 
-  nrow(.)/(n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough))
-  
-```
-### Modeling
