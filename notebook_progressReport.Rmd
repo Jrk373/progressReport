@@ -140,10 +140,10 @@ library(tidyverse)
 # library(dplyr)
 # library(ggpol)
 # library(tidyverse)
-# library(maps)
-# library(choroplethr)
-# library(choroplethrZip)
-# library(choroplethrMaps)
+ library(maps)
+ library(choroplethr)
+ library(choroplethrZip)
+ library(choroplethrMaps)
 # library(ggh4x)
 # library(wesanderson)
 # library(ggridges)
@@ -184,10 +184,6 @@ LEFT JOIN globalMembers.dbo.dailyMembershipAllArizonaAddresses da ON dm.primaryI
 ```
 **need to say something about where this data pull went to.**
 
-<<<<<<< HEAD
-
-#### Residential Data
-=======
 #### Residential Data
 
 In order to process the data to reflect only active NARBHA ACO members, the following is conducted.
@@ -196,12 +192,9 @@ In order to process the data to reflect only active NARBHA ACO members, the foll
 
 -   The global membership table queried from BCBSAZ, *GlblMmbrship,* was loaded to the model.
 
-Separate data frames and objects were created throughout the process to preserve the original data.
+-   Separate data frames and objects were created throughout the process to preserve the original data.
 
-```{r Data_Load1, echo=TRUE, warning=FALSE, message=FALSE}
->>>>>>> 16eadaba7521cd7d4957a718477d4d5a42df5051
-
-In order to process the data to reflect only active NARBHA ACO members, the following is conducted.
+-   In order to process the data to reflect only active NARBHA ACO members, the following is conducted.
 
 -   Reference tables *coordinate_cities* and *ZipDatabase* were added to the model to provide data for the geographical location of Alliance providers.
 
@@ -219,10 +212,6 @@ ZipDatabase <- read.csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/da
 Several reference objects and data frames were created to provide parameters for determining active membership.
 
 ```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
-<<<<<<< HEAD
-=======
-
->>>>>>> 16eadaba7521cd7d4957a718477d4d5a42df5051
 # Create common objects for all
 
 VBP_Report_Date = "2022-09-01"
@@ -377,9 +366,12 @@ Tab_PercentCompliant %>%
 
 ### Modeling
 
-#### Select modeling techniques
+#### Select Modeling Techniques
+
+This is a descriptive model. The purpose of these analyses are to summarize baseline performance of providers. 
 
 #### Generate Test Design
+This is a descriptive model and doesn't have a testing phase.
 
 #### Build Model
 
@@ -429,77 +421,3 @@ Alloc_v_EnrolledPercentDiff <- data.frame(c(
 ```
 
 As of the contract start date, October 1, 2022, The Alliance was allocated `r (prettyNum(sum(ContractAlloc_v_Assignment$AllianceAllocation), big.mark=","))` members by contract. Alliance providers were auto-assigned `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active members as of `r GlobalMembers_Report_Date`. The percent change is `r Alloc_v_EnrolledPercentDiff$PercentDiff`.
-<<<<<<< HEAD
-=======
-
-#### Value Based Purchasing Data
-
-The source of this data is the BCBSAZ VBP Quality Summary report. This is a monthly report that BCBSAZ HC staff generate based on data analyses conducted by a third party vendor. The report is produced monthly, reporting on a calendar year contract cycle (2022-01-01 to 2022-12-31), with claims adjudicated through 90 days prior to the report date. In other words a "90 day claims lag", such that a report in May would have claims adjudicated through February.
-
-The third party vendor uses HEDIS My2022[^1] as their reference to determine eligibility and compliance regarding the target measures (AMM2, FUH, HDO).
-
-[^1]: <https://www.ncqa.org/hedis/>
-
-```{r Data_Load3, echo=TRUE, warning=FALSE, message=FALSE}
-
-# Load data
-VBP_Rep_Comb <- read_csv("C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/data_anon_2022-12-29_HCAVBPReportsCombined.csv")
-
-```
-
-A data frame was created to hold the NCQA means and descriptors that are the target measures for Alliance Providers.
-```{r TBL_NCQAMeasures, echo=TRUE, warning=FALSE, message=FALSE}
-Domain <- c("Behavioral Health", "Behavioral Health","Overuse/Approrpiateness")
-Measure <- c("Antidepressant Medication (AMM), Effective Acute Phase Treatment",
-             "Follow-Up After Hospitalization for Mental Illness (FUH), 
-             Follow-Up Within 7 Days Post-Discharge",
-             "Use of Opioids at High Dosage (HDO)")
-NCQA_Mean <- c(.5729, .3936, .9300)
-
-AllianceMeasures_DF <- data.frame(Domain, Measure, NCQA_Mean)
-
-```
-
-This code is discussed below the chunk
-```{r Tab_PercentCompliant, echo=TRUE, warning=FALSE, message=FALSE}
-# Create the VBP Report compliance table
-Tab_PercentCompliant <- VBP_Rep_Comb %>% 
-  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
-  mutate(SumTotalElig = sum(TotalEligible)) %>%
-  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
-  select(Provider_ShortName, 
-         SubMeasureID,
-         TotalEligible,
-         PercentCompliant,
-         PercentTotalEligible,
-         ClaimsAdjudicatedThrough,
-         AdaptedNCQAMean)
-
-```
-
-BCBSAZ Value Based Purchasing reports for compliance to NCQA Performance measures were merged and uploaded to the data model. This included `r n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough)` months of reports. These reports provide an accumulating record of eligible member encounters, as well as compliance indicators for each Alliance Provider. A data frame for NCQA Measures was created. The Alliance is contracted to provide an Accountable Care Organization that elevates patient care through early recognition and rapid response to inpatient encounters (FUH), early recognition and consistent prescribing of anti-depressant medications (AMM), and finally, careful prescription and monitoring of individuals receive opioid medications (HDO).
-
-The required measures are:
-
--   `r (AllianceMeasures_DF)[1,2]`
-
--   `r (AllianceMeasures_DF)[2,2]`
-
--   `r (AllianceMeasures_DF)[3,2]`
-
-Compliance percentages were computed from the raw data, and selected into a data frame *(Tab_PercentCompliant)*. Because this data is cumulative over the contract year, it may need to be filtered for *VBP_Report_Date* for certain reports. Note: The "adapted compliance" for HDO is used in most analysis as it more accurately reflects successful performance compared to AMM2 and FUH7. Note: The raw data table is to be updated for the next reporting cycle to remove pre-calculated variables as this is redundant to the process for calculating variables outlined above.
-
-The data was validated by verifying all reports were collected for all providers, for all report dates. This analysis utilized the variable *claimsAdjudicatedThrough* as the *"Report Date"*. This check should return **27**, or 1 row per provider, per measure. If valid, the VBP performance data is now ready for analysis.
-
-```{r VBP_Calculations, echo=TRUE, message=FALSE, warning=FALSE}
-
-# Validate that all reports were collected for all providers. This number should a
-Tab_PercentCompliant %>% 
-  group_by(ClaimsAdjudicatedThrough) %>% 
-  nrow(.)/(n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough))
-  
-```
-
-### Modeling
->>>>>>> 16eadaba7521cd7d4957a718477d4d5a42df5051
