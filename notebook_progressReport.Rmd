@@ -139,7 +139,7 @@ options(scipen = 999, show.signif.stars = TRUE)
 # Load Packages and libraries
 library(tidyverse)
 # library(lubridate)
-# library(scales)
+library(scales)
 # library(ggplot2)
 # library(gt)
 # library(gtsummary)
@@ -298,6 +298,7 @@ AdultMembership <- ActiveNAZMmbrshp %>%
 ChildMembership <- ActiveNAZMmbrshp %>% 
   filter(Age < 18)
 
+ActiveNAZMmbrshp
 ```
 
 #### Value Based Purchasing Data
@@ -322,6 +323,8 @@ NCQA_Mean <- c(.5729, .3936, .9300)
 
 AllianceMeasures_DF <- data.frame(Domain, Measure, NCQA_Mean)
 
+AllianceMeasures_DF
+
 ```
 
 The following code is discussed below the chunk.
@@ -345,6 +348,7 @@ Tab_PercentCompliant <- VBP_Rep_Comb %>%
          AdaptedNCQAMean,
          PerformanceLevel)
 
+Tab_PercentCompliant
 ```
 
 BCBSAZ Value Based Purchasing reports for compliance to NCQA Performance measures were merged and uploaded to the data model. This included `r n_distinct(Tab_PercentCompliant$ClaimsAdjudicatedThrough)` months of reports. These reports provide an accumulating record of eligible member encounters, as well as compliance indicators for each Alliance Provider.
@@ -401,7 +405,7 @@ There are `r (prettyNum(nrow(AdultMembership), big.mark=","))` active adults, an
 
 The active membership was then compared to the contract allocated membership. The member allocation table, *AllianceProvAllocation*, was loaded to the data model, and merged with elements of the *ActiveNAZMmbrshp* table. This new data frame was used to compare active enrollments from the BCBSAZ auto-assignment process with allocated members determined by contract.
 
-```{r allianceAllocation, echo=TRUE, warning=FALSE, message=FALSE}
+```{r eval_allianceAllocation, echo=TRUE, warning=FALSE, message=FALSE}
 # Wrangle contract allocation table for comparison
 Alliance_AllocationTable <- AllianceProvAllocation %>% 
   rename(AllianceAllocation = `Annual Member Months`) %>% 
@@ -434,6 +438,193 @@ Alloc_v_EnrolledPercentDiff <- data.frame(c(
   sum(ContractAlloc_v_Assignment$HCA_Enrollment)) %>% 
   mutate(PercentDiff = percent(((`sum.ContractAlloc_v_Assignment.HCA_Enrollment.` -`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))                               /`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
 
+ContractAlloc_v_Assignment
 ```
 
 As of the contract start date, October 1, 2022, The Alliance was allocated `r (prettyNum(sum(ContractAlloc_v_Assignment$AllianceAllocation), big.mark=","))` members by contract. Alliance providers were auto-assigned `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active members as of `r GlobalMembers_Report_Date`. The percent change is `r Alloc_v_EnrolledPercentDiff$PercentDiff`.
+
+In summary, there is not a concerning variance between the contract allocation and the auto-assignment as of this report date. However, Six is above 2% difference and four is above 5% difference. We will reevaluate these levels to determine if intervention is needed. This will be of particular value as the COVID19 public health emergency ends and the the medicaid enrollment freeze is unwound.
+
+#### Gender distribution
+
+```{r TBL_GenderSummary,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+# Gender distribution table
+
+Tab_Gender <- ActiveNAZMmbrshp %>% 
+  mutate(sex = case_when(
+    sex == "M" ~ "Male",
+    sex == "F" ~ "Female"
+  )) %>% 
+  count(sex) %>% 
+  rename(Sex = sex) %>% 
+  rename(Members = n) %>% 
+  mutate(Percent = (Members / (sum(Members)))) 
+
+Tab_Gender
+```
+
+The Alliance serves adults and children aged 6 and older. Distribution of gender is balanced, with Male accounting for 48%, and Female accounting for 52%. When viewed across age groups we also observed a complimentary distribution of gender.
+
+#### Age Grouping
+
+The membership was separated into age distributions according to 13 partially overlapping age groups. These age groups are based on the Age-Phenome Knowledge-base (APK), which has demonstrated that overlapping ranges of are better suited to create groupings according to disease occurrence, including mental health. This "soft-clustering" approach allows ages to be included in multiple age ranges[^4].
+
+[^4]: Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357--2366. <https://doi.org/10.1007/s11357-013-9510-6>
+
+```{r eval_ageGrouping,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+# Population Pyramid
+DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>% 
+  select(Age, sex) %>% 
+  # Create categories using LDA soft grouping method which allows
+  # ages to appear in more than one group
+  mutate(`00 - 16` = case_when(
+    Age > 00 & Age <= 16 ~ "1", TRUE ~ "0")) %>%
+  mutate(`00 - 20` = case_when(
+    Age > 00 & Age <= 20 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`16 - 38` = case_when(
+    Age > 16 & Age <= 38 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`18 - 34` = case_when(
+    Age > 18 & Age <= 34 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`20 - 41` = case_when(
+    Age > 20 & Age <= 41 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`32 - 54` = case_when(
+    Age > 32 & Age <= 54 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`41 - 63` = case_when(
+    Age > 41 & Age <= 63 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`48 - 69` = case_when(
+    Age > 48 & Age <= 69 ~ "1", TRUE ~ "0")) %>%
+  mutate(`50 - 73` = case_when(
+    Age > 50 & Age <= 73 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`50 - 72` = case_when(
+    Age > 50 & Age <= 72 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`62 - 86` = case_when(
+    Age > 62 & Age <= 86 ~ "1", TRUE ~ "0")) %>% 
+  mutate(`76 - 98` = case_when(
+    Age > 76 & Age <= 98 ~ "1", TRUE ~ "0")) %>% 
+  select(sex, `00 - 16`, `00 - 20`, `16 - 38`, `18 - 34`,
+         `20 - 41`, `32 - 54`, `41 - 63`, `48 - 69`,
+         `50 - 73`, `50 - 72`, `62 - 86`, `76 - 98`) %>% 
+  #covert to dbl
+  mutate(`00 - 16` = as.numeric(`00 - 16`)) %>%  
+  mutate(`00 - 20` = as.numeric(`00 - 20`)) %>% 
+  mutate(`16 - 38` = as.numeric(`16 - 38`)) %>% 
+  mutate(`18 - 34` = as.numeric(`18 - 34`)) %>% 
+  mutate(`20 - 41` = as.numeric(`20 - 41`)) %>% 
+  mutate(`32 - 54` = as.numeric(`32 - 54`)) %>% 
+  mutate(`41 - 63` = as.numeric(`41 - 63`)) %>% 
+  mutate(`48 - 69` = as.numeric(`48 - 69`)) %>% 
+  mutate(`50 - 73` = as.numeric(`50 - 73`)) %>% 
+  mutate(`62 - 86` = as.numeric(`62 - 86`)) %>% 
+  mutate(`76 - 98` = as.numeric(`76 - 98`)) %>% 
+  #Group by sex and summarize
+  group_by(sex) %>% 
+  summarise_if(is.numeric, sum, na.rm = TRUE) %>% 
+  pivot_longer(!sex, 
+               names_to = "Age_Group",
+               values_to = "n") %>% 
+  # Change "M" "F" to "Male" "Female"
+  mutate(sex = case_when(
+    sex == "M" ~ "Male",
+    sex == "F" ~ "Female"
+  )) %>% 
+  #filter out 00 - 16
+  #filter(Age_Group != "00 - 16") %>% 
+  #change male to negative
+  mutate(n = ifelse(sex == "Male", n * -1, n)) %>% 
+  #change male female to factor
+  mutate(sex = factor(sex, levels = c("Male","Female")))
+
+DemoTable_SexByAgeGroup
+```
+
+This data is more easily understood through visualization. The following population pyramid was constructed in order view the age grouping distribution by gender. Overall, the same gender distribution was observed. The greatest proportions of members per age group clustered in the ***0-20*** age group, followed closely by ***16-38*** age group, indicating a younger population consituting the Alliance membership.
+
+```{r Fig_populationPyramid,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#Make the pyramid plot
+Fig_PopPyramid <- ggplot(DemoTable_SexByAgeGroup, aes(y = Age_Group, x = n, fill = sex)) +
+  geom_bar(stat = "identity") +
+  geom_text(
+    aes(label = abs(n), hjust = ifelse(sex == "Female", -.3, 1.3)),
+    size = 3
+  ) +
+  scale_fill_manual(values = c(Female = "#942d3d", Male = "#4b605e"), drop = FALSE) +
+  facet_wrap(~sex, scales = "free") +
+  facetted_pos_scales(
+    x = list(
+      scale_x_continuous(
+        labels = abs, expand = c(0, 2500, 0, 0),
+        limits = c(-28000, 0)
+      ),
+      scale_x_continuous(
+        expand = c(0, 0, 0, 2500),
+        limits = c(0, 28000)
+      )
+    ),
+    y = list(
+      scale_y_discrete(position = "right"),
+      scale_y_discrete(labels = NULL)
+    )
+  ) +
+  labs(
+    x = NULL, y = NULL, fill = "Member Sex",
+    title = "Alliance Membership by Gender and Age Group",
+    subtitle = "As of December 31, 2022",
+    caption = "Source: BCBSAZ Global Members, Extracted 12/31/2022"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.y.right = element_text(margin = margin(0, 2.2, 0, 2.2)),
+    legend.position = "bottom",
+    panel.spacing.x = unit(0, "pt")
+  )
+
+Fig_PopPyramid
+```
+
+#### Performance Memasurement
+
+The Alliance aspires to optimal behavioral health care for its members. In order to provide a standardized measure of member health and outcomes, the Alliance adheres to 3 key performance measures of the Healthcare Effectiveness Data and Information Set (HEDIS).[^5] This standard also supports BCBSAZ's status as the only AHCCCS ACC health plan to be accredited by the National Committee for Quality Assurance (NCQA).[^6]
+
+[^5]: <https://www.ncqa.org/hedis/>
+
+[^6]: <https://www.ncqa.org/about-ncqa/>
+
+HEDIS is composed of over 90 separate measures, encompassing 6 domains. The Alliance focuses on 3 measures within the Effectiveness of Care domain, AMM2, FUH7, and HDO, with target means of 57.29%, 39.36%, and 93.00%, respectively.
+
+##### Data integrity and gap analysis
+
+Increased understanding and transparency of Alliance performance ratings and the associated data is one of the primary goals of the Alliance. Since implementation, Alliance team members have worked with BCBSAZ business intelligence, finance and medical management department partners. Through this relationship, the Alliance has built a strong knowledge of the data resources available for summary and predictive analyses. In addition, the Alliance has collaborated with providers to understand current treatment and quality processes and identify barriers to actionable data. 
+
+#### Baseline Measures (Pre-Contract)
+
+The baseline performance of Alliance Providers prior to contract implementation was measured in order to gain an understanding of the primary areas of focus during the first year. Using BCBSAZ Value Based Purchasing Reports, the 6 months prior to contract implementation were assessed. The results indicated in the heatmap below indicated that overall the providers are in compliance on all 3 measures. When observed individually, there are some areas for improvement, particularly in the Follow Up after Hospitalization (FUH) measure.
+
+```{r DATA_ComplianceTable,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+# Make the compliance/performance table
+Tab_PercentCompliant <- VBP_Rep_Comb %>% 
+  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
+  mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
+  select(Provider,
+         Provider_ShortName, 
+         SubMeasureID,
+         AdaptedCompliant,
+         TotalEligible,
+         PercentCompliant,
+         PercentTotalEligible,
+         ClaimsAdjudicatedThrough,
+         AdaptedNCQAMean,
+         PerformanceLevel)
+
+# Calculate performance levels
+AllAlliancePerformance <- Tab_PercentCompliant %>% 
+  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
+  group_by(SubMeasureID) %>% 
+  summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
+            Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
+  mutate(Percent_Compliant = Sum_AdaptedCompliant/Sum_TotalEligible) %>%
+  mutate(NCQA_Mean = AdaptedNCQAMean) %>% 
+  mutate(PerformanceLevel = (Percent_Compliant - AdaptedNCQAMean))
+```
