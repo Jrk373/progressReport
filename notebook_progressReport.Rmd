@@ -36,50 +36,50 @@ There are several components involved in the APR that can be broken down into se
 
 # Method
 
-## Data Mining using CRISP-DM
+Data Mining using CRISP-DM
 
 The CRISP-DM process for data mining was used for this project.
 
-### Business Understanding
+## Business Understanding
 
-##### Clear Understanding of business objective
+### Clear Understanding of business objective
 
 -   Have a complete knowledge of provider performance
 -   Have a complete knowledge of ACO membership
 -   Have current demographic information concerning members
 -   Have complete knowledge of member service (claims) activity
 
-##### Success Criteria
+### Success Criteria
 
 -   To meet or surpass all quality measures
     -   AMM2 = 57.29%
     -   FUH7 = 39.36%
     -   HDO = 93.00%
 
-##### Situation Assessment
+### Situation Assessment
 
 -   The Alliance Providers as a whole meet the respective standards
 -   Some individual are not meeting all measures
 -   The most significant of the non-compliance is FUH7
 
-##### Translate to analytical objectives (Determine Project Goals)
+### Translate to analytical objectives (Determine Project Goals)
 
 -   Study existing trends among VBP, Claims, and Demographic data
 -   Utilize understanding of trends to assess predictive capabilities
 
-##### Clearly understand how action can be taken based on outcomes
+### Clearly understand how action can be taken based on outcomes
 
 -   Data can be shared in real time with internal business partners
 -   Aggregate data, free of PHI can be shared with providers via intranet
 
-##### Identify the Business Problem
+### Identify the Business Problem
 
 -   There has been a lack of clarity and consistency in VBP reporting and communication between health plan and provider.
 -   Providers need a more timely and transparent delivery of program status.
 
-### Data Understanding
+## Data Understanding
 
-#### Identify data sources
+### Identify data sources
 
 -   HCA Data
     -   Global Membership All AZ enrollments
@@ -96,12 +96,12 @@ The CRISP-DM process for data mining was used for this project.
 
     -   AZAHCCCS.gov reference documents
 
-#### What are the formats?
+### What are the formats?
 
 -   All HCA membership and claims data is direct queried from SQL data warehouse maintained by HCA
 -   External reference materials are usually .xls or .csv format, but often require wrangling to make usable for analysis
 
-#### Key fieldnames and targets
+### Key fieldnames and targets
 
 -   Membership IDs
 -   Demographics
@@ -119,13 +119,13 @@ The CRISP-DM process for data mining was used for this project.
     -   Compliant status
     -   Provider information
 
-### Data quality
+## Data quality
 
 Date is compiled and validated by BCBSAZ finance and MIS subject matter experts and can be relied on to be accurate and complete. However, the data transmitted from original sources, like the AHCCCS demographic files, are only as accurate as the data input by providers and members. Value Based Purchasing reports from BCBSAZ are based on 3rd party vendor analysis and report of BCBSAZ data.
 
-### Data Preparation
+## Data Preparation
 
-#### r Setup
+### r Setup
 
 The following setup, libraries, and packages were loaded.
 
@@ -159,7 +159,7 @@ library(scales)
 
 ```
 
-#### Membership Data
+### Membership Data
 
 BCBSAZ Data warehouse is the source of member enrollment data. The following SQL Query is used to extract membership and enrollment data.
 
@@ -202,7 +202,7 @@ VBP_Rep_Comb <- read_csv("./data/data_anon_2022-12-29_HCAVBPReportsCombined.csv"
 AllianceProvAllocation <- read_csv("./data/data_anon_reference_2022-10-01_AllianceProviderMemberAllocation.csv")
 ```
 
-#### Residential Data
+### Residential Data
 
 In order to process the data to reflect only active NARBHA ACO members, the following is conducted.
 
@@ -225,7 +225,7 @@ Several reference objects and data frames were created to provide parameters for
 ```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
 
-VBP_Report_Date = "2022-09-01"
+VBP_Report_Date = "2022-09-01" #claimsAdjudicated Through Date
 
 GlobalMembers_Report_Date = "2022-12-31"
 
@@ -301,7 +301,7 @@ ChildMembership <- ActiveNAZMmbrshp %>%
 ActiveNAZMmbrshp
 ```
 
-#### Value Based Purchasing Data
+### Value Based Purchasing Data
 
 The source of this data is the BCBSAZ VBP Quality Summary report. This is a monthly report that BCBSAZ HC staff generate based on data analyses conducted by a third party vendor. The report is produced monthly, reporting on a calendar year contract cycle (2022-01-01 to 2022-12-31), with claims adjudicated through 90 days prior to the report date. In other words, there is a "90 day claims lag", such that a report in May would have claims adjudicated through February.
 
@@ -377,31 +377,31 @@ Tab_PercentCompliant %>%
   
 ```
 
-### Modeling
+## Modeling
 
-#### Select Modeling Techniques
+### Select Modeling Techniques
 
 This is a descriptive model. The purpose of these analyses are to summarize baseline performance of providers, and baseline population descriptions.
 
-#### Generate Test Design
+### Generate Test Design
 
 This is a descriptive model and doesn't have a testing phase.
 
-#### Build Model
+### Build Model
 
 This model is composed of 2 primary items, that being the membership data, stored in *ActiveNAZMmbrship* and VBP performance levels, stored in *Tab_PercentCompliant*.
 
-#### Assess Model
+### Assess Model
 
 The model, while very simple, is suitable to this task. Our goal is to accurately represent the baseline qualities of the Alliance membership and provider performance.
 
-### Evaluation
+## Evaluation
 
-#### Membership description
+### Membership description
 
 There are `r (prettyNum(nrow(AdultMembership), big.mark=","))` active adults, and `r (prettyNum(nrow(ChildMembership), big.mark=","))` active children, for a total of `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active ACO members assigned to Alliance Providers in the northern region, according to *GlblMmbrshp,* BCBSAZ's primary enrollment database. There is a slight discrepancy between filtering by county *(103,825)* or zip code *(103,264)*. For most analyses we will use county; however, zip code is required for choropleth maps.
 
-#### Allocation to Auto-Assignment comparison
+### Allocation to Auto-Assignment comparison
 
 The active membership was then compared to the contract allocated membership. The member allocation table, *AllianceProvAllocation*, was loaded to the data model, and merged with elements of the *ActiveNAZMmbrshp* table. This new data frame was used to compare active enrollments from the BCBSAZ auto-assignment process with allocated members determined by contract.
 
@@ -432,6 +432,8 @@ ContractAlloc_v_Assignment <-
   mutate(PercentOfMembership = percent(
     AllianceAllocation/(sum(AllianceAllocation))))
 
+write.csv(ContractAlloc_v_Assignment, "./data/output/ContractAlloc_v_Assignment.csv")
+
 # Calculate the percent change from contract implementation to date of membership report
 Alloc_v_EnrolledPercentDiff <- data.frame(c(
   sum(ContractAlloc_v_Assignment$AllianceAllocation)),
@@ -445,7 +447,7 @@ As of the contract start date, October 1, 2022, The Alliance was allocated `r (p
 
 In summary, there is not a concerning variance between the contract allocation and the auto-assignment as of this report date. However, Six is above 2% difference and four is above 5% difference. We will reevaluate these levels to determine if intervention is needed. This will be of particular value as the COVID19 public health emergency ends and the the medicaid enrollment freeze is unwound.
 
-#### Gender distribution
+### Gender distribution
 
 ```{r TBL_GenderSummary,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Gender distribution table
@@ -465,7 +467,7 @@ Tab_Gender
 
 The Alliance serves adults and children aged 6 and older. Distribution of gender is balanced, with Male accounting for 48%, and Female accounting for 52%. When viewed across age groups we also observed a complimentary distribution of gender.
 
-#### Age Grouping
+### Age Grouping
 
 The membership was separated into age distributions according to 13 partially overlapping age groups. These age groups are based on the Age-Phenome Knowledge-base (APK), which has demonstrated that overlapping ranges of are better suited to create groupings according to disease occurrence, including mental health. This "soft-clustering" approach allows ages to be included in multiple age ranges[^4].
 
@@ -581,7 +583,7 @@ Fig_PopPyramid <- ggplot(DemoTable_SexByAgeGroup, aes(y = Age_Group, x = n, fill
 Fig_PopPyramid
 ```
 
-#### Performance Memasurement
+### Performance Memasurement
 
 The Alliance aspires to optimal behavioral health care for its members. In order to provide a standardized measure of member health and outcomes, the Alliance adheres to 3 key performance measures of the Healthcare Effectiveness Data and Information Set (HEDIS).[^5] This standard also supports BCBSAZ's status as the only AHCCCS ACC health plan to be accredited by the National Committee for Quality Assurance (NCQA).[^6]
 
@@ -591,11 +593,11 @@ The Alliance aspires to optimal behavioral health care for its members. In order
 
 HEDIS is composed of over 90 separate measures, encompassing 6 domains. The Alliance focuses on 3 measures within the Effectiveness of Care domain, AMM2, FUH7, and HDO, with target means of 57.29%, 39.36%, and 93.00%, respectively.
 
-##### Data integrity and gap analysis
+#### Data integrity and gap analysis
 
 Increased understanding and transparency of Alliance performance ratings and the associated data is one of the primary goals of the Alliance. Since implementation, Alliance team members have worked with BCBSAZ business intelligence, finance and medical management department partners. Through this relationship, the Alliance has built a strong knowledge of the data resources available for summary and predictive analyses. In addition, the Alliance has collaborated with providers to understand current treatment and quality processes and identify barriers to actionable data. 
 
-#### Baseline Measures (Pre-Contract)
+### Baseline Measures (Pre-Contract)
 
 The baseline performance of Alliance Providers prior to contract implementation was measured in order to gain an understanding of the primary areas of focus during the first year. Using BCBSAZ Value Based Purchasing Reports, the 6 months prior to contract implementation were assessed. The results indicated in the heatmap below indicated that overall the providers are in compliance on all 3 measures. When observed individually, there are some areas for improvement, particularly in the Follow Up after Hospitalization (FUH) measure.
 
@@ -607,6 +609,7 @@ Tab_PercentCompliant <- VBP_Rep_Comb %>%
   mutate(SumTotalElig = sum(TotalEligible)) %>%
   mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
   mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
+  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
   select(Provider,
          Provider_ShortName, 
          SubMeasureID,
@@ -625,6 +628,6 @@ AllAlliancePerformance <- Tab_PercentCompliant %>%
   summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
             Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
   mutate(Percent_Compliant = Sum_AdaptedCompliant/Sum_TotalEligible) %>%
-  mutate(NCQA_Mean = AdaptedNCQAMean) %>% 
-  mutate(PerformanceLevel = (Percent_Compliant - AdaptedNCQAMean))
+  mutate(NCQA_Mean = NCQA_MeanList) %>% 
+  mutate(PerformanceLevel = (Percent_Compliant - NCQA_Mean))
 ```

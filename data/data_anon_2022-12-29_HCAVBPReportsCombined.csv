@@ -1,217 +1,217 @@
 ReportDate,ClaimsAdjudicatedThrough,Provider,Provider_ShortName,SubMeasureID,SubMeasureDescription,Compliant,TotalEligible,AdaptedCompliant,NCQAMean,AdaptedNCQAMean
-5/1/2022,2/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,139,238,139,0.5729,0.5729
-5/1/2022,2/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,2,27,2,0.3936,0.3936
-5/1/2022,2/1/2022,One,One,HDO,Use of Opioids at High Dosage,38,155,117,0.07,0.93
-5/1/2022,2/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,85,148,85,0.5729,0.5729
-5/1/2022,2/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,1,10,1,0.3936,0.3936
-5/1/2022,2/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,1,34,33,0.07,0.93
-5/1/2022,2/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,36,61,36,0.5729,0.5729
-5/1/2022,2/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,2,3,2,0.3936,0.3936
-5/1/2022,2/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,2,24,22,0.07,0.93
-5/1/2022,2/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,43,76,43,0.5729,0.5729
-5/1/2022,2/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,1,4,1,0.3936,0.3936
-5/1/2022,2/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,6,59,53,0.07,0.93
-5/1/2022,2/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,238,407,238,0.5729,0.5729
-5/1/2022,2/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,12,27,12,0.3936,0.3936
-5/1/2022,2/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,17,240,223,0.07,0.93
-5/1/2022,2/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,96,163,96,0.5729,0.5729
-5/1/2022,2/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,1,12,1,0.3936,0.3936
-5/1/2022,2/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,6,68,62,0.07,0.93
-5/1/2022,2/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,290,506,290,0.5729,0.5729
-5/1/2022,2/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,15,41,15,0.3936,0.3936
-5/1/2022,2/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,28,221,193,0.07,0.93
-5/1/2022,2/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,68,122,68,0.5729,0.5729
-5/1/2022,2/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,3,13,3,0.3936,0.3936
-5/1/2022,2/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,6,35,29,0.07,0.93
-5/1/2022,2/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,77,135,77,0.5729,0.5729
-5/1/2022,2/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,2,6,2,0.3936,0.3936
-5/1/2022,2/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,2,35,33,0.07,0.93
-6/1/2022,3/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,196,318,196,0.5729,0.5729
-6/1/2022,3/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,21,63,21,0.3936,0.3936
-6/1/2022,3/1/2022,One,One,HDO,Use of Opioids at High Dosage,70,485,415,0.07,0.93
-6/1/2022,3/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,105,179,105,0.5729,0.5729
-6/1/2022,3/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,6,28,6,0.3936,0.3936
-6/1/2022,3/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,13,116,103,0.07,0.93
-6/1/2022,3/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,39,74,39,0.5729,0.5729
-6/1/2022,3/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,7,10,7,0.3936,0.3936
-6/1/2022,3/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,4,86,82,0.07,0.93
-6/1/2022,3/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,55,95,55,0.5729,0.5729
-6/1/2022,3/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,5,12,5,0.3936,0.3936
-6/1/2022,3/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,20,168,148,0.07,0.93
-6/1/2022,3/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,286,474,286,0.5729,0.5729
-6/1/2022,3/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,67,112,67,0.3936,0.3936
-6/1/2022,3/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,39,907,868,0.07,0.93
-6/1/2022,3/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,119,207,119,0.5729,0.5729
-6/1/2022,3/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,20,48,20,0.3936,0.3936
-6/1/2022,3/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,13,230,217,0.07,0.93
-6/1/2022,3/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,355,602,355,0.5729,0.5729
-6/1/2022,3/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,49,120,49,0.3936,0.3936
-6/1/2022,3/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,55,741,686,0.07,0.93
-6/1/2022,3/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,86,158,86,0.5729,0.5729
-6/1/2022,3/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,24,48,24,0.3936,0.3936
-6/1/2022,3/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,12,132,120,0.07,0.93
-6/1/2022,3/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,94,169,94,0.5729,0.5729
-6/1/2022,3/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,13,47,13,0.3936,0.3936
-6/1/2022,3/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,5,110,105,0.07,0.93
-7/1/2022,4/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,206,330,206,0.5729,0.5729
-7/1/2022,4/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,26,82,26,0.3936,0.3936
-7/1/2022,4/1/2022,One,One,HDO,Use of Opioids at High Dosage,63,468,405,0.07,0.93
-7/1/2022,4/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,104,180,104,0.5729,0.5729
-7/1/2022,4/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,9,39,9,0.3936,0.3936
-7/1/2022,4/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,10,115,105,0.07,0.93
-7/1/2022,4/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,41,75,41,0.5729,0.5729
-7/1/2022,4/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,9,14,9,0.3936,0.3936
-7/1/2022,4/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,4,85,81,0.07,0.93
-7/1/2022,4/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,57,99,57,0.5729,0.5729
-7/1/2022,4/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,6,18,6,0.3936,0.3936
-7/1/2022,4/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,20,165,145,0.07,0.93
-7/1/2022,4/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,288,485,288,0.5729,0.5729
-7/1/2022,4/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,81,151,81,0.3936,0.3936
-7/1/2022,4/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,38,906,868,0.07,0.93
-7/1/2022,4/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,127,226,127,0.5729,0.5729
-7/1/2022,4/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,26,64,26,0.3936,0.3936
-7/1/2022,4/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,12,228,216,0.07,0.93
-7/1/2022,4/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,367,628,367,0.5729,0.5729
-7/1/2022,4/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,62,163,62,0.3936,0.3936
-7/1/2022,4/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,55,757,702,0.07,0.93
-7/1/2022,4/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,89,163,89,0.5729,0.5729
-7/1/2022,4/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,34,61,34,0.3936,0.3936
-7/1/2022,4/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,12,132,120,0.07,0.93
-7/1/2022,4/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,95,175,95,0.5729,0.5729
-7/1/2022,4/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,19,57,19,0.3936,0.3936
-7/1/2022,4/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,6,116,110,0.07,0.93
-8/1/2022,5/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,215,330,215,0.5729,0.5729
-8/1/2022,5/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,47,127,47,0.3936,0.3936
-8/1/2022,5/1/2022,One,One,HDO,Use of Opioids at High Dosage,29,485,456,0.07,0.93
-8/1/2022,5/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,107,180,107,0.5729,0.5729
-8/1/2022,5/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,46,11,0.3936,0.3936
-8/1/2022,5/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,8,130,122,0.07,0.93
-8/1/2022,5/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,43,73,43,0.5729,0.5729
-8/1/2022,5/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,8,19,8,0.3936,0.3936
-8/1/2022,5/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,4,91,87,0.07,0.93
-8/1/2022,5/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,60,98,60,0.5729,0.5729
-8/1/2022,5/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,27,11,0.3936,0.3936
-8/1/2022,5/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,15,170,155,0.07,0.93
-8/1/2022,5/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,296,484,296,0.5729,0.5729
-8/1/2022,5/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,87,184,87,0.3936,0.3936
-8/1/2022,5/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,18,947,929,0.07,0.93
-8/1/2022,5/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,136,225,136,0.5729,0.5729
-8/1/2022,5/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,43,98,43,0.3936,0.3936
-8/1/2022,5/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,4,246,242,0.07,0.93
-8/1/2022,5/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,381,633,381,0.5729,0.5729
-8/1/2022,5/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,94,225,94,0.3936,0.3936
-8/1/2022,5/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,32,811,779,0.07,0.93
-8/1/2022,5/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,93,161,93,0.5729,0.5729
-8/1/2022,5/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,38,78,38,0.3936,0.3936
-8/1/2022,5/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,8,140,132,0.07,0.93
-8/1/2022,5/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,98,170,98,0.5729,0.5729
-8/1/2022,5/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,26,69,26,0.3936,0.3936
-8/1/2022,5/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,3,125,122,0.07,0.93
-9/1/2022,6/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,223,332,223,0.5729,0.5729
-9/1/2022,6/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,86,167,86,0.3936,0.3936
-9/1/2022,6/1/2022,One,One,HDO,Use of Opioids at High Dosage,49,502,453,0.07,0.93
-9/1/2022,6/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,107,175,107,0.5729,0.5729
-9/1/2022,6/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,22,70,22,0.3936,0.3936
-9/1/2022,6/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,9,143,134,0.07,0.93
-9/1/2022,6/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,44,69,44,0.5729,0.5729
-9/1/2022,6/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,12,26,12,0.3936,0.3936
-9/1/2022,6/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,4,100,96,0.07,0.93
-9/1/2022,6/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,61,97,61,0.5729,0.5729
-9/1/2022,6/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,14,39,14,0.3936,0.3936
-9/1/2022,6/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,17,193,176,0.07,0.93
-9/1/2022,6/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,312,479,312,0.5729,0.5729
-9/1/2022,6/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,125,228,125,0.3936,0.3936
-9/1/2022,6/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,32,1002,970,0.07,0.93
-9/1/2022,6/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,150,234,150,0.5729,0.5729
-9/1/2022,6/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,77,144,77,0.3936,0.3936
-9/1/2022,6/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,10,276,266,0.07,0.93
-9/1/2022,6/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,401,634,401,0.5729,0.5729
-9/1/2022,6/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,124,290,124,0.3936,0.3936
-9/1/2022,6/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,42,868,826,0.07,0.93
-9/1/2022,6/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,94,153,94,0.5729,0.5729
-9/1/2022,6/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,49,79,49,0.3936,0.3936
-9/1/2022,6/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,9,150,141,0.07,0.93
-9/1/2022,6/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,103,162,103,0.5729,0.5729
-9/1/2022,6/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,43,87,43,0.3936,0.3936
-9/1/2022,6/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,5,133,128,0.07,0.93
-10/1/2022,7/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,220,330,220,0.5729,0.5729
-10/1/2022,7/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,83,161,83,0.3936,0.3936
-10/1/2022,7/1/2022,One,One,HDO,Use of Opioids at High Dosage,48,506,458,0.07,0.93
-10/1/2022,7/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,106,173,106,0.5729,0.5729
-10/1/2022,7/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,21,67,21,0.3936,0.3936
-10/1/2022,7/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,9,138,129,0.07,0.93
-10/1/2022,7/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,42,67,42,0.5729,0.5729
-10/1/2022,7/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,14,29,14,0.3936,0.3936
-10/1/2022,7/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,4,99,95,0.07,0.93
-10/1/2022,7/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,61,97,61,0.5729,0.5729
-10/1/2022,7/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,14,36,14,0.3936,0.3936
-10/1/2022,7/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,18,191,173,0.07,0.93
-10/1/2022,7/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,309,473,309,0.5729,0.5729
-10/1/2022,7/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,121,221,121,0.3936,0.3936
-10/1/2022,7/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,32,997,965,0.07,0.93
-10/1/2022,7/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,149,231,149,0.5729,0.5729
-10/1/2022,7/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,75,140,75,0.3936,0.3936
-10/1/2022,7/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,9,273,264,0.07,0.93
-10/1/2022,7/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,396,632,396,0.5729,0.5729
-10/1/2022,7/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,122,284,122,0.3936,0.3936
-10/1/2022,7/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,42,866,824,0.07,0.93
-10/1/2022,7/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,93,149,93,0.5729,0.5729
-10/1/2022,7/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,47,77,47,0.3936,0.3936
-10/1/2022,7/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,10,151,141,0.07,0.93
-10/1/2022,7/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,102,158,102,0.5729,0.5729
-10/1/2022,7/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,34,77,34,0.3936,0.3936
-10/1/2022,7/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,5,132,127,0.07,0.93
-11/1/2022,8/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,186,282,186,0.5729,0.5729
-11/1/2022,8/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,66,133,66,0.3936,0.3936
-11/1/2022,8/1/2022,One,One,HDO,Use of Opioids at High Dosage,34,470,436,0.07,0.93
-11/1/2022,8/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,100,166,100,0.5729,0.5729
-11/1/2022,8/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,18,63,18,0.3936,0.3936
-11/1/2022,8/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,6,147,141,0.07,0.93
-11/1/2022,8/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,36,55,36,0.5729,0.5729
-11/1/2022,8/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,26,11,0.3936,0.3936
-11/1/2022,8/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,5,87,82,0.07,0.93
-11/1/2022,8/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,50,83,50,0.5729,0.5729
-11/1/2022,8/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,8,31,8,0.3936,0.3936
-11/1/2022,8/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,13,176,163,0.07,0.93
-11/1/2022,8/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,258,381,258,0.5729,0.5729
-11/1/2022,8/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,81,164,81,0.3936,0.3936
-11/1/2022,8/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,20,877,857,0.07,0.93
-11/1/2022,8/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,108,163,108,0.5729,0.5729
-11/1/2022,8/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,39,72,39,0.3936,0.3936
-11/1/2022,8/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,8,234,226,0.07,0.93
-11/1/2022,8/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,329,529,329,0.5729,0.5729
-11/1/2022,8/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,81,206,81,0.3936,0.3936
-11/1/2022,8/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,32,817,785,0.07,0.93
-11/1/2022,8/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,64,101,64,0.5729,0.5729
-11/1/2022,8/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,15,42,15,0.3936,0.3936
-11/1/2022,8/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,7,116,109,0.07,0.93
-11/1/2022,8/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,75,114,75,0.5729,0.5729
-11/1/2022,8/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,18,48,18,0.3936,0.3936
-11/1/2022,8/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,4,113,109,0.07,0.93
-12/1/2022,9/1/2022,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,184,277,184,0.5729,0.5729
-12/1/2022,9/1/2022,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,73,147,73,0.3936,0.3936
-12/1/2022,9/1/2022,One,One,HDO,Use of Opioids at High Dosage,31,484,453,0.07,0.93
-12/1/2022,9/1/2022,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,36,55,36,0.5729,0.5729
-12/1/2022,9/1/2022,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,12,26,12,0.3936,0.3936
-12/1/2022,9/1/2022,Two,Two,HDO,Use of Opioids at High Dosage,5,93,88,0.07,0.93
-12/1/2022,9/1/2022,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,48,81,48,0.5729,0.5729
-12/1/2022,9/1/2022,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,31,11,0.3936,0.3936
-12/1/2022,9/1/2022,Seven,Seven,HDO,Use of Opioids at High Dosage,12,177,165,0.07,0.93
-12/1/2022,9/1/2022,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,255,377,255,0.5729,0.5729
-12/1/2022,9/1/2022,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,89,174,89,0.3936,0.3936
-12/1/2022,9/1/2022,Five,Five,HDO,Use of Opioids at High Dosage,23,905,882,0.07,0.93
-12/1/2022,9/1/2022,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,108,162,108,0.5729,0.5729
-12/1/2022,9/1/2022,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,39,78,39,0.3936,0.3936
-12/1/2022,9/1/2022,Four,Four,HDO,Use of Opioids at High Dosage,6,245,239,0.07,0.93
-12/1/2022,9/1/2022,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,328,520,328,0.5729,0.5729
-12/1/2022,9/1/2022,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,85,220,85,0.3936,0.3936
-12/1/2022,9/1/2022,Three,Three,HDO,Use of Opioids at High Dosage,31,849,818,0.07,0.93
-12/1/2022,9/1/2022,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,64,101,64,0.5729,0.5729
-12/1/2022,9/1/2022,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,18,51,18,0.3936,0.3936
-12/1/2022,9/1/2022,Six,Six,HDO,Use of Opioids at High Dosage,7,122,115,0.07,0.93
-12/1/2022,9/1/2022,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,75,113,75,0.5729,0.5729
-12/1/2022,9/1/2022,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,21,53,21,0.3936,0.3936
-12/1/2022,9/1/2022,Eight,Eight,HDO,Use of Opioids at High Dosage,4,118,114,0.07,0.93
-12/1/2022,9/1/2022,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,96,162,96,0.5729,0.5729
-12/1/2022,9/1/2022,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,19,69,19,0.3936,0.3936
-12/1/2022,9/1/2022,Nine,Nine,HDO,Use of Opioids at High Dosage,7,156,149,0.07,0.93
+2022-05-01,2022-02-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,139,238,139,0.5729,0.5729
+2022-05-01,2022-02-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,2,27,2,0.3936,0.3936
+2022-05-01,2022-02-01,One,One,HDO,Use of Opioids at High Dosage,38,155,117,0.07,0.93
+2022-05-01,2022-02-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,85,148,85,0.5729,0.5729
+2022-05-01,2022-02-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,1,10,1,0.3936,0.3936
+2022-05-01,2022-02-01,Nine,Nine,HDO,Use of Opioids at High Dosage,1,34,33,0.07,0.93
+2022-05-01,2022-02-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,36,61,36,0.5729,0.5729
+2022-05-01,2022-02-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,2,3,2,0.3936,0.3936
+2022-05-01,2022-02-01,Two,Two,HDO,Use of Opioids at High Dosage,2,24,22,0.07,0.93
+2022-05-01,2022-02-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,43,76,43,0.5729,0.5729
+2022-05-01,2022-02-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,1,4,1,0.3936,0.3936
+2022-05-01,2022-02-01,Seven,Seven,HDO,Use of Opioids at High Dosage,6,59,53,0.07,0.93
+2022-05-01,2022-02-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,238,407,238,0.5729,0.5729
+2022-05-01,2022-02-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,12,27,12,0.3936,0.3936
+2022-05-01,2022-02-01,Five,Five,HDO,Use of Opioids at High Dosage,17,240,223,0.07,0.93
+2022-05-01,2022-02-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,96,163,96,0.5729,0.5729
+2022-05-01,2022-02-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,1,12,1,0.3936,0.3936
+2022-05-01,2022-02-01,Four,Four,HDO,Use of Opioids at High Dosage,6,68,62,0.07,0.93
+2022-05-01,2022-02-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,290,506,290,0.5729,0.5729
+2022-05-01,2022-02-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,15,41,15,0.3936,0.3936
+2022-05-01,2022-02-01,Three,Three,HDO,Use of Opioids at High Dosage,28,221,193,0.07,0.93
+2022-05-01,2022-02-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,68,122,68,0.5729,0.5729
+2022-05-01,2022-02-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,3,13,3,0.3936,0.3936
+2022-05-01,2022-02-01,Six,Six,HDO,Use of Opioids at High Dosage,6,35,29,0.07,0.93
+2022-05-01,2022-02-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,77,135,77,0.5729,0.5729
+2022-05-01,2022-02-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,2,6,2,0.3936,0.3936
+2022-05-01,2022-02-01,Eight,Eight,HDO,Use of Opioids at High Dosage,2,35,33,0.07,0.93
+2022-06-01,2022-03-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,196,318,196,0.5729,0.5729
+2022-06-01,2022-03-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,21,63,21,0.3936,0.3936
+2022-06-01,2022-03-01,One,One,HDO,Use of Opioids at High Dosage,70,485,415,0.07,0.93
+2022-06-01,2022-03-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,105,179,105,0.5729,0.5729
+2022-06-01,2022-03-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,6,28,6,0.3936,0.3936
+2022-06-01,2022-03-01,Nine,Nine,HDO,Use of Opioids at High Dosage,13,116,103,0.07,0.93
+2022-06-01,2022-03-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,39,74,39,0.5729,0.5729
+2022-06-01,2022-03-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,7,10,7,0.3936,0.3936
+2022-06-01,2022-03-01,Two,Two,HDO,Use of Opioids at High Dosage,4,86,82,0.07,0.93
+2022-06-01,2022-03-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,55,95,55,0.5729,0.5729
+2022-06-01,2022-03-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,5,12,5,0.3936,0.3936
+2022-06-01,2022-03-01,Seven,Seven,HDO,Use of Opioids at High Dosage,20,168,148,0.07,0.93
+2022-06-01,2022-03-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,286,474,286,0.5729,0.5729
+2022-06-01,2022-03-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,67,112,67,0.3936,0.3936
+2022-06-01,2022-03-01,Five,Five,HDO,Use of Opioids at High Dosage,39,907,868,0.07,0.93
+2022-06-01,2022-03-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,119,207,119,0.5729,0.5729
+2022-06-01,2022-03-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,20,48,20,0.3936,0.3936
+2022-06-01,2022-03-01,Four,Four,HDO,Use of Opioids at High Dosage,13,230,217,0.07,0.93
+2022-06-01,2022-03-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,355,602,355,0.5729,0.5729
+2022-06-01,2022-03-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,49,120,49,0.3936,0.3936
+2022-06-01,2022-03-01,Three,Three,HDO,Use of Opioids at High Dosage,55,741,686,0.07,0.93
+2022-06-01,2022-03-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,86,158,86,0.5729,0.5729
+2022-06-01,2022-03-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,24,48,24,0.3936,0.3936
+2022-06-01,2022-03-01,Six,Six,HDO,Use of Opioids at High Dosage,12,132,120,0.07,0.93
+2022-06-01,2022-03-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,94,169,94,0.5729,0.5729
+2022-06-01,2022-03-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,13,47,13,0.3936,0.3936
+2022-06-01,2022-03-01,Eight,Eight,HDO,Use of Opioids at High Dosage,5,110,105,0.07,0.93
+2022-07-01,2022-04-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,206,330,206,0.5729,0.5729
+2022-07-01,2022-04-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,26,82,26,0.3936,0.3936
+2022-07-01,2022-04-01,One,One,HDO,Use of Opioids at High Dosage,63,468,405,0.07,0.93
+2022-07-01,2022-04-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,104,180,104,0.5729,0.5729
+2022-07-01,2022-04-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,9,39,9,0.3936,0.3936
+2022-07-01,2022-04-01,Nine,Nine,HDO,Use of Opioids at High Dosage,10,115,105,0.07,0.93
+2022-07-01,2022-04-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,41,75,41,0.5729,0.5729
+2022-07-01,2022-04-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,9,14,9,0.3936,0.3936
+2022-07-01,2022-04-01,Two,Two,HDO,Use of Opioids at High Dosage,4,85,81,0.07,0.93
+2022-07-01,2022-04-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,57,99,57,0.5729,0.5729
+2022-07-01,2022-04-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,6,18,6,0.3936,0.3936
+2022-07-01,2022-04-01,Seven,Seven,HDO,Use of Opioids at High Dosage,20,165,145,0.07,0.93
+2022-07-01,2022-04-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,288,485,288,0.5729,0.5729
+2022-07-01,2022-04-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,81,151,81,0.3936,0.3936
+2022-07-01,2022-04-01,Five,Five,HDO,Use of Opioids at High Dosage,38,906,868,0.07,0.93
+2022-07-01,2022-04-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,127,226,127,0.5729,0.5729
+2022-07-01,2022-04-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,26,64,26,0.3936,0.3936
+2022-07-01,2022-04-01,Four,Four,HDO,Use of Opioids at High Dosage,12,228,216,0.07,0.93
+2022-07-01,2022-04-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,367,628,367,0.5729,0.5729
+2022-07-01,2022-04-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,62,163,62,0.3936,0.3936
+2022-07-01,2022-04-01,Three,Three,HDO,Use of Opioids at High Dosage,55,757,702,0.07,0.93
+2022-07-01,2022-04-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,89,163,89,0.5729,0.5729
+2022-07-01,2022-04-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,34,61,34,0.3936,0.3936
+2022-07-01,2022-04-01,Six,Six,HDO,Use of Opioids at High Dosage,12,132,120,0.07,0.93
+2022-07-01,2022-04-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,95,175,95,0.5729,0.5729
+2022-07-01,2022-04-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,19,57,19,0.3936,0.3936
+2022-07-01,2022-04-01,Eight,Eight,HDO,Use of Opioids at High Dosage,6,116,110,0.07,0.93
+2022-08-01,2022-05-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,215,330,215,0.5729,0.5729
+2022-08-01,2022-05-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,47,127,47,0.3936,0.3936
+2022-08-01,2022-05-01,One,One,HDO,Use of Opioids at High Dosage,29,485,456,0.07,0.93
+2022-08-01,2022-05-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,107,180,107,0.5729,0.5729
+2022-08-01,2022-05-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,46,11,0.3936,0.3936
+2022-08-01,2022-05-01,Nine,Nine,HDO,Use of Opioids at High Dosage,8,130,122,0.07,0.93
+2022-08-01,2022-05-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,43,73,43,0.5729,0.5729
+2022-08-01,2022-05-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,8,19,8,0.3936,0.3936
+2022-08-01,2022-05-01,Two,Two,HDO,Use of Opioids at High Dosage,4,91,87,0.07,0.93
+2022-08-01,2022-05-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,60,98,60,0.5729,0.5729
+2022-08-01,2022-05-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,27,11,0.3936,0.3936
+2022-08-01,2022-05-01,Seven,Seven,HDO,Use of Opioids at High Dosage,15,170,155,0.07,0.93
+2022-08-01,2022-05-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,296,484,296,0.5729,0.5729
+2022-08-01,2022-05-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,87,184,87,0.3936,0.3936
+2022-08-01,2022-05-01,Five,Five,HDO,Use of Opioids at High Dosage,18,947,929,0.07,0.93
+2022-08-01,2022-05-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,136,225,136,0.5729,0.5729
+2022-08-01,2022-05-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,43,98,43,0.3936,0.3936
+2022-08-01,2022-05-01,Four,Four,HDO,Use of Opioids at High Dosage,4,246,242,0.07,0.93
+2022-08-01,2022-05-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,381,633,381,0.5729,0.5729
+2022-08-01,2022-05-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,94,225,94,0.3936,0.3936
+2022-08-01,2022-05-01,Three,Three,HDO,Use of Opioids at High Dosage,32,811,779,0.07,0.93
+2022-08-01,2022-05-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,93,161,93,0.5729,0.5729
+2022-08-01,2022-05-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,38,78,38,0.3936,0.3936
+2022-08-01,2022-05-01,Six,Six,HDO,Use of Opioids at High Dosage,8,140,132,0.07,0.93
+2022-08-01,2022-05-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,98,170,98,0.5729,0.5729
+2022-08-01,2022-05-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,26,69,26,0.3936,0.3936
+2022-08-01,2022-05-01,Eight,Eight,HDO,Use of Opioids at High Dosage,3,125,122,0.07,0.93
+2022-09-01,2022-06-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,223,332,223,0.5729,0.5729
+2022-09-01,2022-06-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,86,167,86,0.3936,0.3936
+2022-09-01,2022-06-01,One,One,HDO,Use of Opioids at High Dosage,49,502,453,0.07,0.93
+2022-09-01,2022-06-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,107,175,107,0.5729,0.5729
+2022-09-01,2022-06-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,22,70,22,0.3936,0.3936
+2022-09-01,2022-06-01,Nine,Nine,HDO,Use of Opioids at High Dosage,9,143,134,0.07,0.93
+2022-09-01,2022-06-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,44,69,44,0.5729,0.5729
+2022-09-01,2022-06-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,12,26,12,0.3936,0.3936
+2022-09-01,2022-06-01,Two,Two,HDO,Use of Opioids at High Dosage,4,100,96,0.07,0.93
+2022-09-01,2022-06-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,61,97,61,0.5729,0.5729
+2022-09-01,2022-06-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,14,39,14,0.3936,0.3936
+2022-09-01,2022-06-01,Seven,Seven,HDO,Use of Opioids at High Dosage,17,193,176,0.07,0.93
+2022-09-01,2022-06-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,312,479,312,0.5729,0.5729
+2022-09-01,2022-06-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,125,228,125,0.3936,0.3936
+2022-09-01,2022-06-01,Five,Five,HDO,Use of Opioids at High Dosage,32,1002,970,0.07,0.93
+2022-09-01,2022-06-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,150,234,150,0.5729,0.5729
+2022-09-01,2022-06-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,77,144,77,0.3936,0.3936
+2022-09-01,2022-06-01,Four,Four,HDO,Use of Opioids at High Dosage,10,276,266,0.07,0.93
+2022-09-01,2022-06-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,401,634,401,0.5729,0.5729
+2022-09-01,2022-06-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,124,290,124,0.3936,0.3936
+2022-09-01,2022-06-01,Three,Three,HDO,Use of Opioids at High Dosage,42,868,826,0.07,0.93
+2022-09-01,2022-06-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,94,153,94,0.5729,0.5729
+2022-09-01,2022-06-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,49,79,49,0.3936,0.3936
+2022-09-01,2022-06-01,Six,Six,HDO,Use of Opioids at High Dosage,9,150,141,0.07,0.93
+2022-09-01,2022-06-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,103,162,103,0.5729,0.5729
+2022-09-01,2022-06-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,43,87,43,0.3936,0.3936
+2022-09-01,2022-06-01,Eight,Eight,HDO,Use of Opioids at High Dosage,5,133,128,0.07,0.93
+2022-10-01,2022-07-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,220,330,220,0.5729,0.5729
+2022-10-01,2022-07-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,83,161,83,0.3936,0.3936
+2022-10-01,2022-07-01,One,One,HDO,Use of Opioids at High Dosage,48,506,458,0.07,0.93
+2022-10-01,2022-07-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,106,173,106,0.5729,0.5729
+2022-10-01,2022-07-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,21,67,21,0.3936,0.3936
+2022-10-01,2022-07-01,Nine,Nine,HDO,Use of Opioids at High Dosage,9,138,129,0.07,0.93
+2022-10-01,2022-07-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,42,67,42,0.5729,0.5729
+2022-10-01,2022-07-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,14,29,14,0.3936,0.3936
+2022-10-01,2022-07-01,Two,Two,HDO,Use of Opioids at High Dosage,4,99,95,0.07,0.93
+2022-10-01,2022-07-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,61,97,61,0.5729,0.5729
+2022-10-01,2022-07-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,14,36,14,0.3936,0.3936
+2022-10-01,2022-07-01,Seven,Seven,HDO,Use of Opioids at High Dosage,18,191,173,0.07,0.93
+2022-10-01,2022-07-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,309,473,309,0.5729,0.5729
+2022-10-01,2022-07-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,121,221,121,0.3936,0.3936
+2022-10-01,2022-07-01,Five,Five,HDO,Use of Opioids at High Dosage,32,997,965,0.07,0.93
+2022-10-01,2022-07-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,149,231,149,0.5729,0.5729
+2022-10-01,2022-07-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,75,140,75,0.3936,0.3936
+2022-10-01,2022-07-01,Four,Four,HDO,Use of Opioids at High Dosage,9,273,264,0.07,0.93
+2022-10-01,2022-07-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,396,632,396,0.5729,0.5729
+2022-10-01,2022-07-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,122,284,122,0.3936,0.3936
+2022-10-01,2022-07-01,Three,Three,HDO,Use of Opioids at High Dosage,42,866,824,0.07,0.93
+2022-10-01,2022-07-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,93,149,93,0.5729,0.5729
+2022-10-01,2022-07-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,47,77,47,0.3936,0.3936
+2022-10-01,2022-07-01,Six,Six,HDO,Use of Opioids at High Dosage,10,151,141,0.07,0.93
+2022-10-01,2022-07-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,102,158,102,0.5729,0.5729
+2022-10-01,2022-07-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,34,77,34,0.3936,0.3936
+2022-10-01,2022-07-01,Eight,Eight,HDO,Use of Opioids at High Dosage,5,132,127,0.07,0.93
+2022-11-01,2022-08-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,186,282,186,0.5729,0.5729
+2022-11-01,2022-08-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,66,133,66,0.3936,0.3936
+2022-11-01,2022-08-01,One,One,HDO,Use of Opioids at High Dosage,34,470,436,0.07,0.93
+2022-11-01,2022-08-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,100,166,100,0.5729,0.5729
+2022-11-01,2022-08-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,18,63,18,0.3936,0.3936
+2022-11-01,2022-08-01,Nine,Nine,HDO,Use of Opioids at High Dosage,6,147,141,0.07,0.93
+2022-11-01,2022-08-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,36,55,36,0.5729,0.5729
+2022-11-01,2022-08-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,26,11,0.3936,0.3936
+2022-11-01,2022-08-01,Two,Two,HDO,Use of Opioids at High Dosage,5,87,82,0.07,0.93
+2022-11-01,2022-08-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,50,83,50,0.5729,0.5729
+2022-11-01,2022-08-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,8,31,8,0.3936,0.3936
+2022-11-01,2022-08-01,Seven,Seven,HDO,Use of Opioids at High Dosage,13,176,163,0.07,0.93
+2022-11-01,2022-08-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,258,381,258,0.5729,0.5729
+2022-11-01,2022-08-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,81,164,81,0.3936,0.3936
+2022-11-01,2022-08-01,Five,Five,HDO,Use of Opioids at High Dosage,20,877,857,0.07,0.93
+2022-11-01,2022-08-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,108,163,108,0.5729,0.5729
+2022-11-01,2022-08-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,39,72,39,0.3936,0.3936
+2022-11-01,2022-08-01,Four,Four,HDO,Use of Opioids at High Dosage,8,234,226,0.07,0.93
+2022-11-01,2022-08-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,329,529,329,0.5729,0.5729
+2022-11-01,2022-08-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,81,206,81,0.3936,0.3936
+2022-11-01,2022-08-01,Three,Three,HDO,Use of Opioids at High Dosage,32,817,785,0.07,0.93
+2022-11-01,2022-08-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,64,101,64,0.5729,0.5729
+2022-11-01,2022-08-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,15,42,15,0.3936,0.3936
+2022-11-01,2022-08-01,Six,Six,HDO,Use of Opioids at High Dosage,7,116,109,0.07,0.93
+2022-11-01,2022-08-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,75,114,75,0.5729,0.5729
+2022-11-01,2022-08-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,18,48,18,0.3936,0.3936
+2022-11-01,2022-08-01,Eight,Eight,HDO,Use of Opioids at High Dosage,4,113,109,0.07,0.93
+2022-12-01,2022-09-01,One,One,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,184,277,184,0.5729,0.5729
+2022-12-01,2022-09-01,One,One,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,73,147,73,0.3936,0.3936
+2022-12-01,2022-09-01,One,One,HDO,Use of Opioids at High Dosage,31,484,453,0.07,0.93
+2022-12-01,2022-09-01,Two,Two,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,36,55,36,0.5729,0.5729
+2022-12-01,2022-09-01,Two,Two,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,12,26,12,0.3936,0.3936
+2022-12-01,2022-09-01,Two,Two,HDO,Use of Opioids at High Dosage,5,93,88,0.07,0.93
+2022-12-01,2022-09-01,Seven,Seven,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,48,81,48,0.5729,0.5729
+2022-12-01,2022-09-01,Seven,Seven,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,11,31,11,0.3936,0.3936
+2022-12-01,2022-09-01,Seven,Seven,HDO,Use of Opioids at High Dosage,12,177,165,0.07,0.93
+2022-12-01,2022-09-01,Five,Five,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,255,377,255,0.5729,0.5729
+2022-12-01,2022-09-01,Five,Five,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,89,174,89,0.3936,0.3936
+2022-12-01,2022-09-01,Five,Five,HDO,Use of Opioids at High Dosage,23,905,882,0.07,0.93
+2022-12-01,2022-09-01,Four,Four,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,108,162,108,0.5729,0.5729
+2022-12-01,2022-09-01,Four,Four,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,39,78,39,0.3936,0.3936
+2022-12-01,2022-09-01,Four,Four,HDO,Use of Opioids at High Dosage,6,245,239,0.07,0.93
+2022-12-01,2022-09-01,Three,Three,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,328,520,328,0.5729,0.5729
+2022-12-01,2022-09-01,Three,Three,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,85,220,85,0.3936,0.3936
+2022-12-01,2022-09-01,Three,Three,HDO,Use of Opioids at High Dosage,31,849,818,0.07,0.93
+2022-12-01,2022-09-01,Six,Six,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,64,101,64,0.5729,0.5729
+2022-12-01,2022-09-01,Six,Six,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,18,51,18,0.3936,0.3936
+2022-12-01,2022-09-01,Six,Six,HDO,Use of Opioids at High Dosage,7,122,115,0.07,0.93
+2022-12-01,2022-09-01,Eight,Eight,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,75,113,75,0.5729,0.5729
+2022-12-01,2022-09-01,Eight,Eight,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,21,53,21,0.3936,0.3936
+2022-12-01,2022-09-01,Eight,Eight,HDO,Use of Opioids at High Dosage,4,118,114,0.07,0.93
+2022-12-01,2022-09-01,Nine,Nine,AMM2,Antidepressant Medication Management: Effective Acute Phase Treatment,96,162,96,0.5729,0.5729
+2022-12-01,2022-09-01,Nine,Nine,FUH7,Follow-Up After Hospitalization for Mental Illness - 7 Day,19,69,19,0.3936,0.3936
+2022-12-01,2022-09-01,Nine,Nine,HDO,Use of Opioids at High Dosage,7,156,149,0.07,0.93
