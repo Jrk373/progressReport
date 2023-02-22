@@ -628,6 +628,11 @@ AllAlliancePerformance <- Tab_PercentCompliant %>%
   summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
             Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
   mutate(Percent_Compliant = Sum_AdaptedCompliant/Sum_TotalEligible) %>%
+<<<<<<< HEAD
   mutate(NCQA_Mean = NCQA_MeanList) %>% 
   mutate(PerformanceLevel = (Percent_Compliant - NCQA_Mean))
+=======
+  #mutate(NCQA_Mean = Tab_PercentCompliant$AdaptedNCQAMean) %>% 
+  mutate(PerformanceLevel = (Percent_Compliant - AdaptedNCQAMean))
+>>>>>>> 90d29b1de468129cce7530d84a5f7771c33a74c6
 ```
