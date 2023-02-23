@@ -1,10 +1,18 @@
 ---
 title: "Northern Arizona Regional Behavioral Health Alliance"
+<<<<<<< HEAD
 subtitle: Accountable Care Organization (ACO) Progress Report
 author: "John Ryan Kivela, Jennie McMillian, LPC, Victoria Tewa, LPC"
 date: "2023-03-01"
 output:
   # pdf_document:
+=======
+subtitle: "Accountable Care Organization (ACO) Progress Report"
+author: "John Ryan Kivela, Jennie McMillian, LPC, Victoria Tewa, LPC"
+date: "2023-03-01"
+output:
+  # word_document:
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
   #   toc: yes
   #   toc_depth: '3'
   html_document:
@@ -12,11 +20,16 @@ output:
     toc: yes
     toc_float: yes
     toc_depth: 3
+<<<<<<< HEAD
     number_sections: yes
+=======
+    number_sections: true
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
     toc_collapsed: no
 
 ---
 
+<<<<<<< HEAD
 ```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Set up knitting options for markdown file
 knitr::opts_chunk$set(echo = TRUE)
@@ -316,6 +329,12 @@ IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>%
          PercentCompliant,
          PerformanceLevel)
 
+=======
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 ```
 
 # Introduction
@@ -329,6 +348,7 @@ This report seeks to outline initial findings of the Alliance in areas of data, 
 ### Membership by County
 
 ```{r Fig_CountyDistribution,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+<<<<<<< HEAD
 Tab_CountyDistribution <- CountyDistribution %>% 
   gt() %>%
   tab_header(
@@ -361,6 +381,11 @@ Tab_CountyDistribution <- CountyDistribution %>%
   opt_horizontal_padding(scale = 3)
 
 Tab_CountyDistribution
+=======
+
+Tab_CountyDistribution
+
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 ```
 
 ### Gender, Age Groups, and Shared Characteristics
@@ -369,6 +394,7 @@ The Alliance serves adults aged 6 and older. Distribution of gender is balanced,
 
 [^4]: Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357--2366. <https://doi.org/10.1007/s11357-013-9510-6>
 
+<<<<<<< HEAD
 #### Gender Distribution
 ```{r Tab_GenderDistribution,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 Tab_GenderDistribution <- Tab_Gender %>% 
@@ -446,12 +472,26 @@ Fig_PopPyramid <- ggplot(DemoTable_SexByAgeGroup, aes(y = Age_Group, x = n, fill
   )
 
 Fig_PopPyramid
+=======
+
+```{r Tab_GenderDistribution,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+Tab_GenderDistribution
+
+```
+
+```{r Fig_populationPyramid,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+Fig_PopPyramid
+
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 ```
 
 ## Alliance Membership Allocation
 
 Alliance Providers are assigned members at the beginning of each contract year. The Alliance supports member voice and choice, and as such provider assignment changes throughout the year in accordance with member needs. The following table describes the assignment by provider at the beginning of the contract year, and the current health plan auto-assignment by provider at the time of this reporting. Polara Health (PH) was recently renamed from West Yavapai Guidance (WYGC). In most cases the acronyms have been updated.
 
+<<<<<<< HEAD
 ```{r Tab_MemberAllocation,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>% 
   gt() %>% 
@@ -491,6 +531,12 @@ Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>%
       opt_horizontal_padding(scale = 3)
 
 Tab_Alloc_v_Assignment
+=======
+```{r Tab_MemberAllocation,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+Tab_Alloc_v_Assignment
+
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 ```
 
 # Performance Measurement
@@ -498,6 +544,7 @@ Tab_Alloc_v_Assignment
 ## HEDIS Measures
 
 ```{r TBL_NCQAMeasures, echo=FALSE, warning=FALSE, message=FALSE}
+<<<<<<< HEAD
 Domain <- c("Behavioral Health", "Behavioral Health","Overuse/Approrpiateness")
 Measure <- c("Antidepressant Medication (AMM), Effective Acute Phase Treatment",
              "Follow-Up After Hospitalization for Mental Illness (FUH), 
@@ -507,6 +554,9 @@ NCQA_Mean <- c(.5729, .3936, .9300)
 
 AllianceMeasures_DF <- data.frame(Domain, Measure, NCQA_Mean)
 
+=======
+#NCQA Target Measures
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 AllianceMeasures_DF
 ```
 
@@ -514,6 +564,7 @@ AllianceMeasures_DF
 
 ```{r Tab_AllProviderPerformance,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 #All Alliance performance table
+<<<<<<< HEAD
 
 AllProvPerformance <- AllAlliancePerformance %>% 
 gt() %>% 
@@ -602,6 +653,13 @@ Fig_AllProvLollipop <- Tab_PercentCompliant %>%
        subtitle = "With Percent of Total Eligible Participants",
        caption = "Data source: BCBSAZ VBP Report, Claims Adjudicated Through Sept. 2022")
 
+=======
+AllProvPerformance
+```
+
+```{r Fig_AllProvLollipop,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+# Target Measure Lollipop, most recent report
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 Fig_AllProvLollipop
 ```
 
@@ -621,6 +679,7 @@ At the time of implementation, the overall averages and performance scores were:
 
 ### Antidepressant Medication Mangement
 
+<<<<<<< HEAD
 ```{r Tab_IndivProviderPerformanceAMM2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 #Individual Provider Performance table
 
@@ -665,11 +724,17 @@ tab_header(
   ) %>% 
   opt_horizontal_padding(scale = 3)
 
+=======
+```{r Tab_IndivProviderPerformanceAMM2,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#Individual Provider Performance table
+# AMM2
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 Tab_AMM2Performance
 ```
 
 ### Follow Up after Hospitalization, 7 Day
 
+<<<<<<< HEAD
 ```{r Tab_IndivProviderPerformanceFUH7, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # FUH7
 Tab_FUH7Performance <- IndivAlliancePerformance_FUH7 %>% 
@@ -712,11 +777,17 @@ tab_header(
   ) %>% 
   opt_horizontal_padding(scale = 3)
 
+=======
+```{r Tab_IndivProviderPerformanceFUH7,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#Individual Provider Performance table
+# AMM2
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 Tab_FUH7Performance
 ```
 
 ### Use of Opioids at High Dosage
 
+<<<<<<< HEAD
 ```{r Tab_IndivProviderPerformanceHDO, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # HDO
 Tab_HDOPerformance <- IndivAlliancePerformance_HDO %>% 
@@ -759,6 +830,11 @@ tab_header(
   ) %>% 
   opt_horizontal_padding(scale = 3)
 
+=======
+```{r Tab_IndivProviderPerformanceHDO,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#Individual Provider Performance table
+# AMM2
+>>>>>>> 1c32106563004a3ff23ea141c9b69cd978e215a1
 Tab_HDOPerformance
 ```
 
