@@ -35,24 +35,24 @@ library(tidyverse)
 
 ```{r Data_Load1, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Load data
+GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
+VBP_Rep_Comb <- read_csv("./data/data_confidential_vbpbhh_2023-01-30_allProvidersCombined.csv")
+AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
-GlblMmbrshp <- read_csv("./data/data_anon_2023-01-02_BCBSAZHCAMembership.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
-VBP_Rep_Comb <- read_csv("./data/data_anon_2022-12-29_HCAVBPReportsCombined.csv")
-AllianceProvAllocation <- read_csv("./data/data_anon_reference_2022-10-01_AllianceProviderMemberAllocation.csv")
 ```
 
 ```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
 
-VBP_Report_Date = "2022-09-01" #claimsAdjudicated Through Date
+VBP_Report_Date = "2022-11-30" #claimsAdjudicated Through Date
 
 GlobalMembers_Report_Date = "2022-12-31"
 
 # options are offered here to use anonomized names
 #
-Provider_ShortName_out <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBH", "TGC", "WYGC"))
-Provider_ShortName <- (c("Nine", "One", "Two", "Seven", "Five", "Six", "Three", "Eight", "Four"))
+Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
+Provider_ShortName_out <- (c("Nine", "One", "Two", "Seven", "Five", "Six", "Three", "Eight", "Four"))
 #
 
 MainStates <- map_data("state")
@@ -64,9 +64,9 @@ AZ_County <- (c("Apache County", "Coconino County", "Mohave County",
 
 # options are offered here to use anonomized names
 #
-AZ_County_Map_out <- (c("Apache", "Coconino", "Mohave", 
+AZ_County_Map <- (c("Apache", "Coconino", "Mohave", 
                     "Navajo", "Yavapai"))
-AZ_County_Map <- (c("Alderan", "Naboo", "Tatooine", 
+AZ_County_Map_out <- (c("Alderan", "Naboo", "Tatooine", 
                     "Dagobah", "Endor"))
 #
 
@@ -770,35 +770,7 @@ Tab_HDOPerformance
 
 ## Analysis
 
-# ACO Program Development
 
-## Internal and inter-departmental process efficacy
-
-## Provider support and technical assistance 
-
-## Partnership with Contexture *(Health Information Exchange)*:
-
-## Establish Alliance Provider quarterly meetings:
-
-The Alliance will be meeting quarterly to discuss collaboration, innovative initiatives, and overall streamlining of processes to ensure quality outcomes. It is also a goal to develop resources and programs to support the above-mentioned action items.
-
-## Best Practices *(Provider)*:
-
-## Possible future endeavors:
-
-# Clinical Advancement
-
-## Provider Well-being:
-
-## Providers as experts:
-
-## Provider knowledge and process:
-
-## Provider Collaboration:
-
-## Clinical Best Practice Well-being Retreat
-
-## Provider HEDIS TIP sheet for Follow Up after Hospitalization (FUH7)
 
 Alliance provider FUH7 TIP sheet has been developed due to the continued concerns we have heard from providers in understanding the allowable billing codes for this measure. It has been discussed with providers that they may have had contact with members but may not be billing FUH7 allowable codes and increase in understanding of allowable codes may help in improving the FUH7 measure. An example of the Alliance FUH7 TIP Sheet will be made available to all key stakeholders.
 

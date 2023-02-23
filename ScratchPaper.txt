@@ -1,0 +1,55 @@
+# Possible libraries
+
+library(tidyverse)
+# library(lubridate)
+library(scales)
+# library(ggplot2)
+# library(gt)
+# library(gtsummary)
+# library(devtools)
+# library(sf)
+# library(dplyr)
+# library(ggpol)
+# library(tidyverse)
+ # library(maps)
+ # library(choroplethr)
+ # library(choroplethrZip)
+library(choroplethrMaps)
+library(ggh4x)
+# library(wesanderson)
+# library(ggridges)
+# library(viridis)
+
+
+
+# ACO Program Development
+
+## Internal and inter-departmental process efficacy
+
+Progress Report section for Program Development and Clinical Advancement:
+
+## Provider support and technical assistance 
+
+## Partnership with Contexture *(Health Information Exchange)*:
+
+## Establish Alliance Provider quarterly meetings:
+
+The Alliance will be meeting quarterly to discuss collaboration, innovative initiatives, and overall streamlining of processes to ensure quality outcomes. It is also a goal to develop resources and programs to support the above-mentioned action items.
+
+## Best Practices *(Provider)*:
+
+## Possible future endeavors:
+
+# Clinical Advancement
+
+## Provider Well-being:
+
+## Providers as experts:
+
+## Provider knowledge and process:
+
+## Provider Collaboration:
+
+## Clinical Best Practice Well-being Retreat
+
+## Provider HEDIS TIP sheet for Follow Up after Hospitalization (FUH7)

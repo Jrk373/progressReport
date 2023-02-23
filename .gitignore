@@ -2,4 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-./data/data_reference_2022-10-01_AllianceProviderMemberAllocation
+.ScratchPaper.txt
+./data/data_reference_2022-10-01_AllianceProviderMemberAllocation.csv
+./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv
+./data/data_confidential_vbpbhh_2023-01-30_allProvidersCombined.csv
+./data/Key.txt

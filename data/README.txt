@@ -1,15 +1,32 @@
-# This is the data folder
+# data
+## This is the data folder
 
 It is to be used for all data that is incorporated in the model. 
 
-Do not store data that is only for reference in this folder. 
+Do not store workbooks, data, etc. that is only for reference in this folder. 
 Reference data that is not used in the model should be saved in 
 the "documents" folder.
 
 ## Data files in this folder include:
+	1.	data_anon_glblmbrs_yyyy-mm-dd_globalMembersRoster
+	2.	data_confidential_glblmbrs_yyyy-mm-dd_globalMembersRoster #gitignore
+	3.	data_anon_vbpbhh_yyyy-mm-dd_allProvidersCombined
+	4.	data_confidential_yyyy-mm-dd_allProvidersCombined #gitignore
+	5.	DATA_
+
 	1.	BCBSAZHCA Membership Roster (anonymized on secure NARBHA server prior to incorporation here)
 	2.	allianceCitiesandClinics (a list of the cities and counties where alliance providers are located)
 	3.	zipCodeDatabase (A table of zipcodes, cities and counties, and latitude and longitude)
+	4. 	VBP bhh report combined (a combined table of all alliance providers' vbp reports)
+
+The data is produced in 2 forms:
+1. anon = all identifying information for bhh and members is anonomized
+2. confidential = all identifying informaiton for members is anonomized	
+
+The confidential form is ignored by git
+
+The original data is stored here:
+.\\OneDrive - The NARBHA Institute\ACO\Data and Reports\Alliance Progress Reports\
 
 # Processes
 
@@ -24,5 +41,4 @@ the "documents" folder.
 7. Remove unneeded columns, including all phi
 8. export to csv as *data_anon_vbpbhh_yyyy-mm-dd_allProviders*
 
-**Note:** all dates need to be custom formatted to *yyyy-mm-dd*
-
+**Note:** all dates need to be custom formatted to *yyyy-mm-dd* **

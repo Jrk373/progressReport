@@ -138,24 +138,9 @@ options(scipen = 999, show.signif.stars = TRUE)
 
 # Load Packages and libraries
 library(tidyverse)
-# library(lubridate)
 library(scales)
-# library(ggplot2)
-# library(gt)
-# library(gtsummary)
-# library(devtools)
-# library(sf)
-# library(dplyr)
-# library(ggpol)
-# library(tidyverse)
- # library(maps)
- # library(choroplethr)
- # library(choroplethrZip)
 library(choroplethrMaps)
 library(ggh4x)
-# library(wesanderson)
-# library(ggridges)
-# library(viridis)
 
 ```
 
@@ -195,11 +180,11 @@ LEFT JOIN globalMembers.dbo.dailyMembershipAllArizonaAddresses da ON dm.primaryI
 
 ```{r Data_Load1, echo=TRUE, warning=FALSE, message=FALSE}
 # Load data
+GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
+VBP_Rep_Comb <- read_csv("./data/data_confidential_vbpbhh_2023-01-30_allProvidersCombined.csv")
+AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
-GlblMmbrshp <- read_csv("./data/data_anon_2023-01-02_BCBSAZHCAMembership.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
-VBP_Rep_Comb <- read_csv("./data/data_anon_2022-12-29_HCAVBPReportsCombined.csv")
-AllianceProvAllocation <- read_csv("./data/data_anon_reference_2022-10-01_AllianceProviderMemberAllocation.csv")
 ```
 
 ### Residential Data
@@ -231,7 +216,7 @@ GlobalMembers_Report_Date = "2022-12-31"
 
 # options are offered here to use anonomized names
 #
-Provider_ShortName_out <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBH", "TGC", "WYGC"))
+Provider_ShortName_out <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
 Provider_ShortName <- (c("Nine", "One", "Two", "Seven", "Five", "Six", "Three", "Eight", "Four"))
 #
 
