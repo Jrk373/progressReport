@@ -1,0 +1,152 @@
+---
+title: "Northern Arizona Regional Behavioral Health Alliance"
+subtitle: "Accountable Care Organization (ACO) Progress Report"
+author: "John Ryan Kivela, Jennie McMillian, LPC, Victoria Tewa, LPC"
+date: "2023-03-01"
+output:
+  # word_document:
+  #   toc: yes
+  #   toc_depth: '3'
+  html_document:
+    theme: cerulean
+    toc: yes
+    toc_float: yes
+    toc_depth: 3
+    number_sections: true
+    toc_collapsed: no
+# editor_options: 
+#   markdown: 
+#     wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r Data_Load_Data, echo=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+# Introduction
+
+The Northern Arizona Regional Behavioral Health Alliance (NARBHA), hereafter "The Alliance", is a collaborative project between the Narbha Institute and Blue Cross Blue Shield of Arizona (BCBSAZ). It is a first of its kind Behavioral Health Accountable Care Organization (ACO), specifically created to improve the health outcomes of disadvantaged people in rural Arizona. The focus of the Alliance is quality improvement and member satisfaction in our rural communities, as well as clinical advancement of our providers and program development of best practices.
+
+This report seeks to outline initial findings of the Alliance in areas of data, data integrity and analysis, Alliance Provider input, and progress to address preliminary gaps. Our initial review revealed that The Alliance is performing above average for all measures. Areas of focus were identified to assist individual providers that are not meeting the performance standard. Seven out of 9 providers were engaged directly for feedback, suggestions, and future plans.
+
+$~$
+
+# Alliance Provider and Membership Composition
+
+The Alliance is composed of 9 Medicaid Behavioral Health Homes, dispersed over 66,000 square miles of Northern Arizona. Alliance Providers were selected based on their ability to meet the comprehensive behavioral health needs of Medicaid recipients. The map below shows the locations of Alliance Provider Behavioral Health Homes throughout Arizona.
+
+
+## Demographics: 
+
+### Membership by County
+
+```{r 04_TBL_MembershipByCounty,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+### Gender, Age Groups, and Shared Characteristics
+
+The Alliance serves adults aged 6 and older. Distribution of gender is balanced, with Male accounting for 48%, and Female accounting for 52%. When viewed across age groups we also see a complimentary distribution of gender. The table below demonstrates age distributions according to 13 partially overlapping age groups. These age groups are based on the Age-Phenome Knowledge-base (APK), which has demonstrated that overlapping ranges of are better suited to create groupings according to disease occurrence, including mental health. This "soft-clustering" approach allows ages to be included in multiple age ranges[^4].
+
+[^4]: Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357--2366. <https://doi.org/10.1007/s11357-013-9510-6>
+
+
+```{r Fig05_population_pyramid,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+```{r 06_TBL_GenderSummary,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+$~$ 
+$~$
+
+## Alliance Membership Allocation
+
+Alliance Providers are assigned members at the beginning of each contract year. The Alliance supports member voice and choice, and as such provider assignment changes throughout the year in accordance with member needs. The following table describes the assignment by provider at the beginning of the contract year, and the current health plan auto-assignment by provider at the time of this reporting. Polara Health (PH) was recently renamed from West Yavapai Guidance (WYGC). In most cases the acronyms have been updated.
+
+```{r TBL07_ProviderAllocation,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+# Performance Measurement
+
+## HEDIS Measures
+
+```{r TBL08_NCQAMeasures,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+## All Providers
+
+```{r Data_ComplianceTable,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+We are pleased to report that a more specific analysis of current performance on the target measures indicates performance levels at or above the target. The chart below represents the most recent VBP Reports for December 2022, which include claims adjudicated through September 2022. These results demonstrate a very strong performance by Alliance Providers.
+
+This report represents the condition of provider performance immediately prior to the implementation of the Alliance ACO.
+
+At the time of implementation, the overall averages and performance scores were:
+
+-   AMM2 = 57.29% (+7.32%)
+
+-   FUH7 = 39.36% (+3.87%)
+
+-   HDO = 96.00% (+3.00%)
+
+## Individual Performance
+
+```{r Tab10a_AllAliancePerformance,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+```{r 10_lollipop,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+```
+
+## Analysis
+
+# ACO Program Development
+
+## Internal and inter-departmental process efficacy
+
+## Provider support and technical assistance 
+
+## Partnership with Contexture *(Health Information Exchange)*:
+
+## Establish Alliance Provider quarterly meetings:
+
+The Alliance will be meeting quarterly to discuss collaboration, innovative initiatives, and overall streamlining of processes to ensure quality outcomes. It is also a goal to develop resources and programs to support the above-mentioned action items.
+
+## Best Practices *(Provider)*:
+
+## Possible future endeavors:
+
+# Clinical Advancement
+
+## Provider Well-being:
+
+## Providers as experts:
+
+## Provider knowledge and process:
+
+## Provider Collaboration:
+
+## Clinical Best Practice Well-being Retreat
+
+## Provider HEDIS TIP sheet for Follow Up after Hospitalization (FUH7)
+
+Alliance provider FUH7 TIP sheet has been developed due to the continued concerns we have heard from providers in understanding the allowable billing codes for this measure. It has been discussed with providers that they may have had contact with members but may not be billing FUH7 allowable codes and increase in understanding of allowable codes may help in improving the FUH7 measure. An example of the Alliance FUH7 TIP Sheet will be made available to all key stakeholders.
+
+## Comprehensive Outlook for 8 Months of Performance
