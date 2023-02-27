@@ -1,19 +1,22 @@
 ---
 title: "Northern Arizona Regional Behavioral Health Alliance"
 subtitle: Accountable Care Organization (ACO) Progress Report
-author: "John Ryan Kivela, Jennie McMillian, LPC, Victoria Tewa, LPC"
+author: "John Ryan Kivela, MA,  Jennie McMillian, LPC, Victoria Tewa, LPC"
 date: "2023-03-01"
 output:
   # word_document:
   #   toc: yes
   #   toc_depth: '3'
   html_document:
+    code_folding: hide
     theme: cerulean
+    number_sections: yes
     toc: yes
     toc_float: yes
-    toc_depth: 3
-    number_sections: yes
     toc_collapsed: no
+    toc_depth: 3
+    
+    
 
 ---
 
@@ -22,7 +25,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set number of digits to display exponential numbers
-options(scipen = 999, show.signif.stars = TRUE)
+options(scipen = 999, 
+        show.signif.stars = TRUE)
 
 # Load Packages and libraries
 library(choroplethrMaps)
@@ -33,54 +37,36 @@ library(tidyverse)
 
 ```
 
-```{r Data_Load1, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r Data_Load1, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # Load data
 GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
 VBP_Rep_Comb <- read_csv("./data/data_confidential_vbpbhh_2023-01-30_allProvidersCombined.csv")
 AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
+data("county.map")
 ```
 
-```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Objects_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
 
 VBP_Report_Date = "2022-11-30" #claimsAdjudicated Through Date
-
-GlobalMembers_Report_Date = "2022-12-31"
-
-# options are offered here to use anonomized names
+GlobalMembers_Report_Date = "2022-12-31" #Date member roster was extracted from HCA
 #
 Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
-Provider_ShortName_out <- (c("Nine", "One", "Two", "Seven", "Five", "Six", "Three", "Eight", "Four"))
 #
-
-MainStates <- map_data("state")
-
+# Various vectors of data for mapping functions
+MainStates <- map_data("state") #table with state info, lat, long, etc.
 Arizona <- filter(MainStates, region == "arizona")
-
-AZ_County <- (c("Apache County", "Coconino County", "Mohave County", 
-                "Navajo County", "Yavapai County"))
-
-# options are offered here to use anonomized names
-#
-AZ_County_Map <- (c("Apache", "Coconino", "Mohave", 
-                    "Navajo", "Yavapai"))
-AZ_County_Map_out <- (c("Alderan", "Naboo", "Tatooine", 
-                    "Dagobah", "Endor"))
-#
-
-data("county.map")
-
+AZ_County <- (c("Apache County", "Coconino County", "Mohave County", "Navajo County", "Yavapai County"))
+AZ_County_Map <- (c("Apache", "Coconino", "Mohave", "Navajo", "Yavapai"))
 countyref <- county.map %>% 
   filter(NAME %in% AZ_County_Map)
-
 NAZ_Zips <- ZipDatabase %>% 
   filter(county %in% AZ_County) %>% 
   select(zip)
-
 Vec_AZ_Zips <- NAZ_Zips$zip
-
+#
 # Create NCQA Mean vector
 NCQA_MeanList = c(.5729, .3936, .93)
 
@@ -88,66 +74,74 @@ NCQA_MeanList = c(.5729, .3936, .93)
 Allocations <- AllianceProvAllocation$`Annual Member Months`
 ```
 
-```{r Data_GlblMmbrshp, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r eval_GlblMmbrshp, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Calculate active members based on BCBSAZ auto-enrollment
 ActiveNAZMmbrshp <- GlblMmbrshp %>% 
   replace(.=="NULL", NA) %>% 
   mutate(disenrollmentDate = !is.na(disenrollmentDate)) %>% 
   filter(disenrollmentDate == FALSE) %>% 
   filter(resCountyName %in% AZ_County_Map) %>%
- #filter(zipCode %in% Vec_AZ_Zips) %>% 
+ #filter(zipCode %in% Vec_AZ_Zips) %>% #potential variation from AZ_County_Map option
   filter(bhhShortname %in% Provider_ShortName)
-
+# Export Active NAZ Membership to csv
+write.csv(ActiveNAZMmbrshp, "./data/output/ActiveNAZMembership.csv")
 # Separate for enrolled adults
 AdultMembership <- ActiveNAZMmbrshp %>% 
   filter(Age >= 18)
-
 # Separate for enrolled children
 ChildMembership <- ActiveNAZMmbrshp %>% 
   filter(Age < 18)
-
 ```
 
 ```{r eval_allianceAllocation, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Wrangle contract allocation table for comparison
-Alliance_AllocationTable <- AllianceProvAllocation %>% 
+Alliance_AllocationTable <- AllianceProvAllocation %>%
+  filter(Provider_ShortName != "EHS") %>% 
   rename(AllianceAllocation = `Annual Member Months`) %>% 
   rename(Provider_ShortName = Provider) %>% 
   mutate(Provider_ShortName = if_else((
             Provider_ShortName == "Spectrum"), 
             "SHG", 
             Provider_ShortName)# the short name for spectrum varies depending on data source
+         ) %>% 
+  mutate(Provider_ShortName = if_else((
+            Provider_ShortName == "WYGC"), 
+            "PH", 
+            Provider_ShortName)# the short name for spectrum varies depending on data source
+         ) %>% 
+  mutate(Provider_ShortName = if_else((
+            Provider_ShortName == "SBH"), 
+            "SBHS", 
+            Provider_ShortName)# the short name for spectrum varies depending on data source
          )
-
-# Wrangle BCBASAZ Auto Enrolled per GlblMmbrshp for comparison
+# Wrangle BCBASAZ Auto Enrolled to filter and count members for Alliance Providers
 HCA_AutoEnrolled <- ActiveNAZMmbrshp %>% 
+  filter(bhhShortname != "EHS") %>% 
   count(bhhShortname) %>%
   rename(HCA_Enrollment = n) %>%
   rename(Provider_ShortName = bhhShortname)
-  
 # Create a table comparing auto-enrollment with contract allocation
 ContractAlloc_v_Assignment <- 
   merge(x=Alliance_AllocationTable, #NARBHA Contract Allocation
         y=HCA_AutoEnrolled, #HCA GlobalMembers Allocation
         by="Provider_ShortName") %>% 
   mutate(PercentDifference = percent(
-    ((HCA_Enrollment-AllianceAllocation) /AllianceAllocation))) %>% 
+    ((HCA_Enrollment-AllianceAllocation)/AllianceAllocation))) %>% 
   mutate(PercentOfMembership = percent(
     AllianceAllocation/(sum(AllianceAllocation))))
-
+# Export the Alloc_v_Assignment table as a csv for reference
 write.csv(ContractAlloc_v_Assignment, "./data/output/ContractAlloc_v_Assignment.csv")
-
-# Calculate the percent change from contract implementation to date of membership report
+# Calculate the percent change from contract implementation to date of membership report for all Alliance
 Alloc_v_EnrolledPercentDiff <- data.frame(c(
   sum(ContractAlloc_v_Assignment$AllianceAllocation)),
   sum(ContractAlloc_v_Assignment$HCA_Enrollment)) %>% 
   mutate(PercentDiff = percent(((`sum.ContractAlloc_v_Assignment.HCA_Enrollment.` -`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))                               /`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
-
+# Export the table as a csv for reference
+write.csv(Alloc_v_EnrolledPercentDiff, "./data/output/Alloc_v_EnrolledPercentDiff.csv")
 ```
 
 ```{r TBL_GenderSummary,  include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Gender distribution table
-
 Tab_Gender <- ActiveNAZMmbrshp %>% 
   mutate(sex = case_when(
     sex == "M" ~ "Male",
@@ -157,7 +151,8 @@ Tab_Gender <- ActiveNAZMmbrshp %>%
   rename(Sex = sex) %>% 
   rename(Members = n) %>% 
   mutate(Percent = (Members / (sum(Members)))) 
-
+# Export the table as a csv for reference
+write.csv(Tab_Gender, "./data/output/Tab_Gender.csv")
 ```
 
 ```{r eval_ageGrouping, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -166,6 +161,7 @@ DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>%
   select(Age, sex) %>% 
   # Create categories using LDA soft grouping method which allows
   # ages to appear in more than one group
+  # [^1 Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357–2366. https://doi.org/10.1007/s11357-013-9510-6]
   mutate(`00 - 16` = case_when(
     Age > 00 & Age <= 16 ~ "1", TRUE ~ "0")) %>%
   mutate(`00 - 20` = case_when(
@@ -202,6 +198,7 @@ DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>%
   mutate(`32 - 54` = as.numeric(`32 - 54`)) %>% 
   mutate(`41 - 63` = as.numeric(`41 - 63`)) %>% 
   mutate(`48 - 69` = as.numeric(`48 - 69`)) %>% 
+  mutate(`50 - 72` = as.numeric(`50 - 73`)) %>%
   mutate(`50 - 73` = as.numeric(`50 - 73`)) %>% 
   mutate(`62 - 86` = as.numeric(`62 - 86`)) %>% 
   mutate(`76 - 98` = as.numeric(`76 - 98`)) %>% 
@@ -216,13 +213,12 @@ DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>%
     sex == "M" ~ "Male",
     sex == "F" ~ "Female"
   )) %>% 
-  #filter out 00 - 16
-  #filter(Age_Group != "00 - 16") %>% 
-  #change male to negative
+  #change male to negative so it flips sides of the axis on a shared facet plot
   mutate(n = ifelse(sex == "Male", n * -1, n)) %>% 
   #change male female to factor
   mutate(sex = factor(sex, levels = c("Male","Female")))
-
+# Export the table as a csv for reference
+write.csv(DemoTable_SexByAgeGroup, "./data/output/DemoTable_SexByAgeGroup.csv")
 ```
 
 ```{r Tab_DistributionbyCounty, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -232,48 +228,18 @@ CountyDistribution <- ActiveNAZMmbrshp %>%
   count(`County of Residence`) %>% 
   rename(Members = n) %>% 
   mutate(Percent = (Members / (sum(Members)))) 
-
+# Export the table as a csv for reference
+write.csv(CountyDistribution, "./data/output/CountyDistribution.csv")
 ```
 
-```{r DATA_AllProvComplianceTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r eval_AllProvComplianceTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Make the compliance/performance table
 Tab_PercentCompliant <- VBP_Rep_Comb %>% 
   # add filter back in for specific reporting period
   filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
-  mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   mutate(SumTotalElig = sum(TotalEligible)) %>%
   mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
-  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
-  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
-  select(Provider,
-         Provider_ShortName, 
-         SubMeasureID,
-         AdaptedCompliant,
-         TotalEligible,
-         PercentCompliant,
-         PercentTotalEligible,
-         ClaimsAdjudicatedThrough,
-         AdaptedNCQAMean,
-         PerformanceLevel)
-
-Tab_CompOutlook <- VBP_Rep_Comb %>% 
-  # add filter back in for specific reporting period
-  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
-  mutate(SumTotalElig = sum(TotalEligible)) %>%
-  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
-  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
-  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
-  select(Provider,
-         Provider_ShortName, 
-         SubMeasureID,
-         AdaptedCompliant,
-         TotalEligible,
-         PercentCompliant,
-         PercentTotalEligible,
-         ClaimsAdjudicatedThrough,
-         AdaptedNCQAMean,
-         PerformanceLevel)
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) 
 
 # Calculate performance levels
 AllAlliancePerformance <- Tab_PercentCompliant %>% 
@@ -284,11 +250,36 @@ AllAlliancePerformance <- Tab_PercentCompliant %>%
   mutate(Percent_Compliant = Sum_AdaptedCompliant/Sum_TotalEligible) %>%
   mutate(NCQA_Mean = NCQA_MeanList) %>% 
   mutate(PerformanceLevel = (Percent_Compliant - NCQA_Mean))
+# Export the table as a csv for reference
+write.csv(Tab_PercentCompliant, "./data/output/Tab_PercentCompliant.csv")
+```
+
+```{r eval_ComprehensiveOutlookTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+Tab_CompOutlook <- VBP_Rep_Comb %>% 
+  # add filter back in for specific reporting period
+  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
+  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
+  select(Provider,
+         Provider_ShortName, 
+         SubMeasureID,
+         AdaptedCompliant,
+         TotalEligible,
+         PercentCompliant,
+         PercentTotalEligible,
+         ClaimsAdjudicatedThrough,
+         AdaptedNCQAMean,
+         PerformanceLevel)
+# Export the table as a csv for reference
+write.csv(Tab_CompOutlook, "./data/output/Tab_CompOutlook.csv")
 
 ```
 
-```{r DATA_IndivProvComplianceTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r eval_IndivProvComplianceTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Calculate performance levels
+# AMM2
 IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>% 
   filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
   filter(SubMeasureID == "AMM2") %>% 
@@ -297,7 +288,10 @@ IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>%
          AdaptedCompliant,
          PercentCompliant,
          PerformanceLevel)
+# Export the table as a csv for reference
+write.csv(IndivAlliancePerformance_AMM2, "./data/output/IndivAlliancePerformance_AMM2.csv")
 
+#FUH7
 IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>% 
   filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
   filter(SubMeasureID == "FUH7") %>% 
@@ -306,7 +300,9 @@ IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>%
          AdaptedCompliant,
          PercentCompliant,
          PerformanceLevel)
-
+# Export the table as a csv for reference
+write.csv(IndivAlliancePerformance_FUH7, "./data/output/IndivAlliancePerformance_FUH7.csv")
+#HDO
 IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>% 
   filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
   filter(SubMeasureID == "HDO") %>% 
@@ -315,7 +311,8 @@ IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>%
          AdaptedCompliant,
          PercentCompliant,
          PerformanceLevel)
-
+# Export the table as a csv for reference
+write.csv(IndivAlliancePerformance_HDO, "./data/output/IndivAlliancePerformance_HDO.csv")
 ```
 
 # Introduction
@@ -328,7 +325,7 @@ This report seeks to outline initial findings of the Alliance in areas of data, 
 
 ### Membership by County
 
-```{r Fig_CountyDistribution,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r Tab_CountyDistribution,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 Tab_CountyDistribution <- CountyDistribution %>% 
   gt() %>%
   tab_header(
@@ -358,17 +355,18 @@ Tab_CountyDistribution <- CountyDistribution %>%
       columns = everything()
     )
   ) %>% 
-  opt_horizontal_padding(scale = 3)
-
-Tab_CountyDistribution
-
+  opt_horizontal_padding(scale = 3) 
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_CountyDistribution.png", width = 500, height = 500)
-
+# If code hangs here, restart R session and repeat
+gtsave(Tab_CountyDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_CountyDistribution.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_CountyDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_CountyDistribution.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_CountyDistribution.png", width = 500, height = 500)
+gtsave(Tab_CountyDistribution, filename = "images/image_2023-03-01_Tab_CountyDistribution.png")
 
+Tab_CountyDistribution
 ```
 
 ### Gender, Age Groups, and Shared Characteristics
@@ -409,15 +407,16 @@ gt() %>%
     )
   ) %>% 
   opt_horizontal_padding(scale = 3)
-
-Tab_GenderDistribution
-
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_GenderDistribution.png", width = 500, height = 500)
-
+gtsave(Tab_GenderDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_GenderDistribution.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_GenderDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_GenderDistribution.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_GenderDistribution.png", width = 500, height = 500)
+gtsave(Tab_GenderDistribution, filename = "images/image_2023-03-01_Tab_GenderDistribution.png")
+#
+Tab_GenderDistribution
 ```
 
 #### Gender and Age Group Population Pyramid
@@ -459,16 +458,17 @@ Fig_PopPyramid <- ggplot(DemoTable_SexByAgeGroup, aes(y = Age_Group, x = n, fill
     legend.position = "bottom",
     panel.spacing.x = unit(0, "pt")
   )
-
+#
 Fig_PopPyramid
-
-# Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_PopPyramid.png", width = 500, height = 500)
-
-# creates dated image for tracking and filing
+#
+# Creates undated dashboard image for SharePoint
+dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_PopPyramid.png", width = 500, height = 500)
+# creates dated image for tracking and filing in SharePoint
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_PopPyramid.png", width = 500, height = 500)
-
+dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_PopPyramid.png", width = 500, height = 500)
+# creates dated image for tracking and filing in R project folder
+# date must be updated for each monthly report
+dev.print(device = png, filename = "./images/image_2023-03-01_Fig_PopPyramid.png", width = 500, height = 500)
 ```
 
 ## Alliance Membership Allocation
@@ -512,16 +512,16 @@ Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>%
       )
     ) %>% 
       opt_horizontal_padding(scale = 3)
-
-Tab_Alloc_v_Assignment
-
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_Allo_v_Assignment.png", width = 500, height = 500)
-
+gtsave(Tab_Alloc_v_Assignment, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_Alloc_v_Assignment.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_Alloc_v_Assignment, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_Alloc_v_Assignment.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_Alloc_v_Assignment.png", width = 500, height = 500)
+gtsave(Tab_Alloc_v_Assignment, filename = "images/image_2023-03-01_Tab_Alloc_v_Assignment.png")
 
+Tab_Alloc_v_Assignment
 ```
 
 # Performance Measurement
@@ -571,7 +571,7 @@ gt() %>%
              Percent_Compliant ~ px(110),
              NCQA_Mean ~ px(110),
              PerformanceLevel ~ px(120)
-             )%>% 
+             )%>%
   tab_source_note(
     source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through September, 2022*")
   ) %>% 
@@ -586,22 +586,21 @@ gt() %>%
     )
   ) %>% 
   opt_horizontal_padding(scale = 3)
-
-Tab_AllProvPerformance
-
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_AllProvPerformance.png", width = 500, height = 500)
-
+gtsave(Tab_AllProvPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_AllProvPerformance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_AllProvPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AllProvPerformance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AllProvPerformance.png", width = 500, height = 500)
+gtsave(Tab_AllProvPerformance, filename = "images/image_2023-03-01_Tab_AllProvPerformance.png")
+
+Tab_AllProvPerformance
 ```
 <br>
 ```{r Fig_AllProvLollipop,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Target Measure Lollipop, most recent report
-
 # Lollipop Chart ----------------------------------------------------------
-
 Fig_AllProvLollipop <- Tab_PercentCompliant %>% 
   filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>%
   ggplot(aes(x = Provider_ShortName, 
@@ -638,16 +637,17 @@ Fig_AllProvLollipop <- Tab_PercentCompliant %>%
   labs(title = "Alliance Provider Target Measure Compliance",
        subtitle = "With Percent of Total Eligible Participants",
        caption = "Data source: BCBSAZ VBP Report, Claims Adjudicated Through Sept. 2022")
-
+#
 Fig_AllProvLollipop
-
-# Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_AllProvLollipop.png", width = 500, height = 500)
-
-# creates dated image for tracking and filing
+#
+# Creates undated dashboard image for SharePoint
+dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_AllProvLollipop.png", width = 500, height = 500)
+# creates dated image for tracking and filing in SharePoint
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_AllProvLollipop.png", width = 500, height = 500)
-
+dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_AllProvLollipop.png", width = 500, height = 500)
+# creates dated image for tracking and filing in R project folder
+# date must be updated for each monthly report
+dev.print(device = png, filename = "./images/image_2023-03-01_Fig_AllProvLollipop.png", width = 500, height = 500)
 ```
 
 We are pleased to report that a more specific analysis of current performance on the target measures indicates performance levels at or above the target. The chart below represents the most recent VBP Reports for December 2022, which include claims adjudicated through September 2022. These results demonstrate a very strong performance by Alliance Providers.
@@ -668,8 +668,7 @@ At the time of implementation, the overall averages and performance scores were:
 
 ```{r Tab_IndivProviderPerformanceAMM2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 #Individual Provider Performance table
-
-# AMM@
+# AMM2
 Tab_AMM2Performance <- IndivAlliancePerformance_AMM2 %>% 
 gt() %>% 
 tab_header(
@@ -709,16 +708,16 @@ tab_header(
     )
   ) %>% 
   opt_horizontal_padding(scale = 3)
-
-Tab_AMM2Performance
-
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_AMM2Performance.png", width = 500, height = 500)
-
+gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_AMM2Performance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AMM2Performance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AMM2Performance.png", width = 500, height = 500)
+gtsave(Tab_AMM2Performance, filename = "images/image_2023-03-01_Tab_AMM2Performance.png")
 
+Tab_AMM2Performance
 ```
 
 ### Follow Up after Hospitalization, 7 Day
@@ -764,16 +763,16 @@ tab_header(
     )
   ) %>% 
   opt_horizontal_padding(scale = 3)
-
-Tab_FUH7Performance
-
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_FUH7Performance.png", width = 500, height = 500)
-
+gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_FUH7Performance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_FUH7Performance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_FUH7Performance.png", width = 500, height = 500)
+gtsave(Tab_FUH7Performance, filename = "images/image_2023-03-01_Tab_FUH7Performance.png")
 
+Tab_FUH7Performance
 ```
 
 ### Use of Opioids at High Dosage
@@ -819,16 +818,16 @@ tab_header(
     )
   ) %>% 
   opt_horizontal_padding(scale = 3)
-
-Tab_HDOPerformance
-
 # Creates undated dashboard image
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_HDOPerformance.png", width = 500, height = 500)
-
+gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_HDOPerformance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_HDOPerformance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_HDOPerformance.png", width = 500, height = 500)
+gtsave(Tab_HDOPerformance, filename = "images/image_2023-03-01_Tab_HDOPerformance.png")
 
+Tab_HDOPerformance
 ```
 
 ## Analysis
