@@ -362,6 +362,13 @@ Tab_CountyDistribution <- CountyDistribution %>%
 
 Tab_CountyDistribution
 
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_CountyDistribution.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_CountyDistribution.png", width = 500, height = 500)
+
 ```
 
 ### Gender, Age Groups, and Shared Characteristics
@@ -404,6 +411,13 @@ gt() %>%
   opt_horizontal_padding(scale = 3)
 
 Tab_GenderDistribution
+
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_GenderDistribution.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_GenderDistribution.png", width = 500, height = 500)
 ```
 
 #### Gender and Age Group Population Pyramid
@@ -447,6 +461,13 @@ Fig_PopPyramid <- ggplot(DemoTable_SexByAgeGroup, aes(y = Age_Group, x = n, fill
   )
 
 Fig_PopPyramid
+
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_PopPyramid.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_PopPyramid.png", width = 500, height = 500)
 
 ```
 
@@ -494,6 +515,13 @@ Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>%
 
 Tab_Alloc_v_Assignment
 
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_Allo_v_Assignment.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_Alloc_v_Assignment.png", width = 500, height = 500)
+
 ```
 
 # Performance Measurement
@@ -517,7 +545,7 @@ AllianceMeasures_DF
 
 ```{r Tab_AllProviderPerformance,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 #All Alliance performance table
-AllProvPerformance <- AllAlliancePerformance %>% 
+Tab_AllProvPerformance <- AllAlliancePerformance %>% 
 gt() %>% 
   tab_header(
     title = md("Overall Performance of Alliance Provider Network"),
@@ -559,7 +587,14 @@ gt() %>%
   ) %>% 
   opt_horizontal_padding(scale = 3)
 
-AllProvPerformance
+Tab_AllProvPerformance
+
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_AllProvPerformance.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AllProvPerformance.png", width = 500, height = 500)
 ```
 <br>
 ```{r Fig_AllProvLollipop,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -604,7 +639,14 @@ Fig_AllProvLollipop <- Tab_PercentCompliant %>%
        subtitle = "With Percent of Total Eligible Participants",
        caption = "Data source: BCBSAZ VBP Report, Claims Adjudicated Through Sept. 2022")
 
-AllProvPerformance
+Fig_AllProvLollipop
+
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_AllProvLollipop.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_AllProvLollipop.png", width = 500, height = 500)
 
 ```
 
@@ -670,6 +712,13 @@ tab_header(
 
 Tab_AMM2Performance
 
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_AMM2Performance.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AMM2Performance.png", width = 500, height = 500)
+
 ```
 
 ### Follow Up after Hospitalization, 7 Day
@@ -718,6 +767,13 @@ tab_header(
 
 Tab_FUH7Performance
 
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_FUH7Performance.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_FUH7Performance.png", width = 500, height = 500)
+
 ```
 
 ### Use of Opioids at High Dosage
@@ -765,6 +821,13 @@ tab_header(
   opt_horizontal_padding(scale = 3)
 
 Tab_HDOPerformance
+
+# Creates undated dashboard image
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Tab_HDOPerformance.png", width = 500, height = 500)
+
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+png(file = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_HDOPerformance.png", width = 500, height = 500)
 
 ```
 
