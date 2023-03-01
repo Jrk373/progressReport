@@ -2,7 +2,7 @@
 title: "Northern Arizona Regional Behavioral Health Alliance"
 subtitle: Accountable Care Organization (ACO) Progress Report
 author: "John Ryan Kivela, MA,  Jennie McMillian, LPC, Victoria Tewa, LPC"
-date: "2023-03-01"
+date: "2023-01-01"
 output:
   # word_document:
   #   toc: yes
@@ -40,7 +40,7 @@ library(tidyverse)
 ```{r Data_Load1, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # Load data
 GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
-VBP_Rep_Comb <- read_csv("./data/data_confidential_vbpbhh_2023-01-30_allProvidersCombined.csv")
+VBP_Rep_Comb <- read_csv("./data/datadata_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
 AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
@@ -50,7 +50,7 @@ data("county.map")
 ```{r Objects_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
 
-VBP_Report_Date = "2022-11-30" #claimsAdjudicated Through Date
+VBP_Report_Date = "2022-10-31" #claimsAdjudicated Through Date
 GlobalMembers_Report_Date = "2022-12-31" #Date member roster was extracted from HCA
 #
 Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
@@ -236,15 +236,17 @@ write.csv(CountyDistribution, "./data/output/CountyDistribution.csv")
 # Make the compliance/performance table
 Tab_PercentCompliant <- VBP_Rep_Comb %>% 
   # add filter back in for specific reporting period
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   mutate(SumTotalElig = sum(TotalEligible)) %>%
+  filter(Data.Period == VBP_Report_Date) %>%
+  filter(SubMeasure.ID %in% c("AMM2","FUH7", "HDO")) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   
+  mutate(SumTotalElig = sum(TotalEligible)) %>%
   mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
   mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) 
 
 # Calculate performance levels
 AllAlliancePerformance <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  group_by(SubMeasureID) %>% 
+  filter(Data.Period == VBP_Report_Date) %>% 
+  group_by(SubMeasure.ID) %>% 
   summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
             Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
   mutate(Percent_Compliant = Sum_AdaptedCompliant/Sum_TotalEligible) %>%
@@ -257,19 +259,20 @@ write.csv(Tab_PercentCompliant, "./data/output/Tab_PercentCompliant.csv")
 ```{r eval_ComprehensiveOutlookTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 Tab_CompOutlook <- VBP_Rep_Comb %>% 
   # add filter back in for specific reporting period
-  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   mutate(SumTotalElig = sum(TotalEligible)) %>%
+  #filter(Data.Period == VBP_Report_Date) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   
+  mutate(SumTotalElig = sum(TotalEligible)) %>%
   mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
   mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
-  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
-  select(Provider,
-         Provider_ShortName, 
-         SubMeasureID,
+  #mutate(Data.Period = as.Date(Data.Period)) %>% 
+  select(Health.Home.Name,
+         Provider_Shortname, 
+         SubMeasure.ID,
          AdaptedCompliant,
          TotalEligible,
          PercentCompliant,
          PercentTotalEligible,
-         ClaimsAdjudicatedThrough,
+         Data.Period,
          AdaptedNCQAMean,
          PerformanceLevel)
 # Export the table as a csv for reference
@@ -281,9 +284,9 @@ write.csv(Tab_CompOutlook, "./data/output/Tab_CompOutlook.csv")
 # Calculate performance levels
 # AMM2
 IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  filter(SubMeasureID == "AMM2") %>% 
-  select(Provider,
+  filter(Data.Period == VBP_Report_Date) %>% 
+  filter(SubMeasure.ID == "AMM2") %>% 
+  select(Health.Home.Name,
          TotalEligible,
          AdaptedCompliant,
          PercentCompliant,
@@ -293,9 +296,9 @@ write.csv(IndivAlliancePerformance_AMM2, "./data/output/IndivAlliancePerformance
 
 #FUH7
 IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  filter(SubMeasureID == "FUH7") %>% 
-  select(Provider,
+  filter(Data.Period == VBP_Report_Date) %>% 
+  filter(SubMeasure.ID == "FUH7") %>% 
+  select(Health.Home.Name,
          TotalEligible,
          AdaptedCompliant,
          PercentCompliant,
@@ -304,9 +307,9 @@ IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>%
 write.csv(IndivAlliancePerformance_FUH7, "./data/output/IndivAlliancePerformance_FUH7.csv")
 #HDO
 IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  filter(SubMeasureID == "HDO") %>% 
-  select(Provider,
+  filter(Data.Period == VBP_Report_Date) %>% 
+  filter(SubMeasure.ID == "HDO") %>% 
+  select(Health.Home.Name,
          TotalEligible,
          AdaptedCompliant,
          PercentCompliant,
@@ -361,10 +364,10 @@ Tab_CountyDistribution <- CountyDistribution %>%
 gtsave(Tab_CountyDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_CountyDistribution.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_CountyDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_CountyDistribution.png")
+gtsave(Tab_CountyDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_CountyDistribution.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_CountyDistribution, filename = "images/image_2023-03-01_Tab_CountyDistribution.png")
+gtsave(Tab_CountyDistribution, filename = "images/image_2023-01-01_Tab_CountyDistribution.png")
 
 Tab_CountyDistribution
 ```
@@ -411,10 +414,10 @@ gt() %>%
 gtsave(Tab_GenderDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_GenderDistribution.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_GenderDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_GenderDistribution.png")
+gtsave(Tab_GenderDistribution, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_GenderDistribution.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_GenderDistribution, filename = "images/image_2023-03-01_Tab_GenderDistribution.png")
+gtsave(Tab_GenderDistribution, filename = "images/image_2023-01-01_Tab_GenderDistribution.png")
 #
 Tab_GenderDistribution
 ```
@@ -465,10 +468,10 @@ Fig_PopPyramid
 dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_PopPyramid.png", width = 500, height = 500)
 # creates dated image for tracking and filing in SharePoint
 # date must be updated for each monthly report
-dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_PopPyramid.png", width = 500, height = 500)
+dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Fig_PopPyramid.png", width = 500, height = 500)
 # creates dated image for tracking and filing in R project folder
 # date must be updated for each monthly report
-dev.print(device = png, filename = "./images/image_2023-03-01_Fig_PopPyramid.png", width = 500, height = 500)
+dev.print(device = png, filename = "./images/image_2023-01-01_Fig_PopPyramid.png", width = 500, height = 500)
 ```
 
 ## Alliance Membership Allocation
@@ -516,10 +519,10 @@ Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>%
 gtsave(Tab_Alloc_v_Assignment, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_Alloc_v_Assignment.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_Alloc_v_Assignment, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_Alloc_v_Assignment.png")
+gtsave(Tab_Alloc_v_Assignment, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_Alloc_v_Assignment.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_Alloc_v_Assignment, filename = "images/image_2023-03-01_Tab_Alloc_v_Assignment.png")
+gtsave(Tab_Alloc_v_Assignment, filename = "images/image_2023-01-01_Tab_Alloc_v_Assignment.png")
 
 Tab_Alloc_v_Assignment
 ```
@@ -558,14 +561,14 @@ gt() %>%
               decimals = 2,
               force_sign = TRUE) %>% 
   opt_align_table_header(align = "left") %>% 
-  cols_label(SubMeasureID = "NCQA Measure",
+  cols_label(SubMeasure.ID = "NCQA Measure",
              Sum_AdaptedCompliant = "Compliant",
              Sum_TotalEligible = "Eligible",
              Percent_Compliant = "Percent Compliant",
              NCQA_Mean = "NCQA Mean",
              PerformanceLevel = "Performance Level"
              ) %>%
-   cols_width(SubMeasureID ~ px(110),
+   cols_width(SubMeasure.ID ~ px(110),
              Sum_AdaptedCompliant ~ px(110),
              Sum_TotalEligible ~ px(110),
              Percent_Compliant ~ px(110),
@@ -590,10 +593,10 @@ gt() %>%
 gtsave(Tab_AllProvPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_AllProvPerformance.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_AllProvPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AllProvPerformance.png")
+gtsave(Tab_AllProvPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_AllProvPerformance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_AllProvPerformance, filename = "images/image_2023-03-01_Tab_AllProvPerformance.png")
+gtsave(Tab_AllProvPerformance, filename = "images/image_2023-01-01_Tab_AllProvPerformance.png")
 
 Tab_AllProvPerformance
 ```
@@ -602,24 +605,24 @@ Tab_AllProvPerformance
 # Target Measure Lollipop, most recent report
 # Lollipop Chart ----------------------------------------------------------
 Fig_AllProvLollipop <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>%
-  ggplot(aes(x = Provider_ShortName, 
+  filter(Data.Period == VBP_Report_Date) %>%
+  ggplot(aes(x = Provider_Shortname, 
              y = PercentCompliant)
          ) +
   geom_line(aes(y = AdaptedNCQAMean,
-                group = SubMeasureID),
+                group = SubMeasure.ID),
                 color = "#dfa689",
             size = 4
             ) +
   geom_point(aes(size = PercentTotalEligible*10),
                  color = "#4b605e",
             ) +
-  geom_segment(aes(xend = Provider_ShortName,
+  geom_segment(aes(xend = Provider_Shortname,
                    y = 0,
                    yend = PercentCompliant),
                    color = "#4b605e"
                )+
-  facet_grid(cols = vars(SubMeasureID)
+  facet_grid(cols = vars(SubMeasure.ID)
              )+
   theme_bw()+
   theme(legend.position = "none",
@@ -644,10 +647,10 @@ Fig_AllProvLollipop
 dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_db_Fig_AllProvLollipop.png", width = 500, height = 500)
 # creates dated image for tracking and filing in SharePoint
 # date must be updated for each monthly report
-dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Fig_AllProvLollipop.png", width = 500, height = 500)
+dev.print(device = png, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Fig_AllProvLollipop.png", width = 500, height = 500)
 # creates dated image for tracking and filing in R project folder
 # date must be updated for each monthly report
-dev.print(device = png, filename = "./images/image_2023-03-01_Fig_AllProvLollipop.png", width = 500, height = 500)
+dev.print(device = png, filename = "./images/image_2023-01-01_Fig_AllProvLollipop.png", width = 500, height = 500)
 ```
 
 We are pleased to report that a more specific analysis of current performance on the target measures indicates performance levels at or above the target. The chart below represents the most recent VBP Reports for December 2022, which include claims adjudicated through September 2022. These results demonstrate a very strong performance by Alliance Providers.
@@ -712,10 +715,10 @@ tab_header(
 gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_AMM2Performance.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_AMM2Performance.png")
+gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_AMM2Performance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_AMM2Performance, filename = "images/image_2023-03-01_Tab_AMM2Performance.png")
+gtsave(Tab_AMM2Performance, filename = "images/image_2023-01-01_Tab_AMM2Performance.png")
 
 Tab_AMM2Performance
 ```
@@ -767,10 +770,10 @@ tab_header(
 gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_FUH7Performance.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_FUH7Performance.png")
+gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_FUH7Performance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_FUH7Performance, filename = "images/image_2023-03-01_Tab_FUH7Performance.png")
+gtsave(Tab_FUH7Performance, filename = "images/image_2023-01-01_Tab_FUH7Performance.png")
 
 Tab_FUH7Performance
 ```
@@ -822,10 +825,10 @@ tab_header(
 gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_HDOPerformance.png")
 # creates dated image for tracking and filing in Sharepoint
 # date must be updated for each monthly report
-gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-03-01_Tab_HDOPerformance.png")
+gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_HDOPerformance.png")
 # creates dated image for tracking and filing
 # date must be updated for each monthly report
-gtsave(Tab_HDOPerformance, filename = "images/image_2023-03-01_Tab_HDOPerformance.png")
+gtsave(Tab_HDOPerformance, filename = "images/image_2023-01-01_Tab_HDOPerformance.png")
 
 Tab_HDOPerformance
 ```
