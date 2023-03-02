@@ -49,11 +49,12 @@ data("county.map")
 
 ```{r Objects_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
-
-VBP_Report_Date = "2022-10-31" #claimsAdjudicated Through Date
-GlobalMembers_Report_Date = "2022-12-31"
+# VBP Report Date Information
+Data.Period = "2022-10-31" #claimsAdjudicated Through Date
+Reportasof = "2022-12-16"
 ProgressReportDate = "2023-01-01"
-#Date member roster was extracted from HCA
+#Date member roster was extracted from HCAGlobal
+Members_Report_Date = "2022-12-31" 
 #
 Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
 #
@@ -238,7 +239,7 @@ write.csv(CountyDistribution, "./data/output/2023-01-01_CountyDistribution.csv")
 # Make the compliance/performance table
 Tab_PercentCompliant <- VBP_Rep_Comb %>% 
   # add filter back in for specific reporting period
-  filter(Data.Period == VBP_Report_Date) %>%
+  filter(Data.Period == Data.Period) %>%
   filter(SubMeasure.ID %in% c("AMM2","FUH7", "HDO")) %>% 
   mutate(SumTotalEligible = sum(TotalEligible)) %>% 
   group_by(Data.Period, Provider_Shortname, Health.Home.Name, SubMeasure.ID, AdaptedNCQAMean, SumTotalEligible) %>% 
@@ -251,7 +252,7 @@ Tab_PercentCompliant <- VBP_Rep_Comb %>%
 write.csv(Tab_PercentCompliant, "./data/output/2023-01-01_Tab_PercentCompliant.csv")
 # Calculate performance levels
 AllAlliancePerformance <- Tab_PercentCompliant %>% 
-  filter(Data.Period == VBP_Report_Date) %>% 
+  filter(Data.Period == Data.Period) %>% 
   group_by(SubMeasure.ID) %>% 
   summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
             Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
@@ -265,7 +266,7 @@ write.csv(AllAlliancePerformance, "./data/output/2023-01-01_Tab_AllAlliancePerfo
 ```{r eval_ComprehensiveOutlookTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 # Tab_CompOutlook <- VBP_Rep_Comb %>% 
 #   # add filter back in for specific reporting period
-#   #filter(Data.Period == VBP_Report_Date) %>% 
+#   #filter(Data.Period == Data.Period) %>% 
 #   mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   
 #   mutate(SumTotalElig = sum(TotalEligible)) %>%
 #   mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
@@ -290,7 +291,7 @@ write.csv(AllAlliancePerformance, "./data/output/2023-01-01_Tab_AllAlliancePerfo
 # Calculate performance levels
 # AMM2
 IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>% 
-  filter(Data.Period == VBP_Report_Date) %>% 
+  #filter(Data.Period == Data.Period) %>% 
   filter(SubMeasure.ID == "AMM2") %>% 
   select(Health.Home.Name,
          TotalEligible,
@@ -302,7 +303,7 @@ write.csv(IndivAlliancePerformance_AMM2, "./data/output/2023-01-01_IndivAlliance
 
 #FUH7
 IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>% 
-  filter(Data.Period == VBP_Report_Date) %>% 
+  filter(Data.Period == Data.Period) %>% 
   filter(SubMeasure.ID == "FUH7") %>% 
   select(Health.Home.Name,
          TotalEligible,
@@ -313,7 +314,7 @@ IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>%
 write.csv(IndivAlliancePerformance_FUH7, "./data/output/2023-01-01_IndivAlliancePerformance_FUH7.csv")
 #HDO
 IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>% 
-  filter(Data.Period == VBP_Report_Date) %>% 
+  filter(Data.Period == Data.Period) %>% 
   filter(SubMeasure.ID == "HDO") %>% 
   select(Health.Home.Name,
          TotalEligible,
@@ -547,7 +548,7 @@ NCQA_Mean <- c(.5729, .3936, .9300)
 
 AllianceMeasures_DF <- data.frame(Domain, Measure, NCQA_Mean)
 
-AllianceMeasures_DF
+AllianceMeasures_DF %>% gt()
 ```
 
 ## All Providers
@@ -611,7 +612,7 @@ Tab_AllProvPerformance
 # Target Measure Lollipop, most recent report
 # Lollipop Chart ----------------------------------------------------------
 Fig_AllProvLollipop <- Tab_PercentCompliant %>% 
-  filter(Data.Period == VBP_Report_Date) %>%
+  filter(Data.Period == Data.Period) %>%
   ggplot(aes(x = Provider_Shortname, 
              y = PercentCompliant)
          ) +
@@ -747,13 +748,13 @@ tab_header(
               decimals = 2,
               force_sign = TRUE) %>% 
   opt_align_table_header(align = "left") %>% 
-  cols_label(Provider = "Provider",
+  cols_label(Health.Home.Name = "Provider",
              AdaptedCompliant = "Compliant",
              TotalEligible = "Eligible",
              PercentCompliant = "Percent Compliant",
              PerformanceLevel = "Performance Level"
              ) %>%
-   cols_width(Provider ~ px(200),
+   cols_width(Health.Home.Name ~ px(200),
              AdaptedCompliant ~ px(110),
              TotalEligible ~ px(110),
              PercentCompliant ~ px(110),
@@ -802,13 +803,13 @@ tab_header(
               decimals = 2,
               force_sign = TRUE) %>% 
   opt_align_table_header(align = "left") %>% 
-  cols_label(Provider = "Provider",
+  cols_label(Health.Home.Name = "Provider",
              AdaptedCompliant = "Compliant",
              TotalEligible = "Eligible",
              PercentCompliant = "Percent Compliant",
              PerformanceLevel = "Performance Level"
              ) %>%
-   cols_width(Provider ~ px(200),
+   cols_width(Health.Home.Name ~ px(200),
              AdaptedCompliant ~ px(110),
              TotalEligible ~ px(110),
              PercentCompliant ~ px(110),

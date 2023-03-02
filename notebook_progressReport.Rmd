@@ -9,7 +9,6 @@ output:
     number_sections: true
     toc_collapsed: no
     theme: cerulean
-    
 ---
 
 # Introduction
@@ -129,18 +128,20 @@ Date is compiled and validated by BCBSAZ finance and MIS subject matter experts 
 
 The following setup, libraries, and packages were loaded.
 
-```{r setup, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Set up knitting options for markdown file
 knitr::opts_chunk$set(echo = TRUE)
 
 # Set number of digits to display exponential numbers
-options(scipen = 999, show.signif.stars = TRUE)
+options(scipen = 999, 
+        show.signif.stars = TRUE)
 
 # Load Packages and libraries
-library(tidyverse)
-library(scales)
 library(choroplethrMaps)
 library(ggh4x)
+library(gt)
+library(scales)
+library(tidyverse)
 
 ```
 
@@ -176,15 +177,23 @@ LEFT JOIN globalMembers.dbo.clientIdPlus cid ON dm.primaryId = cid.primaryId
 LEFT JOIN globalMembers.dbo.dailyMembershipAllArizonaAddresses da ON dm.primaryId = da.primaryId
 ```
 
-**need to say something about where this data pull went to.**
+The resulting solution is saved as a CSV here:
 
-```{r Data_Load1, echo=TRUE, warning=FALSE, message=FALSE}
+1.  ./ACO/Data and Reports/Alliance Progress Reports/Data_Files
+2.  With the naming convention
+    1.  data_confidential_glblmbrs_YYYY-MM-DD_globalMembersRoster.csv
+
+    2.  Where the date is the date the data was extracted
+
+The raw data files are loaded as indicated below
+```{r Data_Load1, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # Load data
 GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
-VBP_Rep_Comb <- read_csv("./data/data_confidential_vbpbhh_2023-01-30_allProvidersCombined.csv")
+VBP_Rep_Comb <- read_csv("./data/datadata_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
 AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
+data("county.map")
 ```
 
 ### Residential Data
@@ -207,45 +216,29 @@ Separate data frames and objects were created throughout the process to preserve
 
 Several reference objects and data frames were created to provide parameters for determining active membership.
 
-```{r OBJ_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Objects_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
-
-VBP_Report_Date = "2022-09-01" #claimsAdjudicated Through Date
-
-GlobalMembers_Report_Date = "2022-12-31"
-
-# options are offered here to use anonomized names
+# VBP Report Date Information
+Data.Period = "2022-10-31" #claimsAdjudicated Through Date
+Reportasof = "2022-12-16"
+ProgressReportDate = "2023-01-01"
+#Date member roster was extracted from HCAGlobal
+Members_Report_Date = "2022-12-31" 
 #
-Provider_ShortName_out <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
-Provider_ShortName <- (c("Nine", "One", "Two", "Seven", "Five", "Six", "Three", "Eight", "Four"))
+Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
 #
-
-MainStates <- map_data("state")
-
+# Various vectors of data for mapping functions
+MainStates <- map_data("state") #table with state info, lat, long, etc.
 Arizona <- filter(MainStates, region == "arizona")
-
-AZ_County <- (c("Apache County", "Coconino County", "Mohave County", 
-                "Navajo County", "Yavapai County"))
-
-# options are offered here to use anonomized names
-#
-AZ_County_Map_out <- (c("Apache", "Coconino", "Mohave", 
-                    "Navajo", "Yavapai"))
-AZ_County_Map <- (c("Alderan", "Naboo", "Tatooine", 
-                    "Dagobah", "Endor"))
-#
-
-data("county.map")
-
+AZ_County <- (c("Apache County", "Coconino County", "Mohave County", "Navajo County", "Yavapai County"))
+AZ_County_Map <- (c("Apache", "Coconino", "Mohave", "Navajo", "Yavapai"))
 countyref <- county.map %>% 
   filter(NAME %in% AZ_County_Map)
-
 NAZ_Zips <- ZipDatabase %>% 
   filter(county %in% AZ_County) %>% 
   select(zip)
-
 Vec_AZ_Zips <- NAZ_Zips$zip
-
+#
 # Create NCQA Mean vector
 NCQA_MeanList = c(.5729, .3936, .93)
 
@@ -262,27 +255,6 @@ The data frame *ActiveNAZMmbrshp* was created to contain the active membership o
 -   Include only those auto-assigned to Alliance Providers
 
 -   The data was also calculated to distinguish adults, *Age \>= 18 (Adult Membership)*, from children, *Age \< 18 (Child Membership)*. Both age groups are included in the overall model.
-
-```{r Data_GlblMmbrshp, echo=TRUE, warning=FALSE, message=FALSE}
-# Calculate active members based on BCBSAZ auto-enrollment
-ActiveNAZMmbrshp <- GlblMmbrshp %>% 
-  replace(.=="NULL", NA) %>% 
-  mutate(disenrollmentDate = !is.na(disenrollmentDate)) %>% 
-  filter(disenrollmentDate == FALSE) %>% 
-  filter(resCountyName %in% AZ_County_Map) %>%
- #filter(zipCode %in% Vec_AZ_Zips) %>% 
-  filter(bhhShortname %in% Provider_ShortName)
-
-# Separate for enrolled adults
-AdultMembership <- ActiveNAZMmbrshp %>% 
-  filter(Age >= 18)
-
-# Separate for enrolled children
-ChildMembership <- ActiveNAZMmbrshp %>% 
-  filter(Age < 18)
-
-ActiveNAZMmbrshp
-```
 
 ### Value Based Purchasing Data
 
@@ -388,42 +360,51 @@ There are `r (prettyNum(nrow(AdultMembership), big.mark=","))` active adults, an
 
 The active membership was then compared to the contract allocated membership. The member allocation table, *AllianceProvAllocation*, was loaded to the data model, and merged with elements of the *ActiveNAZMmbrshp* table. This new data frame was used to compare active enrollments from the BCBSAZ auto-assignment process with allocated members determined by contract.
 
-```{r eval_allianceAllocation, echo=TRUE, warning=FALSE, message=FALSE}
+```{r eval_allianceAllocation, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Wrangle contract allocation table for comparison
-Alliance_AllocationTable <- AllianceProvAllocation %>% 
+Alliance_AllocationTable <- AllianceProvAllocation %>%
+  filter(Provider_ShortName != "EHS") %>% 
   rename(AllianceAllocation = `Annual Member Months`) %>% 
   rename(Provider_ShortName = Provider) %>% 
   mutate(Provider_ShortName = if_else((
             Provider_ShortName == "Spectrum"), 
             "SHG", 
             Provider_ShortName)# the short name for spectrum varies depending on data source
+         ) %>% 
+  mutate(Provider_ShortName = if_else((
+            Provider_ShortName == "WYGC"), 
+            "PH", 
+            Provider_ShortName)# the short name for spectrum varies depending on data source
+         ) %>% 
+  mutate(Provider_ShortName = if_else((
+            Provider_ShortName == "SBH"), 
+            "SBHS", 
+            Provider_ShortName)# the short name for spectrum varies depending on data source
          )
-
-# Wrangle BCBASAZ Auto Enrolled per GlblMmbrshp for comparison
+# Wrangle BCBASAZ Auto Enrolled to filter and count members for Alliance Providers
 HCA_AutoEnrolled <- ActiveNAZMmbrshp %>% 
+  filter(bhhShortname != "EHS") %>% 
   count(bhhShortname) %>%
   rename(HCA_Enrollment = n) %>%
   rename(Provider_ShortName = bhhShortname)
-  
 # Create a table comparing auto-enrollment with contract allocation
 ContractAlloc_v_Assignment <- 
   merge(x=Alliance_AllocationTable, #NARBHA Contract Allocation
         y=HCA_AutoEnrolled, #HCA GlobalMembers Allocation
         by="Provider_ShortName") %>% 
   mutate(PercentDifference = percent(
-    ((HCA_Enrollment-AllianceAllocation) /AllianceAllocation))) %>% 
+    ((HCA_Enrollment-AllianceAllocation)/AllianceAllocation))) %>% 
   mutate(PercentOfMembership = percent(
     AllianceAllocation/(sum(AllianceAllocation))))
-
-write.csv(ContractAlloc_v_Assignment, "./data/output/ContractAlloc_v_Assignment.csv")
-
-# Calculate the percent change from contract implementation to date of membership report
+# Export the Alloc_v_Assignment table as a csv for reference
+write.csv(ContractAlloc_v_Assignment, "./data/output/2023-01-01_ContractAlloc_v_Assignment.csv")
+# Calculate the percent change from contract implementation to date of membership report for all Alliance
 Alloc_v_EnrolledPercentDiff <- data.frame(c(
   sum(ContractAlloc_v_Assignment$AllianceAllocation)),
   sum(ContractAlloc_v_Assignment$HCA_Enrollment)) %>% 
   mutate(PercentDiff = percent(((`sum.ContractAlloc_v_Assignment.HCA_Enrollment.` -`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))                               /`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
-
-ContractAlloc_v_Assignment
+# Export the table as a csv for reference
+write.csv(Alloc_v_EnrolledPercentDiff, "./data/output/2023-01-01_Alloc_v_EnrolledPercentDiff.csv")
 ```
 
 As of the contract start date, October 1, 2022, The Alliance was allocated `r (prettyNum(sum(ContractAlloc_v_Assignment$AllianceAllocation), big.mark=","))` members by contract. Alliance providers were auto-assigned `r (prettyNum(nrow(ActiveNAZMmbrshp), big.mark=","))` active members as of `r GlobalMembers_Report_Date`. The percent change is `r Alloc_v_EnrolledPercentDiff$PercentDiff`.
@@ -432,9 +413,8 @@ In summary, there is not a concerning variance between the contract allocation a
 
 ### Gender distribution
 
-```{r TBL_GenderSummary,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r TBL_GenderSummary,  include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Gender distribution table
-
 Tab_Gender <- ActiveNAZMmbrshp %>% 
   mutate(sex = case_when(
     sex == "M" ~ "Male",
@@ -444,24 +424,25 @@ Tab_Gender <- ActiveNAZMmbrshp %>%
   rename(Sex = sex) %>% 
   rename(Members = n) %>% 
   mutate(Percent = (Members / (sum(Members)))) 
-
-Tab_Gender
+# Export the table as a csv for reference
+write.csv(Tab_Gender, "./data/output/2023-01-01_Tab_Gender.csv")
 ```
 
 The Alliance serves adults and children aged 6 and older. Distribution of gender is balanced, with Male accounting for 48%, and Female accounting for 52%. When viewed across age groups we also observed a complimentary distribution of gender.
 
 ### Age Grouping
 
-The membership was separated into age distributions according to 13 partially overlapping age groups. These age groups are based on the Age-Phenome Knowledge-base (APK), which has demonstrated that overlapping ranges of are better suited to create groupings according to disease occurrence, including mental health. This "soft-clustering" approach allows ages to be included in multiple age ranges[^4].
+The membership was separated into age distributions according to 13 partially overlapping age groups. These age groups are based on the Age-Phenome Knowledge-base (APK), which has demonstrated that overlapping ranges of are better suited to create groupings according to disease occurrence, including mental health. This "soft-clustering" approach allows ages to be included in multiple age ranges[^2].
 
-[^4]: Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357--2366. <https://doi.org/10.1007/s11357-013-9510-6>
+[^2]: Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357--2366. <https://doi.org/10.1007/s11357-013-9510-6>
 
-```{r eval_ageGrouping,  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r eval_ageGrouping, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Population Pyramid
 DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>% 
   select(Age, sex) %>% 
   # Create categories using LDA soft grouping method which allows
   # ages to appear in more than one group
+  # [^1 Geifman, N., Cohen, R., & Rubin, E. (2013). Redefining meaningful age groups in the context of disease. AGE, 35(6), 2357–2366. https://doi.org/10.1007/s11357-013-9510-6]
   mutate(`00 - 16` = case_when(
     Age > 00 & Age <= 16 ~ "1", TRUE ~ "0")) %>%
   mutate(`00 - 20` = case_when(
@@ -498,6 +479,7 @@ DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>%
   mutate(`32 - 54` = as.numeric(`32 - 54`)) %>% 
   mutate(`41 - 63` = as.numeric(`41 - 63`)) %>% 
   mutate(`48 - 69` = as.numeric(`48 - 69`)) %>% 
+  mutate(`50 - 72` = as.numeric(`50 - 73`)) %>%
   mutate(`50 - 73` = as.numeric(`50 - 73`)) %>% 
   mutate(`62 - 86` = as.numeric(`62 - 86`)) %>% 
   mutate(`76 - 98` = as.numeric(`76 - 98`)) %>% 
@@ -512,14 +494,12 @@ DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>%
     sex == "M" ~ "Male",
     sex == "F" ~ "Female"
   )) %>% 
-  #filter out 00 - 16
-  #filter(Age_Group != "00 - 16") %>% 
-  #change male to negative
+  #change male to negative so it flips sides of the axis on a shared facet plot
   mutate(n = ifelse(sex == "Male", n * -1, n)) %>% 
   #change male female to factor
   mutate(sex = factor(sex, levels = c("Male","Female")))
-
-DemoTable_SexByAgeGroup
+# Export the table as a csv for reference
+write.csv(DemoTable_SexByAgeGroup, "./data/output/2023-01-01_DemoTable_SexByAgeGroup.csv")
 ```
 
 This data is more easily understood through visualization. The following population pyramid was constructed in order view the age grouping distribution by gender. Overall, the same gender distribution was observed. The greatest proportions of members per age group clustered in the ***0-20*** age group, followed closely by ***16-38*** age group, indicating a younger population consituting the Alliance membership.
@@ -566,90 +546,233 @@ ggplot(DemoTable_SexByAgeGroup, aes(y = Age_Group, x = n, fill = sex)) +
 Fig_PopPyramid
 ```
 
+### Distribution by County
+
+```{r Tab_DistributionbyCounty, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+CountyDistribution <- ActiveNAZMmbrshp %>% 
+  rename(`County of Residence` = resCountyName) %>% 
+  select(`County of Residence`) %>% 
+  count(`County of Residence`) %>% 
+  rename(Members = n) %>% 
+  mutate(Percent = (Members / (sum(Members)))) 
+# Export the table as a csv for reference
+write.csv(CountyDistribution, "./data/output/2023-01-01_CountyDistribution.csv")
+```
+
 ### Performance Memasurement
 
-The Alliance aspires to optimal behavioral health care for its members. In order to provide a standardized measure of member health and outcomes, the Alliance adheres to 3 key performance measures of the Healthcare Effectiveness Data and Information Set (HEDIS).[^5] This standard also supports BCBSAZ's status as the only AHCCCS ACC health plan to be accredited by the National Committee for Quality Assurance (NCQA).[^6]
+The Alliance aspires to optimal behavioral health care for its members. In order to provide a standardized measure of member health and outcomes, the Alliance adheres to 3 key performance measures of the Healthcare Effectiveness Data and Information Set (HEDIS).[^3] This standard also supports BCBSAZ's status as the only AHCCCS ACC health plan to be accredited by the National Committee for Quality Assurance (NCQA).[^4]
 
-[^5]: <https://www.ncqa.org/hedis/>
+[^3]: <https://www.ncqa.org/hedis/>
 
-[^6]: <https://www.ncqa.org/about-ncqa/>
+[^4]: <https://www.ncqa.org/about-ncqa/>
 
 HEDIS is composed of over 90 separate measures, encompassing 6 domains. The Alliance focuses on 3 measures within the Effectiveness of Care domain, AMM2, FUH7, and HDO, with target means of 57.29%, 39.36%, and 93.00%, respectively.
 
 #### Data integrity and gap analysis
 
-Increased understanding and transparency of Alliance performance ratings and the associated data is one of the primary goals of the Alliance. Since implementation, Alliance team members have worked with BCBSAZ business intelligence, finance and medical management department partners. Through this relationship, the Alliance has built a strong knowledge of the data resources available for summary and predictive analyses. In addition, the Alliance has collaborated with providers to understand current treatment and quality processes and identify barriers to actionable data. 
+Increased understanding and transparency of Alliance performance ratings and the associated data is one of the primary goals of the Alliance. Since implementation, Alliance team members have worked with BCBSAZ business intelligence, finance and medical management department partners. Through this relationship, the Alliance has built a strong knowledge of the data resources available for summary and predictive analyses. In addition, the Alliance has collaborated with providers to understand current treatment and quality processes and identify barriers to actionable data.
 
 ### Baseline Measures (Pre-Contract)
 
 The baseline performance of Alliance Providers prior to contract implementation was measured in order to gain an understanding of the primary areas of focus during the first year. Using BCBSAZ Value Based Purchasing Reports, the 6 months prior to contract implementation were assessed. The results indicated in the heatmap below indicated that overall the providers are in compliance on all 3 measures. When observed individually, there are some areas for improvement, particularly in the Follow Up after Hospitalization (FUH) measure.
 
-```{r DATA_AllProvComplianceTable,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#### All Providers
+
+```{r eval_AllProvComplianceTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Make the compliance/performance table
 Tab_PercentCompliant <- VBP_Rep_Comb %>% 
   # add filter back in for specific reporting period
-  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>% 
-  mutate(SumTotalElig = sum(TotalEligible)) %>%
-  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
-  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
-  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
-  select(Provider,
-         Provider_ShortName, 
-         SubMeasureID,
-         AdaptedCompliant,
-         TotalEligible,
-         PercentCompliant,
-         PercentTotalEligible,
-         ClaimsAdjudicatedThrough,
-         AdaptedNCQAMean,
-         PerformanceLevel)
-
+  filter(Data.Period == Data.Period) %>%
+  filter(SubMeasure.ID %in% c("AMM2","FUH7", "HDO")) %>% 
+  mutate(SumTotalEligible = sum(TotalEligible)) %>% 
+  group_by(Data.Period, Provider_Shortname, Health.Home.Name, SubMeasure.ID, AdaptedNCQAMean, SumTotalEligible) %>% 
+  summarize(AdaptedCompliant = sum(AdaptedCompliant),
+            TotalEligible = sum(TotalEligible)) %>% 
+  mutate(PercentCompliant = (AdaptedCompliant/TotalEligible)) %>%
+  mutate(PerformanceLevel = (PercentCompliant - AdaptedNCQAMean)) %>% 
+  mutate(PercentTotalElig = TotalEligible/SumTotalEligible) 
+# Export the table as a csv for reference
+write.csv(Tab_PercentCompliant, "./data/output/2023-01-01_Tab_PercentCompliant.csv")
 # Calculate performance levels
 AllAlliancePerformance <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  group_by(SubMeasureID) %>% 
+  filter(Data.Period == Data.Period) %>% 
+  group_by(SubMeasure.ID) %>% 
   summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
             Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
   mutate(Percent_Compliant = Sum_AdaptedCompliant/Sum_TotalEligible) %>%
   mutate(NCQA_Mean = NCQA_MeanList) %>% 
   mutate(PerformanceLevel = (Percent_Compliant - NCQA_Mean))
-
-AllAlliancePerformance
+# Export the table as a csv for reference
+write.csv(AllAlliancePerformance, "./data/output/2023-01-01_Tab_AllAlliancePerformance.csv")
 ```
 
-Next we calculated the ***individual performance levels*** for each of the target measures.
 
-```{r DATA_IndivProvComplianceTable,  echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
-# Calculate performance levels
-IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  filter(SubMeasureID == "AMM2") %>% 
-  select(Provider,
-         TotalEligible,
-         AdaptedCompliant,
-         PercentCompliant,
-         PerformanceLevel)
+## Individual Performance
 
-IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  filter(SubMeasureID == "FUH7") %>% 
-  select(Provider,
-         TotalEligible,
-         AdaptedCompliant,
-         PercentCompliant,
-         PerformanceLevel)
+### Antidepressant Medication Mangement
 
-IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>% 
-  filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
-  filter(SubMeasureID == "HDO") %>% 
-  select(Provider,
-         TotalEligible,
-         AdaptedCompliant,
-         PercentCompliant,
-         PerformanceLevel)
+```{r Tab_IndivProviderPerformanceAMM2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+#Individual Provider Performance table
+# AMM2
+Tab_AMM2Performance <- IndivAlliancePerformance_AMM2 %>% 
+  select(Health.Home.Name, AdaptedCompliant, TotalEligible, PercentCompliant, PerformanceLevel) %>% 
+gt() %>% 
+tab_header(
+    title = md("Individual Performance, Antidepressant Medication Management"),
+    subtitle = md("*January 2022 - November 2022* <br> NCQA Mean = 57.30%")
+  ) %>% 
+  fmt_percent(columns = c("PercentCompliant"), 
+            decimals = 2,
+            force_sign = FALSE) %>% 
+  fmt_percent(columns = c("PerformanceLevel"), 
+              decimals = 2,
+              force_sign = TRUE) %>% 
+  opt_align_table_header(align = "left") %>% 
+  cols_label(Health.Home.Name = "Provider",
+             AdaptedCompliant = "Compliant",
+             TotalEligible = "Eligible",
+             PercentCompliant = "Percent Compliant",
+             PerformanceLevel = "Performance Level"
+             ) %>%
+   cols_width(Health.Home.Name ~ px(200),
+             AdaptedCompliant ~ px(110),
+             TotalEligible ~ px(110),
+             PercentCompliant ~ px(110),
+             PerformanceLevel ~ px(120)
+             )%>% 
+  tab_source_note(
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through November, 2022*")
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_fill(color = "#4b605e"),
+      cell_text(weight = "bold",
+                color = "#e3efe6")
+    ),
+    locations = cells_column_labels(
+      columns = everything()
+    )
+  ) %>% 
+  opt_horizontal_padding(scale = 3)
+# Creates undated dashboard image
+gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_AMM2Performance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_AMM2Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_AMM2Performance.png")
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+gtsave(Tab_AMM2Performance, filename = "images/image_2023-01-01_Tab_AMM2Performance.png")
 
-IndivAlliancePerformance_AMM2
-IndivAlliancePerformance_FUH7
-IndivAlliancePerformance_HDO
+Tab_AMM2Performance
+```
+
+### Follow Up after Hospitalization, 7 Day
+
+```{r Tab_IndivProviderPerformanceFUH7, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+# FUH7
+Tab_FUH7Performance <- IndivAlliancePerformance_FUH7 %>% 
+gt() %>% 
+tab_header(
+    title = md("Individual Performance, Follow Up after Hospitalization"),
+    subtitle = md("*January 2022 - November 2022* <br> NCQA Mean = 39.36%")
+  ) %>% 
+  fmt_percent(columns = c("PercentCompliant"), 
+            decimals = 2,
+            force_sign = FALSE) %>% 
+  fmt_percent(columns = c("PerformanceLevel"), 
+              decimals = 2,
+              force_sign = TRUE) %>% 
+  opt_align_table_header(align = "left") %>% 
+  cols_label(Health.Home.Name = "Provider",
+             AdaptedCompliant = "Compliant",
+             TotalEligible = "Eligible",
+             PercentCompliant = "Percent Compliant",
+             PerformanceLevel = "Performance Level"
+             ) %>%
+   cols_width(Health.Home.Name ~ px(200),
+             AdaptedCompliant ~ px(110),
+             TotalEligible ~ px(110),
+             PercentCompliant ~ px(110),
+             PerformanceLevel ~ px(120)
+             )%>% 
+  tab_source_note(
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through November, 2022*")
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_fill(color = "#4b605e"),
+      cell_text(weight = "bold",
+                color = "#e3efe6")
+    ),
+    locations = cells_column_labels(
+      columns = everything()
+    )
+  ) %>% 
+  opt_horizontal_padding(scale = 3)
+# Creates undated dashboard image
+gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_FUH7Performance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_FUH7Performance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_FUH7Performance.png")
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+gtsave(Tab_FUH7Performance, filename = "images/image_2023-01-01_Tab_FUH7Performance.png")
+
+Tab_FUH7Performance
+```
+
+### Use of Opioids at High Dosage
+
+```{r Tab_IndivProviderPerformanceHDO, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+# HDO
+Tab_HDOPerformance <- IndivAlliancePerformance_HDO %>% 
+gt() %>% 
+tab_header(
+    title = md("Individual Performance, Use of Opioids at High Dosage"),
+    subtitle = md("*January 2022 - November 2022* <br> NCQA Mean = 93% Compliant")
+  ) %>% 
+  fmt_percent(columns = c("PercentCompliant"), 
+            decimals = 2,
+            force_sign = FALSE) %>% 
+  fmt_percent(columns = c("PerformanceLevel"), 
+              decimals = 2,
+              force_sign = TRUE) %>% 
+  opt_align_table_header(align = "left") %>% 
+  cols_label(Health.Home.Name = "Provider",
+             AdaptedCompliant = "Compliant",
+             TotalEligible = "Eligible",
+             PercentCompliant = "Percent Compliant",
+             PerformanceLevel = "Performance Level"
+             ) %>%
+   cols_width(Health.Home.Name ~ px(200),
+             AdaptedCompliant ~ px(110),
+             TotalEligible ~ px(110),
+             PercentCompliant ~ px(110),
+             PerformanceLevel ~ px(120)
+             )%>% 
+  tab_source_note(
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through November, 2022*")
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_fill(color = "#4b605e"),
+      cell_text(weight = "bold",
+                color = "#e3efe6")
+    ),
+    locations = cells_column_labels(
+      columns = everything()
+    )
+  ) %>% 
+  opt_horizontal_padding(scale = 3)
+# Creates undated dashboard image
+gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_Tab_HDOPerformance.png")
+# creates dated image for tracking and filing in Sharepoint
+# date must be updated for each monthly report
+gtsave(Tab_HDOPerformance, filename = "C:/Users/KGLtd/OneDrive - The NARBHA Institute/Site Assets/SitePages/Alliance-Dashboard/image_2023-01-01_Tab_HDOPerformance.png")
+# creates dated image for tracking and filing
+# date must be updated for each monthly report
+gtsave(Tab_HDOPerformance, filename = "images/image_2023-01-01_Tab_HDOPerformance.png")
+
+Tab_HDOPerformance
 ```
