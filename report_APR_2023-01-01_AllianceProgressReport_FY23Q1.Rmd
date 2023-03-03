@@ -41,9 +41,15 @@ library(readxl)
 
 ```{r Data_Load1, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # Load data
+<<<<<<< HEAD
 GlblMmbrshp <- read_xlsx("./data/data_original_glblmbrs_2023-01-02_globalMembersRoster.xlsx", sheet = "Data_Original_MemberRoster")
 VBP_Rep_Comb <- read_csv("./data/data_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
 AllianceProvAllocation <- read_csv("./data/data_original_2022-10-01_alliancePrvdrMbrAllocation.csv")
+=======
+GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
+VBP_Rep_Comb <- read_csv("./data/datadata_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
+AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
 data("county.map")
@@ -51,12 +57,18 @@ data("county.map")
 
 ```{r Objects_ForAll, echo=FALSE, message=FALSE, warning=FALSE}
 # Create common objects for all
+<<<<<<< HEAD
 # VBP Report Date Information
 Data.Period = "2022-10-31" #claimsAdjudicated Through Date
 Reportasof = "2022-12-16"
 ProgressReportDate = "2023-01-01"
 #Date member roster was extracted from HCAGlobal
 Members_Report_Date = "2022-12-31" 
+=======
+
+VBP_Report_Date = "2022-10-31" #claimsAdjudicated Through Date
+GlobalMembers_Report_Date = "2022-12-31" #Date member roster was extracted from HCA
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
 #
 Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBH", "TGC", "WYGC"))
 #
@@ -248,6 +260,7 @@ write.csv(CountyDistribution, "./data/output/2023-01-01_CountyDistribution.csv")
 # Make the compliance/performance table
 Tab_PercentCompliant <- VBP_Rep_Comb %>% 
   # add filter back in for specific reporting period
+<<<<<<< HEAD
   filter(Data.Period == Data.Period) %>%
   filter(SubMeasure.ID %in% c("AMM2","FUH7", "HDO")) %>% 
   mutate(SumTotalEligible = sum(TotalEligible)) %>% 
@@ -262,6 +275,18 @@ write.csv(Tab_PercentCompliant, "./data/output/2023-01-01_Tab_PercentCompliant.c
 # Calculate performance levels
 AllAlliancePerformance <- Tab_PercentCompliant %>% 
   filter(Data.Period == Data.Period) %>% 
+=======
+  filter(Data.Period == VBP_Report_Date) %>%
+  filter(SubMeasure.ID %in% c("AMM2","FUH7", "HDO")) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   
+  mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) 
+
+# Calculate performance levels
+AllAlliancePerformance <- Tab_PercentCompliant %>% 
+  filter(Data.Period == VBP_Report_Date) %>% 
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
   group_by(SubMeasure.ID) %>% 
   summarise(Sum_AdaptedCompliant = sum(AdaptedCompliant, na.rm = FALSE),
             Sum_TotalEligible = sum(TotalEligible, na.rm = FALSE)) %>% 
@@ -273,6 +298,7 @@ write.csv(AllAlliancePerformance, "./data/output/2023-01-01_Tab_AllAlliancePerfo
 ```
 
 ```{r eval_ComprehensiveOutlookTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+<<<<<<< HEAD
 # Tab_CompOutlook <- VBP_Rep_Comb %>% 
 #   # add filter back in for specific reporting period
 #   #filter(Data.Period == Data.Period) %>% 
@@ -293,6 +319,28 @@ write.csv(AllAlliancePerformance, "./data/output/2023-01-01_Tab_AllAlliancePerfo
 #          PerformanceLevel)
 # # Export the table as a csv for reference
 # write.csv(Tab_CompOutlook, "./data/output/Tab_CompOutlook.csv")
+=======
+Tab_CompOutlook <- VBP_Rep_Comb %>% 
+  # add filter back in for specific reporting period
+  #filter(Data.Period == VBP_Report_Date) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   
+  mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
+  #mutate(Data.Period = as.Date(Data.Period)) %>% 
+  select(Health.Home.Name,
+         Provider_Shortname, 
+         SubMeasure.ID,
+         AdaptedCompliant,
+         TotalEligible,
+         PercentCompliant,
+         PercentTotalEligible,
+         Data.Period,
+         AdaptedNCQAMean,
+         PerformanceLevel)
+# Export the table as a csv for reference
+write.csv(Tab_CompOutlook, "./data/output/Tab_CompOutlook.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
 
 ```
 
@@ -300,7 +348,11 @@ write.csv(AllAlliancePerformance, "./data/output/2023-01-01_Tab_AllAlliancePerfo
 # Calculate performance levels
 # AMM2
 IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>% 
+<<<<<<< HEAD
   #filter(Data.Period == Data.Period) %>% 
+=======
+  filter(Data.Period == VBP_Report_Date) %>% 
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
   filter(SubMeasure.ID == "AMM2") %>% 
   select(Health.Home.Name,
          TotalEligible,
@@ -312,7 +364,11 @@ write.csv(IndivAlliancePerformance_AMM2, "./data/output/2023-01-01_IndivAlliance
 
 #FUH7
 IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>% 
+<<<<<<< HEAD
   filter(Data.Period == Data.Period) %>% 
+=======
+  filter(Data.Period == VBP_Report_Date) %>% 
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
   filter(SubMeasure.ID == "FUH7") %>% 
   select(Health.Home.Name,
          TotalEligible,
@@ -323,7 +379,11 @@ IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>%
 write.csv(IndivAlliancePerformance_FUH7, "./data/output/2023-01-01_IndivAlliancePerformance_FUH7.csv")
 #HDO
 IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>% 
+<<<<<<< HEAD
   filter(Data.Period == Data.Period) %>% 
+=======
+  filter(Data.Period == VBP_Report_Date) %>% 
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
   filter(SubMeasure.ID == "HDO") %>% 
   select(Health.Home.Name,
          TotalEligible,
@@ -621,7 +681,11 @@ Tab_AllProvPerformance
 # Target Measure Lollipop, most recent report
 # Lollipop Chart ----------------------------------------------------------
 Fig_AllProvLollipop <- Tab_PercentCompliant %>% 
+<<<<<<< HEAD
   filter(Data.Period == Data.Period) %>%
+=======
+  filter(Data.Period == VBP_Report_Date) %>%
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
   ggplot(aes(x = Provider_Shortname, 
              y = PercentCompliant)
          ) +

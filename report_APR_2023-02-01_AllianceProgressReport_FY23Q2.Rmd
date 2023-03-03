@@ -92,7 +92,11 @@ ActiveNAZMmbrshp <- GlblMmbrshp %>%
                 bhhShortname)
            ))
 # Export Active NAZ Membership to csv
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(ActiveNAZMmbrshp, "./data/output/2023-02-01_ActiveNAZMembership.csv")
+=======
+write.csv(ActiveNAZMmbrshp, "./data/output/2023-03-01_ActiveNAZMembership.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 # Separate for enrolled adults
 AdultMembership <- ActiveNAZMmbrshp %>% 
   filter(Age >= 18)
@@ -142,14 +146,22 @@ ContractAlloc_v_Assignment <-
   mutate(PercentOfMembership = percent(
     AllianceAllocation/(sum(AllianceAllocation))))
 # Export the Alloc_v_Assignment table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(ContractAlloc_v_Assignment, "./data/output/2023-02-01_ContractAlloc_v_Assignment.csv")
+=======
+write.csv(ContractAlloc_v_Assignment, "./data/output/2023-03-01_ContractAlloc_v_Assignment.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 # Calculate the percent change from contract implementation to date of membership report for all Alliance
 Alloc_v_EnrolledPercentDiff <- data.frame(c(
   sum(ContractAlloc_v_Assignment$AllianceAllocation)),
   sum(ContractAlloc_v_Assignment$HCA_Enrollment)) %>% 
   mutate(PercentDiff = percent(((`sum.ContractAlloc_v_Assignment.HCA_Enrollment.` -`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))                               /`c.sum.ContractAlloc_v_Assignment.AllianceAllocation..`))
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(Alloc_v_EnrolledPercentDiff, "./data/output/2023-02-01_Alloc_v_EnrolledPercentDiff.csv")
+=======
+write.csv(Alloc_v_EnrolledPercentDiff, "./data/output/2023-03-01_Alloc_v_EnrolledPercentDiff.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 ```
 
 ```{r TBL_GenderSummary,  include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -230,7 +242,11 @@ DemoTable_SexByAgeGroup <- ActiveNAZMmbrshp %>%
   #change male female to factor
   mutate(sex = factor(sex, levels = c("Male","Female")))
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(DemoTable_SexByAgeGroup, "./data/output/2023-02-01_DemoTable_SexByAgeGroup.csv")
+=======
+write.csv(DemoTable_SexByAgeGroup, "./data/output/2023-03-01_DemoTable_SexByAgeGroup.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 ```
 
 ```{r Tab_DistributionbyCounty, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -241,7 +257,11 @@ CountyDistribution <- ActiveNAZMmbrshp %>%
   rename(Members = n) %>% 
   mutate(Percent = (Members / (sum(Members)))) 
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(CountyDistribution, "./data/output/2023-02-01_CountyDistribution.csv")
+=======
+write.csv(CountyDistribution, "./data/output/2023-03-01_CountyDistribution.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 ```
 
 ```{r eval_AllProvComplianceTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -269,6 +289,7 @@ AllAlliancePerformance <- Tab_PercentCompliant %>%
   mutate(NCQA_Mean = NCQA_MeanList) %>% 
   mutate(PerformanceLevel = (Percent_Compliant - NCQA_Mean))
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(AllAlliancePerformance, "./data/output/2023-02-01_Tab_AllAlliancePerformance.csv")
 ```
 
@@ -293,6 +314,31 @@ write.csv(AllAlliancePerformance, "./data/output/2023-02-01_Tab_AllAlliancePerfo
 #          PerformanceLevel)
 # # Export the table as a csv for reference
 # write.csv(Tab_CompOutlook, "./data/output/Tab_CompOutlook.csv")
+=======
+write.csv(Tab_PercentCompliant, "./data/output/2023-03-01_Tab_PercentCompliant.csv")
+```
+
+```{r eval_ComprehensiveOutlookTable, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+Tab_CompOutlook <- VBP_Rep_Comb %>% 
+  # add filter back in for specific reporting period
+  #filter(ClaimsAdjudicatedThrough == VBP_Report_Date) %>% 
+  mutate(PercentCompliant = AdaptedCompliant/TotalEligible) %>%   mutate(SumTotalElig = sum(TotalEligible)) %>%
+  mutate(PercentTotalEligible = TotalEligible/SumTotalElig) %>%
+  mutate(PerformanceLevel = PercentCompliant-AdaptedNCQAMean) %>% 
+  #mutate(ClaimsAdjudicatedThrough = as.Date(ClaimsAdjudicatedThrough)) %>% 
+  select(Provider,
+         Provider_ShortName, 
+         SubMeasureID,
+         AdaptedCompliant,
+         TotalEligible,
+         PercentCompliant,
+         PercentTotalEligible,
+         ClaimsAdjudicatedThrough,
+         AdaptedNCQAMean,
+         PerformanceLevel)
+# Export the table as a csv for reference
+write.csv(Tab_CompOutlook, "./data/output/2023-03-01_Tab_CompOutlook.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 
 ```
 
@@ -308,7 +354,11 @@ IndivAlliancePerformance_AMM2 <- Tab_PercentCompliant %>%
          PercentCompliant,
          PerformanceLevel)
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(IndivAlliancePerformance_AMM2, "./data/output/2023-02-01_IndivAlliancePerformance_AMM2.csv")
+=======
+write.csv(IndivAlliancePerformance_AMM2, "./data/output/2023-03-01_IndivAlliancePerformance_AMM2.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 
 #FUH7
 IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>% 
@@ -320,7 +370,11 @@ IndivAlliancePerformance_FUH7 <- Tab_PercentCompliant %>%
          PercentCompliant,
          PerformanceLevel)
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(IndivAlliancePerformance_FUH7, "./data/output/2023-02-01_IndivAlliancePerformance_FUH7.csv")
+=======
+write.csv(IndivAlliancePerformance_FUH7, "./data/output/2023-03-01_IndivAlliancePerformance_FUH7.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 #HDO
 IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>% 
   filter(Data.Period == Data.Period) %>% 
@@ -331,7 +385,11 @@ IndivAlliancePerformance_HDO <- Tab_PercentCompliant %>%
          PercentCompliant,
          PerformanceLevel)
 # Export the table as a csv for reference
+<<<<<<< HEAD:report_APR_2023-02-01_AllianceProgressReport_FY23Q2.Rmd
 write.csv(IndivAlliancePerformance_HDO, "./data/output/2023-02-01_IndivAlliancePerformance_HDO.csv")
+=======
+write.csv(IndivAlliancePerformance_HDO, "./data/output/2023-03-01_IndivAlliancePerformance_HDO.csv")
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a:report_APR_2023-03-01_AllianceProgressReport_FY23Q2.Rmd
 ```
 
 # Introduction

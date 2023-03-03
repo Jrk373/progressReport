@@ -7,7 +7,19 @@ Do not store workbooks, data, etc. that is only for reference in this folder.
 Reference data that is not used in the model should be saved in 
 the "documents" folder.
 
+<<<<<<< HEAD
 ***Updated: 3/1/23***
+=======
+*** As of 2/28/23, process needs to be reannotated according "VBP_Import" R script. 
+This allows us to skip many risky steps of processing in excel.***
+
+## Data files in this folder include:
+	1.	data_anon_glblmbrs_yyyy-mm-dd_globalMembersRoster
+	2.	data_confidential_glblmbrs_yyyy-mm-dd_globalMembersRoster #gitignore
+	3.	data_anon_vbpbhh_yyyy-mm-dd_allProvidersCombined
+	4.	data_confidential_yyyy-mm-dd_allProvidersCombined #gitignore
+	5.	DATA_
+>>>>>>> fccb0280c37fd4cb1b1395cf8edd3ccb2d76961a
 
 # VBP Report Data
 ## Import HC VBP Reports
