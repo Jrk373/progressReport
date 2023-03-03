@@ -1,9 +1,0 @@
-This is a list of alternatives for anonomizing certain data aspects.
-
-BHH is anonomized using this key:
-Provider_ShortName_out <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
-
-County is anonymized using this key:
-
-AZ_County_Map_out <- (c("Apache", "Coconino", "Mohave", "Navajo", "Yavapai"))
-AZ_County_Map <- (c("Alderan", "Naboo", "Tatooine", "Dagobah", "Endor"))
