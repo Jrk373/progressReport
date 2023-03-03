@@ -13,8 +13,9 @@ output:
     number_sections: yes
     toc: yes
     toc_float: yes
-    toc_collapsed: no
     toc_depth: 3
+    toc_collapsed: false
+    
     
     
 
@@ -34,14 +35,15 @@ library(ggh4x)
 library(gt)
 library(scales)
 library(tidyverse)
+library(readxl)
 
 ```
 
 ```{r Data_Load1, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # Load data
-GlblMmbrshp <- read_csv("./data/data_confidential_glblmbrs_2023-02-21_globalMembersRoster.csv")
-VBP_Rep_Comb <- read_csv("./data/datadata_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
-AllianceProvAllocation <- read_csv("./data/data_confidential_2022-10-01_alliancePrvdrMbrAllocation.csv")
+GlblMmbrshp <- read_xlsx("./data/data_original_glblmbrs_2023-01-02_globalMembersRoster.xlsx", sheet = "Data_Original_MemberRoster")
+VBP_Rep_Comb <- read_csv("./data/data_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
+AllianceProvAllocation <- read_csv("./data/data_original_2022-10-01_alliancePrvdrMbrAllocation.csv")
 coordinate_cities <- read_csv("./data/data_reference_allianceCitiesAndClinics.csv")
 ZipDatabase <- read.csv("./data/data_reference_zip_code_database.csv")
 data("county.map")
@@ -56,7 +58,7 @@ ProgressReportDate = "2023-01-01"
 #Date member roster was extracted from HCAGlobal
 Members_Report_Date = "2022-12-31" 
 #
-Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBHS", "TGC", "PH"))
+Provider_ShortName <- (c("CBI", "CPIH", "EHS", "LCBHC", "MMHC", "SHG", "SBH", "TGC", "WYGC"))
 #
 # Various vectors of data for mapping functions
 MainStates <- map_data("state") #table with state info, lat, long, etc.
@@ -80,12 +82,15 @@ Allocations <- AllianceProvAllocation$`Annual Member Months`
 ```{r eval_GlblMmbrshp, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 # Calculate active members based on BCBSAZ auto-enrollment
 ActiveNAZMmbrshp <- GlblMmbrshp %>% 
-  replace(.=="NULL", NA) %>% 
-  mutate(disenrollmentDate = !is.na(disenrollmentDate)) %>% 
-  filter(disenrollmentDate == FALSE) %>% 
+  filter(disenrollmentDate == "NULL") %>% 
   filter(resCountyName %in% AZ_County_Map) %>%
  #filter(zipCode %in% Vec_AZ_Zips) %>% #potential variation from AZ_County_Map option
-  filter(bhhShortname %in% Provider_ShortName)
+  filter(bhhShortname %in% Provider_ShortName) %>% 
+  mutate(bhhShortname = 
+           if_else((bhhShortname == "SBH"), "SBHS", 
+              if_else((bhhShortname == "WYGC"), "PH", 
+                bhhShortname)
+           ))
 # Export Active NAZ Membership to csv
 write.csv(ActiveNAZMmbrshp, "./data/output/2023-01-01_ActiveNAZMembership.csv")
 # Separate for enrolled adults
@@ -117,12 +122,16 @@ Alliance_AllocationTable <- AllianceProvAllocation %>%
             "SBHS", 
             Provider_ShortName)# the short name for spectrum varies depending on data source
          )
+# Export to CSV file
+write.csv(Alliance_AllocationTable, "./data/output/2022-10-01_AllianceAllocationTable.csv")
 # Wrangle BCBASAZ Auto Enrolled to filter and count members for Alliance Providers
 HCA_AutoEnrolled <- ActiveNAZMmbrshp %>% 
   filter(bhhShortname != "EHS") %>% 
   count(bhhShortname) %>%
   rename(HCA_Enrollment = n) %>%
   rename(Provider_ShortName = bhhShortname)
+# Export to CSV file
+write.csv(HCA_AutoEnrolled, "./data/output/2022-01-01_HCA_AutoEnrolled.csv")
 # Create a table comparing auto-enrollment with contract allocation
 ContractAlloc_v_Assignment <- 
   merge(x=Alliance_AllocationTable, #NARBHA Contract Allocation
@@ -340,7 +349,7 @@ Tab_CountyDistribution <- CountyDistribution %>%
   gt() %>%
   tab_header(
     title = md("**Member Distribution by County**"),
-    subtitle = md("As of February 21, 2023")
+    subtitle = md("As of December 31, 2022")
   ) %>% 
   opt_align_table_header(align = "left") %>% 
   fmt_number(Members,
@@ -354,7 +363,7 @@ Tab_CountyDistribution <- CountyDistribution %>%
   cols_width(`County of Residence` ~ px(220),
              Members ~ px(100),
              Percent ~ px(100)) %>% 
-  tab_source_note(source_note = md("*SOURCE: BCBSAZ Global Members, extracted 02/21/2023*")) %>% 
+  tab_source_note(source_note = md("*SOURCE: BCBSAZ Global Members, extracted 12/31/2022*")) %>% 
   tab_style(
     style = list(
       cell_fill(color = "#6b7e7d"),
@@ -391,7 +400,7 @@ Tab_GenderDistribution <- Tab_Gender %>%
 gt() %>%
   tab_header(
     title = md("**Member Distribution by Sex**"),
-    subtitle = md("As of February 21, 2023")
+    subtitle = md("As of December 31, 2022")
   ) %>% 
   opt_align_table_header(align = "left") %>% 
   fmt_number(Members,
@@ -405,7 +414,7 @@ gt() %>%
   cols_width(Sex ~ px(125),
              Members ~ px(125),
              Percent ~ px(125)) %>% 
-  tab_source_note(source_note = md("*SOURCE: BCBSAZ Global Members, extracted 2/21/23*")) %>% 
+  tab_source_note(source_note = md("*SOURCE: BCBSAZ Global Members, extracted 12/31/2022*")) %>% 
   tab_style(
     style = list(
       cell_fill(color = "#4b605e"),
@@ -490,7 +499,7 @@ Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>%
   gt() %>% 
     tab_header(
       title = md("Alliance Provider, Member Allocation"),
-      subtitle = md("*Compared with BCBSAZ AutoAssignment, February 2023*")
+      subtitle = md("*Compared with BCBSAZ AutoAssignment, December 31, 2022*")
       ) %>% 
     fmt_number(c(AllianceAllocation, 
                HCA_Enrollment),
@@ -499,7 +508,7 @@ Tab_Alloc_v_Assignment <- ContractAlloc_v_Assignment %>%
              sep_mark = ",") %>%
     opt_align_table_header(align = "left") %>% 
     tab_source_note(
-        source_note = md("*Alliance Allocation based on Contract Year 2022-2023 <br> BCBSAZ Auto Assignment based on Global Members, extracted 2/21/2023*")
+        source_note = md("*Alliance Allocation based on Contract Year 2022-2023 <br> BCBSAZ Auto Assignment based on Global Members, extracted 12/31/2022*")
         ) %>% 
     cols_width(Provider_ShortName ~ px(100),
               AllianceAllocation ~ px(115),
@@ -559,7 +568,7 @@ Tab_AllProvPerformance <- AllAlliancePerformance %>%
 gt() %>% 
   tab_header(
     title = md("Overall Performance of Alliance Provider Network"),
-    subtitle = md("*January 2022 - November 2022*")
+    subtitle = md("*January 2022 - October 2022*")
   ) %>% 
   fmt_percent(columns = c("Percent_Compliant", "NCQA_Mean"), 
             decimals = 2,
@@ -583,7 +592,7 @@ gt() %>%
              PerformanceLevel ~ px(120)
              )%>%
   tab_source_note(
-    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through September, 2022*")
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through October 31, 2022*")
   ) %>% 
   tab_style(
     style = list(
@@ -646,7 +655,7 @@ Fig_AllProvLollipop <- Tab_PercentCompliant %>%
   scale_y_continuous(labels = scales::percent)+
   labs(title = "Alliance Provider Target Measure Compliance",
        subtitle = "With Percent of Total Eligible Participants",
-       caption = "Data source: BCBSAZ VBP Report, Claims Adjudicated Through Sept. 2022")
+       caption = "Data source: BCBSAZ VBP Report, Claims Adjudicated Through Oct. 2022")
 #
 Fig_AllProvLollipop
 #
@@ -684,7 +693,7 @@ Tab_AMM2Performance <- IndivAlliancePerformance_AMM2 %>%
 gt() %>% 
 tab_header(
     title = md("Individual Performance, Antidepressant Medication Management"),
-    subtitle = md("*January 2022 - November 2022* <br> NCQA Mean = 57.30%")
+    subtitle = md("*January 2022 - October 2022* <br> NCQA Mean = 57.30%")
   ) %>% 
   fmt_percent(columns = c("PercentCompliant"), 
             decimals = 2,
@@ -706,7 +715,7 @@ tab_header(
              PerformanceLevel ~ px(120)
              )%>% 
   tab_source_note(
-    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through November, 2022*")
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through October 31, 2022*")
   ) %>% 
   tab_style(
     style = list(
@@ -739,7 +748,7 @@ Tab_FUH7Performance <- IndivAlliancePerformance_FUH7 %>%
 gt() %>% 
 tab_header(
     title = md("Individual Performance, Follow Up after Hospitalization"),
-    subtitle = md("*January 2022 - November 2022* <br> NCQA Mean = 39.36%")
+    subtitle = md("*January 2022 - October 2022* <br> NCQA Mean = 39.36%")
   ) %>% 
   fmt_percent(columns = c("PercentCompliant"), 
             decimals = 2,
@@ -761,7 +770,7 @@ tab_header(
              PerformanceLevel ~ px(120)
              )%>% 
   tab_source_note(
-    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through November, 2022*")
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through October 31, 2022*")
   ) %>% 
   tab_style(
     style = list(
@@ -794,7 +803,7 @@ Tab_HDOPerformance <- IndivAlliancePerformance_HDO %>%
 gt() %>% 
 tab_header(
     title = md("Individual Performance, Use of Opioids at High Dosage"),
-    subtitle = md("*January 2022 - November 2022* <br> NCQA Mean = 93% Compliant")
+    subtitle = md("*January 2022 - October 2022* <br> NCQA Mean = 93% Compliant")
   ) %>% 
   fmt_percent(columns = c("PercentCompliant"), 
             decimals = 2,
@@ -816,7 +825,7 @@ tab_header(
              PerformanceLevel ~ px(120)
              )%>% 
   tab_source_note(
-    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through November, 2022*")
+    source_note = md("*SOURCE: BCBSAZ VBP Performance Reports, Claims Adjudicated Through October 31, 2022*")
   ) %>% 
   tab_style(
     style = list(
@@ -846,5 +855,3 @@ Tab_HDOPerformance
 
 
 Alliance provider FUH7 TIP sheet has been developed due to the continued concerns we have heard from providers in understanding the allowable billing codes for this measure. It has been discussed with providers that they may have had contact with members but may not be billing FUH7 allowable codes and increase in understanding of allowable codes may help in improving the FUH7 measure. An example of the Alliance FUH7 TIP Sheet will be made available to all key stakeholders.
-
-## Comprehensive Outlook for 8 Months of Performance

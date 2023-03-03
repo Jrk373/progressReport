@@ -3,14 +3,14 @@ library(readxl)
 library(scales)
 
 # Import the unaltered VBP report, Detail sheet, as received from HCA
-vbp_cbi <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_94-2880847_Community_Bridges_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
-vbp_cpih <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0215065_Change_Point_Integrated_Health_HCA_BHH_VBP.xlsx", sheet = "Detail")
-vbp_lcbhc <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0250938_Little_Colorado_Behavioral_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
-vbp_mmhc <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0214457_Mohave_Mental_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
-vbp_ph <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0206928_Polara_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
-vbp_sbhs <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0290033_Southwest_Behavioral_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
-vbp_shg <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0207499_Spectrum_Health_Group_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
-vbp_tgc <- read_xlsx("C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/Quality/vbpbhh_report_2023-01-30_86-0223720_The_Guidance_Center_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_cbi <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_94-2880847_Community_Bridges_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_cpih <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0215065_Change_Point_Integrated_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_lcbhc <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0250938_Little_Colorado_Behavioral_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_mmhc <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0214457_Mohave_Mental_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_ph <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0206928_Polara_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_sbhs <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0290033_Southwest_Behavioral_Health_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_shg <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0207499_Spectrum_Health_Group_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
+vbp_tgc <- read_xlsx("./data/VBP Reports/Quality/vbpbhh_report_2022-12-16_86-0223720_The_Guidance_Center_HCA_BHH_VBP_Quality.xlsx", sheet = "Detail")
 
 # Bind the Details sheet from all providers into one table
 Master_VBP_Rep_Comb <- rbind(
@@ -53,7 +53,13 @@ VBP_Rep_Comb <- VBP_Rep_Comb %>%
                                                       ifelse(Health.Home.Name == "THE GUIDANCE CENTER", "TGC", NA
         ))))))))) %>% 
   drop_na(Provider_Shortname) %>% 
-  mutate(AdaptedCompliant = if_else((SubMeasure.ID == "HDO" & Numerator == 0), 1, Numerator)) %>% 
+  mutate(AdaptedCompliant = if_else((SubMeasure.ID == "AMM2" & Numerator == 0), 0, 
+                  if_else((SubMeasure.ID == "AMM2" & Numerator == 1), 1,
+                           if_else((SubMeasure.ID == "FUH7" & Numerator == 0), 0, 
+                                   if_else((SubMeasure.ID == "FUH7" & Numerator == 1), 1,
+                                           if_else((SubMeasure.ID == "HDO" & Numerator == 0), 1, 
+                                                   if_else((SubMeasure.ID == "HDO" & Numerator == 1), 0, 0
+         ))))))) %>% 
   mutate(AdaptedNCQAMean = ifelse(SubMeasure.ID == "AMM2", .5729,
                                      ifelse(SubMeasure.ID == "FUH7", .3936, 
                                             ifelse(SubMeasure.ID == "HDO", .9300, NA)
@@ -71,6 +77,6 @@ VBP_Rep_Comb <- VBP_Rep_Comb %>%
          Member.Age
          )
 #export new data model table to csv
-write.csv(VBP_Rep_Comb, "C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBP Reports/data_original_vbpbhh_2023-01-30_allProvidersCombined.csv")
-write.csv(VBP_Rep_Comb, "C:/Users/KGLtd/OneDrive/R_Studio/progressReport/data/datadata_original_vbpbhh_2023-01-30_allProvidersCombined.csv")
+write.csv(VBP_Rep_Comb, "C:/Users/KGLtd/OneDrive - The NARBHA Institute/ACO/Data and Reports/BCBS-HCA Reports/VBPReports/data_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
+write.csv(VBP_Rep_Comb, "./data/VBP Reports/Quality/data_original_vbpbhh_2022-12-16_allProvidersCombined.csv")
 

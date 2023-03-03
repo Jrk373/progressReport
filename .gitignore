@@ -4,8 +4,8 @@
 .RData
 .Ruserdata
 .ScratchPaper.txt
-./archive
-./data
-./documents
-./images
-./reports
+archive/
+data/
+documents/
+images/
+reports/
